@@ -1,6 +1,7 @@
 """GATE 1: inspect realistic mini NetCDF structure without performing CML physics."""
 import hashlib
 from pathlib import Path
+import pytest
 import numpy as np
 import pandas as pd
 import xarray as xr
@@ -75,6 +76,7 @@ def test_all_missing_direction_does_not_abort_other_direction(tmp_path):
 
     This uses a fake estimator solely to test error HANDLING, not scientific values.
     """
+    pytest.importorskip('numba', reason='science extra not installed (pip install -e .[science])')
     from types import SimpleNamespace
     from essd_cz.rainfall import aggregate_exact
     paths=create(tmp_path/'input')

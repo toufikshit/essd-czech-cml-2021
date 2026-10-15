@@ -7,7 +7,7 @@ hydrometeorological sensing: a multisource dataset for the Czech Republic*
 The dataset contains observations from 2,219 commercial microwave links (CML)
 and reference sensors in the Czech Republic for April to October 2021. Nine
 notebooks walk from the released NetCDF files to rainfall retrieval, gauge
-validation, rainfall maps and E-band water vapour analysis. The original
+validation, rainfall maps and E band water vapour analysis. The original
 scientific scripts are preserved unchanged under `original/` and the notebooks
 call them directly.
 
