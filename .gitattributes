@@ -1,0 +1,4 @@
+# The 44 preserved originals (and everything else) must stay byte-identical on
+# every platform: tools_verify_originals.py hash-checks them after checkout.
+# Disable all end-of-line conversion.
+* -text
