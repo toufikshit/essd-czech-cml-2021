@@ -9,6 +9,7 @@ here.
 |---|---|
 | `README_handoff_root.md` | the handoff tree's root README, replaced by the rewritten `README.md` |
 | `RUN_FIRST_handoff.txt` | handoff quick-start (HPC-first wording), folded into `README.md` |
+| `README_NOTEBOOKS_handoff.md` | one-paragraph pointer to `README_CONNECTED_WORKFLOW.md`, superseded by `README.md` |
 | `gitignore_handoff.txt` | handoff `.gitignore`, replaced by the extended one |
 | `active_profile_hpc_handoff.json` | the HPC-default profile the handoff shipped with (`"profile": "hpc"`); the live `config/active_profile.json` defaults to the portable `"user"` profile |
 | `NOTEBOOK_ADDED_SHA256.json`, `NOTEBOOK_RELEASE_MANIFEST.txt` | hash list / manifest of an **older eight-notebook naming scheme** predating the V2 connected notebooks; stale relative to `notebooks/` |
