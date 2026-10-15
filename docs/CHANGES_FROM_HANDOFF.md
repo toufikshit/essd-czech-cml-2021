@@ -92,3 +92,14 @@ scientific code and no data values changed; the 44 originals still verify.
   `docs/ENVIRONMENT.md` points at the package extras; CI installs the package.
 * `docs/EVIDENCE.md` and `docs/PROVENANCE_MAP.md` rewritten in plainer
   language, same facts.
+
+## Release filename correction (2026-10-15, third pass)
+
+The seven public data files were renamed so the names state the real
+coverage: `*_20210401_20211031.nc` (and the CHMI files likewise). The staged
+files were verified by their actual time coordinates before renaming and
+revalidated against the sources after; no data value changed.
+`src/essd_cz/config.py` now lists the release names in `EXPECTED_NAMES` and
+keeps the author's full history names working through `FULL_HISTORY_NAMES`
+(the hpc profile and `ACCEPTED_NAMES`). The user paths example, the test
+fixture runner and the documentation use the new names.

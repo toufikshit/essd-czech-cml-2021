@@ -9,25 +9,23 @@ Download all seven and put them in one folder. Do not rename them. The code
 checks the names.
 
 ```
-CZ_CML_RAW_1MIN_20200101_20211231.nc
-CZ_CML_PREPROCESSED_1MIN_20200101_20211231.nc
-CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_5MIN_20200101_20211231.nc
-CZ_RAIN_GAUGE_10MIN_20200101_20211231.nc
-CZ_RADAR_CMLPATH_5MIN_20200101_20211231.nc
-CHMI_10MIN_TEMPERATURE_2021.nc
-CHMI_10MIN_HUMIDITY_2021.nc
+CZ_CML_RAW_1MIN_20210401_20211031.nc
+CZ_CML_PREPROCESSED_1MIN_20210401_20211031.nc
+CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_5MIN_20210401_20211031.nc
+CZ_RAIN_GAUGE_10MIN_20210401_20211031.nc
+CZ_RADAR_CMLPATH_5MIN_20210401_20211031.nc
+CHMI_10MIN_TEMPERATURE_20210401_20211031.nc
+CHMI_10MIN_HUMIDITY_20210401_20211031.nc
 ```
 
-The file names carry the extraction window of the source archive. The
-released content covers April to October 2021. The deposit README explains
-this.
+The file names state the coverage: 1 April to 31 October 2021.
 
 Then copy `config/user_paths.example.json` to `config/user_paths.json` and
 set the seven paths. For example, with the data in `data/` inside this
 repository:
 
 ```json
-"raw": "../data/CZ_CML_RAW_1MIN_20200101_20211231.nc"
+"raw": "../data/CZ_CML_RAW_1MIN_20210401_20211031.nc"
 ```
 
 Paths are relative to the `config/` folder. Absolute paths also work. You can

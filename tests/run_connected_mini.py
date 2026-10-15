@@ -17,6 +17,7 @@ from essd_cz.workflows import availability
 from essd_cz.notebook_figures import plot_network,plot_characteristics,monthly_from_native_csv
 import numpy as np
 import xarray as xr
+from essd_cz.config import EXPECTED_NAMES
 
 
 def run(root):
@@ -25,8 +26,7 @@ def run(root):
     source=root/'artificial_data'
     create(source)
     for role,nn in [('gauge',3),('humidity',2),('temperature',2)]:
-        path=source / {'gauge':'CZ_RAIN_GAUGE_10MIN_20200101_20211231.nc',
-            'humidity':'CHMI_10MIN_HUMIDITY_2021.nc','temperature':'CHMI_10MIN_TEMPERATURE_2021.nc'}[role]
+        path=source / EXPECTED_NAMES[role]
         tmp=path.with_suffix('.staging.nc')
         with xr.open_dataset(path) as ds:
             dim='WSI' if role=='gauge' else 'station'

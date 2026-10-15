@@ -4,7 +4,18 @@ from pathlib import Path
 import json
 
 ROLES = ('raw', 'qc', 'rain', 'gauge', 'radar', 'temperature', 'humidity')
+# Public release files (April to October 2021), as published on Zenodo.
 EXPECTED_NAMES = {
+    'raw': 'CZ_CML_RAW_1MIN_20210401_20211031.nc',
+    'qc': 'CZ_CML_PREPROCESSED_1MIN_20210401_20211031.nc',
+    'rain': 'CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_5MIN_20210401_20211031.nc',
+    'gauge': 'CZ_RAIN_GAUGE_10MIN_20210401_20211031.nc',
+    'radar': 'CZ_RADAR_CMLPATH_5MIN_20210401_20211031.nc',
+    'temperature': 'CHMI_10MIN_TEMPERATURE_20210401_20211031.nc',
+    'humidity': 'CHMI_10MIN_HUMIDITY_20210401_20211031.nc',
+}
+# The author's full history source files (2020 to 2021), used by the hpc profile.
+FULL_HISTORY_NAMES = {
     'raw': 'CZ_CML_RAW_1MIN_20200101_20211231.nc',
     'qc': 'CZ_CML_PREPROCESSED_1MIN_20200101_20211231.nc',
     'rain': 'CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_5MIN_20200101_20211231.nc',
@@ -13,6 +24,7 @@ EXPECTED_NAMES = {
     'temperature': 'CHMI_10MIN_TEMPERATURE_2021.nc',
     'humidity': 'CHMI_10MIN_HUMIDITY_2021.nc',
 }
+ACCEPTED_NAMES = {role: (EXPECTED_NAMES[role], FULL_HISTORY_NAMES[role]) for role in ROLES}
 
 
 def load_paths(config_file: str | Path) -> dict[str, Path]:
@@ -31,8 +43,8 @@ def load_paths(config_file: str | Path) -> dict[str, Path]:
     for role in ROLES:
         p = Path(provided[role]).expanduser()
         path = (p if p.is_absolute() else config_file.parent / p).resolve()
-        if path.name != EXPECTED_NAMES[role]:
-            raise ValueError(f'{role}: wrong filename {path.name!r}; expected {EXPECTED_NAMES[role]!r}')
+        if path.name not in ACCEPTED_NAMES[role]:
+            raise ValueError(f'{role}: wrong filename {path.name!r}; expected one of {ACCEPTED_NAMES[role]}')
         if not path.is_file():
             raise FileNotFoundError(f'{role}: {path}')
         found[role] = path
