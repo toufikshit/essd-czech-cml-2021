@@ -13,6 +13,7 @@ authors:
 version: "1.0.0-rc1"
 date-released: "2026-10-15"
 license: MIT
+repository-code: "https://github.com/toufikshit/essd-czech-cml-2021"
 keywords:
   - commercial microwave links
   - opportunistic sensing
