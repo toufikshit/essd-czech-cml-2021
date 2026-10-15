@@ -11,8 +11,8 @@ validation, rainfall maps and E band water vapour analysis. The original
 scientific scripts are preserved unchanged under `original/` and the notebooks
 call them directly.
 
-> Status: release candidate. The dataset is not yet on Zenodo and this
-> repository is not yet public. See `docs/LICENCES.md` for the licence state.
+> Status: the dataset is not yet on Zenodo. The Zenodo link and the DOIs will
+> be added here after the deposit is published.
 
 ## Quick start
 
@@ -76,24 +76,17 @@ of every notebook runs in seconds to minutes.
 | `CHMI_10MIN_TEMPERATURE_2021.nc` | 10 min | 251 CHMI temperature stations |
 | `CHMI_10MIN_HUMIDITY_2021.nc` | 10 min | 247 CHMI humidity stations |
 
-The rainfall method is Graf wet and dry detection with a constant baseline,
-Pastorek wet antenna correction and ITU R P.838 (2005) coefficients. The
-thresholds and baselines are derived from the CML data themselves. There was
-no calibration of the CML rainfall against gauges or radar.
+The rainfall retrieval uses CML data only, without gauge or radar
+calibration. The method is described in the manuscript and in
+[docs/CONNECTED_WORKFLOW.md](docs/CONNECTED_WORKFLOW.md).
 
-## Reproducibility in one paragraph
+## Reproducibility
 
 The released rainfall file was reproduced exactly: a full recomputation of
 all 2,219 links with the preserved original script matched the released file
-in every value and every mask (137.8 million rain values compared, zero
-differences). The published rainfall was computed from the full 2020 to 2021
-signal history. The released April to October data alone cannot rebuild the
-wet and dry thresholds, so the per link thresholds are stored inside the
-rainfall file. The water vapour analysis uses 1,352 directional series, and
-the selection used in the paper is 45 directional sublinks from 31 physical
-CMLs. Some historical steps are not recovered; see
-[docs/PROVENANCE_MAP.md](docs/PROVENANCE_MAP.md) for the honest list and
-[docs/EVIDENCE.md](docs/EVIDENCE.md) for the numbers and proof files.
+in every value and every mask. The verification numbers and proof files are
+in [docs/EVIDENCE.md](docs/EVIDENCE.md), and the provenance of every piece of
+code is in [docs/PROVENANCE_MAP.md](docs/PROVENANCE_MAP.md).
 
 ## Troubleshooting
 
@@ -108,12 +101,15 @@ CMLs. Some historical steps are not recovered; see
 
 ## Licences
 
-Proposed and partly confirmed, see [docs/LICENCES.md](docs/LICENCES.md) and
-[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md): MIT for the project code
-(pending ownership confirmation), CC BY-NC 4.0 for the CML data files,
-CC BY 4.0 for the CHMI and DWD derived data files.
+The software is MIT. The CML data files are CC BY-NC 4.0, provided under an
+agreement with T-Mobile Czech Republic (available on request). The CHMI and
+DWD derived data files are CC BY 4.0. Per file details:
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 ## Citation
 
-See [CITATION.cff](CITATION.cff). Please cite both the paper and the dataset
-once their DOIs exist.
+See [CITATION.cff](CITATION.cff). Software by Taoufiq Shit. Dataset and
+paper by Taoufiq Shit, Martin Fencl and Vojtěch Bareš (Faculty of Civil
+Engineering, Czech Technical University in Prague). Please cite both the
+paper and the dataset once their DOIs exist. Funded by the Czech Science
+Foundation (GAČR), grant 24-13677L (MERGOSAT).
