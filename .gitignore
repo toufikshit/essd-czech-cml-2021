@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+
+# Data products are distributed via Zenodo, never through git history
+*.nc
+*.npz
+*.tar
+*.tar.gz
+*.zip
+data/
+external_radar/
+
+# Generated results (each user's workspace); small HPC evidence lives in docs/evidence/
+results/*
+!results/.gitkeep
+
+# Notebook noise
+notebooks/.ipynb_checkpoints/
+notebooks/outputs/*
+!notebooks/outputs/.gitkeep
+.ipynb_checkpoints/
+
+# User-specific configuration (copied from the committed *.example.json)
+config/user_paths.json
+
+# OS noise
+.DS_Store
+Thumbs.db

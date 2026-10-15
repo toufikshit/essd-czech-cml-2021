@@ -1,0 +1,527 @@
+{
+  "script_version": "ITU2005_REBUILD_1.0",
+  "input_cml": "/home/jovyan/ESSD_publication_dataset/CZ_CML_PREPROCESSED_1MIN_20200101_20211231.nc",
+  "output": "/home/jovyan/ESSD_publication_dataset/ESSD_CZ_2021_CONNECTED_WALKTHROUGH_V2/results/connected_workflow/01_rainfall_rebuild/recomputed_CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_5MIN.nc",
+  "n_links": 2219,
+  "n_sublinks": 2,
+  "n_time_1min": 1052640,
+  "n_time_5min": 210528,
+  "wet_dry_method": "GRAF_RSTD_Q80",
+  "rstd_window": 60,
+  "graf_quantile": 0.8,
+  "graf_factor": 1.12,
+  "threshold_min_periods": 60,
+  "detection_min_periods": 45,
+  "baseline_method": "pycomlink baseline_constant",
+  "n_average_last_dry": 1,
+  "waa_method": "Pastorek_2021",
+  "pastorek_A_max": 14.0,
+  "pastorek_zeta": 0.55,
+  "pastorek_d": 0.1,
+  "kr_model": "ITU_2005",
+  "min_output_valid_fraction": 1.0,
+  "n_series_failures": 525,
+  "failures": [
+    {
+      "cml_id": "10624_27008_3339",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "10624_27008_3339",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "10662_10795_3342",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "10685_304691_3344",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "10662_10795_3342",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "10685_304691_3344",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "11335_13209_3400",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "11335_13209_3400",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "11350_13117_3412",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "11350_13117_3412",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "11429_25098_3428",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "11429_25098_3428",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "11700_11799_3432",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "11700_11799_3432",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "11701_27039_2338",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "11708_11797_3434",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "11738_26061_3447",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "11746_13121_3449",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "11738_26061_3447",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "11746_13121_3449",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "11759_11799_3457",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "11765_11799_3460",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "11776_27007_2187",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "11776_27007_3461",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "11759_11799_3457",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "11765_11799_3460",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "11776_27007_2187",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "11776_27007_3461",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "11797_323916_3474",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "11799_14441_3478",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "11797_323916_3474",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "11799_14441_3478",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "13212_25007_3505",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "13212_25007_3505",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "23025_24096_3580",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "23025_24096_3580",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "24003_24030_3594",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "24003_24033_3595",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "24003_24030_3594",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "24003_24033_3595",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "24003_24063_3596",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "24003_24064_3597",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "24003_24147_3599",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "24003_24151_3600",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "24003_24063_3596",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "24003_24064_3597",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "24003_24147_3599",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "24003_24151_3600",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "24003_24162_3602",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "24003_24162_3602",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "24039_24096_3618",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "24037_24041_3616",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "24037_24041_3616",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "24039_24096_3618",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "24060_25044_3628",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "24060_25044_3628",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "24125_48201_3635",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "24156_57040_3637",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "24125_48201_3635",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "24156_57040_3637",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "25007_25076_3643",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "25007_46036_3652",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "25007_25076_3643",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "25007_46036_3652",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "25036_25098_3662",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "25044_25902_3664",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "25036_25098_3662",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "25044_25902_3664",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "26020_26029_3692",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "26020_26029_3692",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "26028_26063_3695",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "26028_26063_3695",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "26045_29239_3707",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "26045_28045_3706",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "26050_26068_3708",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "26052_26063_3709",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "26045_28045_3706",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "26045_29239_3707",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "26050_26068_3708",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "26052_26063_3709",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "26056_26099_3710",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "26098_27036_3713",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "26056_26099_3710",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "26098_27036_3713",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "26100_87031_3717",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "26100_87031_3717",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "27008_27052_3726",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "27008_27049_3725",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "27008_27049_3725",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "27008_27052_3726",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "27028_27099_3737",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "27036_27069_3740",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "27028_27099_3737",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "27036_27069_3740",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "27036_27115_3741",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "27036_27115_2189",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "27037_28030_3742",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "27040_27044_3745",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "27040_27060_3746",
+      "sublink_id": "0",
+      "error": "<2 valid observations"
+    },
+    {
+      "cml_id": "27036_27115_2189",
+      "sublink_id": "1",
+      "error": "<2 valid observations"
+    }
+  ],
+  "elapsed_seconds": 430.7785212993622
+}

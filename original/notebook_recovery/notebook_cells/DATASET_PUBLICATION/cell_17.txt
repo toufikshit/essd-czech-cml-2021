@@ -1,0 +1,65 @@
+!cd /home/jovyan
+
+
+!python -u /home/jovyan/cml_graf_blettner_publishable_pipeline_v2.py \
+  --cml-qc-nc /home/jovyan/CML_S2020E2021_1MIN_CZ_QC_GRAF_RSTD_WETDRY.nc \
+  --radar-nc /home/jovyan/RADAR_S2021E2021_5MIN_CZ.nc \
+  --gauge-nc /home/jovyan/CHMI_10MIN_v1.nc \
+  --output-v2-nc /home/jovyan/CML_RAIN_PASTOREK_GRAF_1MIN_V2.nc \
+  --out-dir /home/jovyan/GRAF_PASTOREK_BLETTNER_PUBLISHABLE_RESULTS \
+  --time-dim time \
+  --cml-dim cml_id \
+  --sublink-dim sublink_id \
+  --trsl-var trsl_qc \
+  --graf-wet-var graf_rstd_wet_1min \
+  --graf-valid-var graf_rstd_valid_1min \
+  --link-pass-var qc_final_link_pass \
+  --sublink-pass-var qc_final_sublink_pass \
+  --qc-valid-var qc_final_valid \
+  --frequency-var frequency \
+  --length-var length \
+  --polarization-var polarization \
+  --site-a-lon site_a_longitude \
+  --site-a-lat site_a_latitude \
+  --site-b-lon site_b_longitude \
+  --site-b-lat site_b_latitude \
+  --frequency-unit MHz \
+  --length-unit km \
+  --kr-model ITU_2005 \
+  --n-average-last-dry 1 \
+  --pastorek-a-max 14 \
+  --pastorek-zeta 0.55 \
+  --pastorek-d 0.1 \
+  --baseline-pad-hours 48 \
+  --tstart "2020-01-01 00:00:00" \
+  --tend "2021-12-31 23:59:00" \
+  --n-workers 16 \
+  --link-batch 8 \
+  --compression-level 1 \
+  --time-chunk-1min 10080 \
+  --output-link-chunk 8 \
+  --sync-every-batches 4 \
+  --cml-rain-var R_cml \
+  --cml-wet-var graf_wet \
+  --cml-valid-var graf_wet_valid \
+  --eval-link-batch 8 \
+  --wet-aggregation any \
+  --min-cml-valid-fraction 1.0 \
+  --wet-threshold 0.1 \
+  --hexbin-scope reference_wet \
+  --radar-var rr \
+  --radar-scale 12 \
+  --radar-minutes 5 \
+  --radar-timestamp-label start \
+  --gauge-var rr \
+  --gauge-scale 6 \
+  --gauge-minutes 10 \
+  --gauge-timestamp-label start \
+  --projection EPSG:25833 \
+  --max-gauge-distance-m 1000 \
+  --spatial-batch 128 \
+  --plot-max 150 \
+  --gridsize 55 \
+  --dpi 300 \
+  --save-pdf \
+  --overwrite

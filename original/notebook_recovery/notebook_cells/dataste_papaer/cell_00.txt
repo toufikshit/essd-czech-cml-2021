@@ -1,0 +1,18 @@
+!python batch_cml_vs_radar_joint_events_essd_vertical.py \
+  --gridded-nc cml_rainfall_gridded_selected_period.nc \
+  --cml-var R \
+  --cml-geom-nc cml_preprocessed_v3.nc \
+  --radar-root dwd_radolan \
+  --convective-threshold 10 \
+  --cml-rain-threshold 0.1 \
+  --min-peak-mmph 10 \
+  --min-convective-pixels 100 \
+  --min-cml-wet-pixels 40 \
+  --min-joint-wet-pixels 15 \
+  --min-links-in-window 40 \
+  --min-cml-availability-fraction 0.15 \
+  --max-events 6 \
+  --instances-per-event 3 \
+  --min-instance-gap-min 30 \
+  --scan-stride 1 \
+  --out-dir joint_convective_event_instances_essd

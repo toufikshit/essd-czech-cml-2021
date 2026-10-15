@@ -1,0 +1,28 @@
+# DRAFT — placeholders must be completed and approved by the authors before release.
+cff-version: 1.2.0
+message: >-
+  If you use this software, please cite both the software and the
+  accompanying ESSD data description paper (DOI pending).
+type: software
+title: >-
+  ESSD Czech CML 2021 — connected reviewer workflow (TITLE TO BE CONFIRMED)
+authors:
+  - family-names: "TODO-FAMILY-NAME"
+    given-names: "TODO-GIVEN-NAME"
+    affiliation: "Czech Technical University in Prague (CONFIRM)"
+    email: "TODO@EXAMPLE"
+version: "0.1.0-rc1"
+date-released: "TODO"
+repository-code: "TODO-GITHUB-URL"
+license: "NOASSERTION"  # see LICENSING.md — licence not yet selected
+references:
+  - type: article
+    title: >-
+      (ESSD manuscript title — TODO)
+    journal: "Earth System Science Data"
+    doi: "TODO"
+  - type: dataset
+    title: >-
+      Czech Republic 2021 commercial microwave link rainfall and
+      environmental dataset (Zenodo deposit — TODO)
+    doi: "TODO"

@@ -1,0 +1,49 @@
+!cd /home/jovyan
+
+!OMP_NUM_THREADS=1 \
+!MKL_NUM_THREADS=1 \
+!OPENBLAS_NUM_THREADS=1 \
+!NUMBA_NUM_THREADS=16 \
+!python -u /home/jovyan/cml_dual_wetdry_pastorek_optimized.py \
+  --input-nc /home/jovyan/CML_S2020E2021_1MIN_CZ_QC_GRAF_RSTD_WETDRY.nc \
+  --radar-nc /home/jovyan/RADAR_S2021E2021_5MIN_CZ.nc \
+  --output-graf-nc /home/jovyan/CML_RAIN_PASTOREK_GRAF_1MIN.nc \
+  --output-radar-nc /home/jovyan/CML_RAIN_PASTOREK_RADAR_5MIN.nc \
+  --log-csv /home/jovyan/CML_RAIN_PASTOREK_PROCESSING_LOG.csv \
+  --summary-json /home/jovyan/CML_RAIN_PASTOREK_RUN_SUMMARY.json \
+  --time-dim time \
+  --cml-dim cml_id \
+  --sublink-dim sublink_id \
+  --radar-time-dim time \
+  --radar-cml-dim cml_id \
+  --tsl-var tx \
+  --rsl-var rx \
+  --graf-wet-var graf_rstd_wet_1min \
+  --graf-valid-var graf_rstd_valid_1min \
+  --frequency-var frequency \
+  --length-var length \
+  --polarization-var polarization \
+  --radar-var rr \
+  --frequency-unit MHz \
+  --length-unit km \
+  --kr-model ITU_2005 \
+  --tstart "2020-01-01 00:00:00" \
+  --tend "2021-12-31 23:59:00" \
+  --baseline-pad-hours 48 \
+  --radar-scale 12 \
+  --radar-wet-threshold 0.1 \
+  --radar-timestamp-label start \
+  --min-cml-valid-fraction 1.0 \
+  --n-average-last-dry 1 \
+  --pastorek-a-max 14 \
+  --pastorek-zeta 0.55 \
+  --pastorek-d 0.1 \
+  --n-workers 16 \
+  --link-batch 32 \
+  --availability-scan-batch 256 \
+  --compression-level 1 \
+  --time-chunk-1min 1440 \
+  --time-chunk-radar 288 \
+  --output-link-chunk 8 \
+  --sync-every-batches 4 \
+  --overwrite

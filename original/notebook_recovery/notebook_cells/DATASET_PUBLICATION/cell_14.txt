@@ -1,0 +1,19 @@
+!python cml_estimate_and_grid_cml_radar_gauge_merged_parallel_timewindow.py \
+  --cml-nc cml_preprocessed_v3.nc \
+  --radar-nc RADAR_S2021E2021_5MIN_CZ.nc \
+  --gauge-nc CHMI_10MIN_v1.nc \
+  --estimation-nc cml_rainrate_baseline_kr_waa_methods_june.nc \
+  --gridded-nc cml_rainfall_gridded_june.nc \
+  --tstart "2020-01-01 00:00:00" \
+  --tend "2021-12-31 23:59:00" \
+  --grid-baseline-method pycml_constant \
+  --grid-kr-model ITU_2003 \
+  --grid-waa-method pastorek_2021 \
+  --grid-time-chunk 288 \
+  --gauge-time-chunk 144 \
+  --batch 32 \
+  --cell-chunk 20000 \
+  --grid-workers 2 \
+  --idw-query-workers 1 \
+  --overwrite-estimation \
+  --overwrite-grid

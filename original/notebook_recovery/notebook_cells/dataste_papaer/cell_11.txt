@@ -1,0 +1,24 @@
+!cd /home/jovyan
+
+!python -u /home/jovyan/cml_graf_rstd_hess_radar_gauge_v3.py \
+  --cml-nc /home/jovyan/ESSD_publication_dataset/CZ_CML_PREPROCESSED_1MIN_20200101_20211231.nc \
+  --radar-nc /home/jovyan/ESSD_publication_dataset/CZ_RADAR_CMLPATH_5MIN_20200101_20211231.nc \
+  --gauge-nc /home/jovyan/ESSD_publication_dataset/CZ_RAIN_GAUGE_10MIN_20200101_20211231.nc \
+  --out-dir /home/jovyan/ESSD_publication_dataset/GRAF_RSTD_HESS_RADAR_GAUGE \
+  --radar-var rr \
+  --radar-scale 12 \
+  --radar-wet-threshold 0.1 \
+  --gauge-var rr \
+  --gauge-scale 6 \
+  --gauge-wet-threshold 0.1 \
+  --max-gauge-dist-km 1 \
+  --rstd-window 60 \
+  --graf-quantile 0.80 \
+  --graf-factor 1.12 \
+  --threshold-min-periods 60 \
+  --detection-min-periods 45 \
+  --temporal-aggregation any \
+  --min-cml-valid-fraction 1.0 \
+  --radar-timestamp-label start \
+  --gauge-timestamp-label end \
+  --link-batch 8

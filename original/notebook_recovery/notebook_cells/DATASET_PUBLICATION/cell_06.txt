@@ -1,0 +1,26 @@
+!cd /home/jovyan
+
+!python -u /home/jovyan/cml_qc_filter_standalone_v4_3.py \
+  --qc-nc /home/jovyan/CML_S2020E2021_1MIN_CZ_QC_GRAF_RSTD_WETDRY.nc \
+  --out-nc /home/jovyan/CML_S2020E2021_1MIN_CZ_QC_STRICT_MINIMAL.nc \
+  --summary-json /home/jovyan/CML_S2020E2021_1MIN_CZ_QC_STRICT_MINIMAL_summary.json \
+  --summary-csv /home/jovyan/CML_S2020E2021_1MIN_CZ_QC_STRICT_MINIMAL_filtering.csv \
+  --link-pass-var qc_final_link_pass \
+  --sublink-pass-var qc_final_sublink_pass \
+  --valid-var qc_final_valid \
+  --tx-var tx \
+  --rx-var rx \
+  --trsl-var trsl_qc \
+  --frequency-var frequency \
+  --polarization-var polarization \
+  --length-var length \
+  --time-dim time \
+  --sublink-dim sublink_id \
+  --cml-dim cml_id \
+  --min-valid-fraction 0 \
+  --min-valid-observations 1 \
+  --time-chunk 10080 \
+  --link-batch 16 \
+  --link-chunk 16 \
+  --compression-level 1 \
+  --overwrite

@@ -1,0 +1,135 @@
+{
+  "created_utc": "2026-10-12T17:27:24.117762+00:00",
+  "source": "notebook-referenced scripts only, exact paths",
+  "included": [
+    {
+      "source_path": "/home/jovyan/availability_2d_histogram_independent_masked_no_inside_labels.py",
+      "notebook_reference": "dataste_papaer.ipynb cell 9",
+      "zip_member": "notebook_references/figures_legacy/availability_2d_histogram_independent_masked_no_inside_labels.py",
+      "sha256": "058e955a08960882065277449c3e4b31cb450bfa99129d52bd1fc18360d53a42",
+      "bytes": 23580
+    },
+    {
+      "source_path": "/home/jovyan/batch_cml_vs_radar_joint_events_essd_1h.py",
+      "notebook_reference": "dataste_papaer.ipynb cell 3",
+      "zip_member": "notebook_references/event_maps_legacy/batch_cml_vs_radar_joint_events_essd_1h.py",
+      "sha256": "7f7088eaa0f39822513fdbb49929eac59451caea2e95c397da18ffe67fd06f65",
+      "bytes": 56153
+    },
+    {
+      "source_path": "/home/jovyan/batch_cml_vs_radar_joint_events_essd_multiscale_cartopy_v3.py",
+      "notebook_reference": "dataste_papaer.ipynb cell 2",
+      "zip_member": "notebook_references/event_maps_legacy/batch_cml_vs_radar_joint_events_essd_multiscale_cartopy_v3.py",
+      "sha256": "3ad767d110862e180ec732f7577d017d90adcd32dfd98694677465c93f953951",
+      "bytes": 21232
+    },
+    {
+      "source_path": "/home/jovyan/batch_cml_vs_radar_joint_events_essd_vertical.py",
+      "notebook_reference": "dataste_papaer.ipynb cell 0",
+      "zip_member": "notebook_references/event_maps_legacy/batch_cml_vs_radar_joint_events_essd_vertical.py",
+      "sha256": "23ba8887fbf6bb79c7ecf5a0947900ec426f8517483043377c33e07824093b96",
+      "bytes": 46065
+    },
+    {
+      "source_path": "/home/jovyan/blettner_event_rainfall_maps.py",
+      "notebook_reference": "dataste_papaer.ipynb cell 7",
+      "zip_member": "notebook_references/event_maps_legacy/blettner_event_rainfall_maps.py",
+      "sha256": "8c838bf0400176ca2e405a7227f856c4e923a33ebf78184a3ee98cf6f8fd668e",
+      "bytes": 34123
+    },
+    {
+      "source_path": "/home/jovyan/cml_compare_single_combo_pycml_itu03_pastorek_hexbin_oneplot_reference.py",
+      "notebook_reference": "dataste_papaer.ipynb cell 12",
+      "zip_member": "notebook_references/validation_legacy/cml_compare_single_combo_pycml_itu03_pastorek_hexbin_oneplot_reference.py",
+      "sha256": "23c83bd3052c2d164f0436920694dcd5137657033f3a348484e85a790ba03780",
+      "bytes": 43111
+    },
+    {
+      "source_path": "/home/jovyan/cml_compare_single_combo_wet_radar_only.py",
+      "notebook_reference": "DATASET_PUBLICATION.ipynb cell 9",
+      "zip_member": "notebook_references/validation_legacy/cml_compare_single_combo_wet_radar_only.py",
+      "sha256": "7911f067607e92cd45d98fe378ed1cf3c7f7ec183b64314fd3eac6687f02c673",
+      "bytes": 47221
+    },
+    {
+      "source_path": "/home/jovyan/cml_dual_wetdry_pastorek_optimized.py",
+      "notebook_reference": "DATASET_PUBLICATION.ipynb cell 16",
+      "zip_member": "notebook_references/rainfall_experiments/cml_dual_wetdry_pastorek_optimized.py",
+      "sha256": "29eb0b84724da27448d9e435a2d8a5e5d96e469c5d19ea675c160a3cefdd111b",
+      "bytes": 62128
+    },
+    {
+      "source_path": "/home/jovyan/cml_estimate_and_grid_cml_radar_gauge_merged_parallel_timewindow.py",
+      "notebook_reference": "DATASET_PUBLICATION.ipynb cell 14",
+      "zip_member": "notebook_references/rainfall_experiments/cml_estimate_and_grid_cml_radar_gauge_merged_parallel_timewindow.py",
+      "sha256": "21e53baf72669b6954d0f10208b11b9c57ae4636b497d7b32195b5665d128199",
+      "bytes": 94170
+    },
+    {
+      "source_path": "/home/jovyan/cml_estimate_and_grid_cml_radar_gauge_merged_parallel_timewindow_v2.py",
+      "notebook_reference": "DATASET_PUBLICATION.ipynb cells 8, 13",
+      "zip_member": "notebook_references/rainfall_experiments/cml_estimate_and_grid_cml_radar_gauge_merged_parallel_timewindow_v2.py",
+      "sha256": "b81933d86fd9ade7d4352aeb2565b9fd802c287f3b704c1f45057988e8275bc9",
+      "bytes": 96226
+    },
+    {
+      "source_path": "/home/jovyan/cml_graf_blettner_publishable_pipeline_v2.py",
+      "notebook_reference": "DATASET_PUBLICATION.ipynb cell 17",
+      "zip_member": "notebook_references/rainfall_experiments/cml_graf_blettner_publishable_pipeline_v2.py",
+      "sha256": "04b8cfb31c8d851fd4e2136031fbd57db5922e2b8457d631cb7bf0e938280237",
+      "bytes": 76044
+    },
+    {
+      "source_path": "/home/jovyan/cml_graf_rstd_hess_radar_gauge_v3.py",
+      "notebook_reference": "dataste_papaer.ipynb cell 11",
+      "zip_member": "notebook_references/wetdry_validation/cml_graf_rstd_hess_radar_gauge_v3.py",
+      "sha256": "46a9f22258471cac85847e06731c54dfa837af035c153d591a76189f5027e5c5",
+      "bytes": 56126
+    },
+    {
+      "source_path": "/home/jovyan/cml_multi_waa_itu_fullperiod_optimized.py",
+      "notebook_reference": "DATASET_PUBLICATION.ipynb cell 18",
+      "zip_member": "notebook_references/rainfall_experiments/cml_multi_waa_itu_fullperiod_optimized.py",
+      "sha256": "65991c7f8537f0eaadc3dd6e80316fb2568a79f925c4c56da63151ab566af17b",
+      "bytes": 67022
+    },
+    {
+      "source_path": "/home/jovyan/cml_wet_dry_rsd_contingency_matrix_only.py",
+      "notebook_reference": "dataste_papaer.ipynb cell 8",
+      "zip_member": "notebook_references/wetdry_validation/cml_wet_dry_rsd_contingency_matrix_only.py",
+      "sha256": "b3b76be7ad2628a6c7dea36b9d635eb3a11c0f935a991c183cdd57ab4b970a53",
+      "bytes": 23751
+    },
+    {
+      "source_path": "/home/jovyan/compare_two_cml_rain_products_same_samples_fast.py",
+      "notebook_reference": "DATASET_PUBLICATION.ipynb cell 12",
+      "zip_member": "notebook_references/qc_sensitivity/compare_two_cml_rain_products_same_samples_fast.py",
+      "sha256": "64092bb7468f037d3f0cb8883b40ee684c3207455e4f6e742ab0f7596485b37c",
+      "bytes": 18794
+    },
+    {
+      "source_path": "/home/jovyan/filter_rainrate_empty_only_if_trsl_empty.py",
+      "notebook_reference": "dataste_papaer.ipynb cell 13",
+      "zip_member": "notebook_references/qc_sensitivity/filter_rainrate_empty_only_if_trsl_empty.py",
+      "sha256": "0ad9490ce81cf28bd0275ead73df2a0d62798941959298f58b4eeddc05a37905",
+      "bytes": 27073
+    },
+    {
+      "source_path": "/home/jovyan/inspect_essd_three_netcdf.py",
+      "notebook_reference": "DATASET_PUBLICATION.ipynb cell 1",
+      "zip_member": "notebook_references/publication_diagnostics/inspect_essd_three_netcdf.py",
+      "sha256": "504c66b5df7e01e081a44c9ffa63aa01e964cdffee21681b55aca4c993c1756f",
+      "bytes": 4131
+    },
+    {
+      "source_path": "/home/jovyan/run_filter_strategy_rainfall_experiment.py",
+      "notebook_reference": "DATASET_PUBLICATION.ipynb cell 13",
+      "zip_member": "notebook_references/qc_sensitivity/run_filter_strategy_rainfall_experiment.py",
+      "sha256": "56d8c35500024c5387a0d4d660c53aeaff705ba0bb3812fdab92b9ac530601fe",
+      "bytes": 46108
+    }
+  ],
+  "not_found_or_skipped": [],
+  "original_march_qc_producer": "NOT IDENTIFIED",
+  "note": "References are not proof of execution or creation of the scientific datasets."
+}

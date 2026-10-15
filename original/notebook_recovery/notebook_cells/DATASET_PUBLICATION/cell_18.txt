@@ -1,0 +1,55 @@
+!cd /home/jovyan
+
+!mkdir -p /home/jovyan/CML_RAIN_MULTI_WAA_ITU_2020_2021
+
+!OMP_NUM_THREADS=1 \
+!MKL_NUM_THREADS=1 \
+!OPENBLAS_NUM_THREADS=1 \
+!NUMBA_NUM_THREADS=16 \
+!python -u /home/jovyan/cml_multi_waa_itu_fullperiod_optimized.py \
+  --input-nc /home/jovyan/CML_S2020E2021_1MIN_CZ_QC_GRAF_RSTD_WETDRY.nc \
+  --radar-nc /home/jovyan/RADAR_S2021E2021_5MIN_CZ.nc \
+  --output-dir /home/jovyan/CML_RAIN_MULTI_WAA_ITU_2020_2021 \
+  --filename-prefix CML_RAIN \
+  --time-dim time \
+  --cml-dim cml_id \
+  --sublink-dim sublink_id \
+  --radar-time-dim time \
+  --radar-cml-dim cml_id \
+  --tsl-var tx \
+  --rsl-var rx \
+  --graf-wet-var graf_rstd_wet_1min \
+  --graf-valid-var graf_rstd_valid_1min \
+  --frequency-var frequency \
+  --length-var length \
+  --polarization-var polarization \
+  --radar-var rr \
+  --frequency-unit MHz \
+  --length-unit km \
+  --graf-tstart "2020-01-01 00:00:00" \
+  --graf-tend "2021-12-31 23:59:00" \
+  --baseline-pad-hours 48 \
+  --radar-scale 12 \
+  --radar-wet-threshold 0.1 \
+  --radar-timestamp-label start \
+  --min-cml-valid-fraction 1.0 \
+  --n-average-last-dry 1 \
+  --kr-models ITU_2003 ITU_2005 \
+  --waa-methods none leijnse_2008 pastorek_2021 schleiss_2013 \
+  --leijnse-gamma 1.4714285714285715e-05 \
+  --leijnse-l-antenna 0.0043 \
+  --leijnse-delta 0.36 \
+  --pastorek-a-max 14 \
+  --pastorek-zeta 0.55 \
+  --pastorek-d 0.1 \
+  --schleiss-waa-max 2 \
+  --schleiss-delta-t 1 \
+  --schleiss-tau 15 \
+  --n-workers 16 \
+  --link-batch 8 \
+  --availability-scan-batch 256 \
+  --compression-level 1 \
+  --time-chunk-1min 10080 \
+  --time-chunk-radar 2016 \
+  --output-link-chunk 8 \
+  --overwritey-batches 4 \

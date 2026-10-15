@@ -1,0 +1,20 @@
+{
+  "description": "Known Jupyter source file locations (2020-2021 or 2021); source files are not yet physically release-cropped",
+  "datasets": {
+    "raw": "/home/jovyan/ESSD_publication_dataset/CZ_CML_RAW_1MIN_20200101_20211231.nc",
+    "qc": "/home/jovyan/ESSD_publication_dataset/CZ_CML_PREPROCESSED_1MIN_20200101_20211231.nc",
+    "rain": "/home/jovyan/ESSD_publication_dataset/cmlonly_graf_itu2005_pastorek/CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_5MIN_20200101_20211231.nc",
+    "gauge": "/home/jovyan/ESSD_publication_dataset/CZ_RAIN_GAUGE_10MIN_20200101_20211231.nc",
+    "radar": "/home/jovyan/ESSD_publication_dataset/CZ_RADAR_CMLPATH_5MIN_20200101_20211231.nc",
+    "temperature": "/home/jovyan/opendata.chmi.cz/processed/CHMI_10MIN_TEMPERATURE_2021.nc",
+    "humidity": "/home/jovyan/opendata.chmi.cz/processed/CHMI_10MIN_HUMIDITY_2021.nc"
+  },
+  "extras": {
+    "native_radklim_root": "/home/jovyan/dwd_radolan/2021/suplement",
+    "historical_event_cache": "/home/jovyan/ESSD_publication_dataset/cmlonly_graf_nearby_comparison/apr_oct_2021/article_style/multiple_events_radar/selected_instances_cache.csv",
+    "wvd_v6_nc": "/home/jovyan/ESSD_publication_dataset/CZ_CML_WVD_EBAND_PROGRESSIVE_V6_2021.nc",
+    "wvd_v6_diagnostics_csv": "/home/jovyan/ESSD_publication_dataset/CZ_CML_WVD_EBAND_PROGRESSIVE_V6_DIAGNOSTICS.csv",
+    "wvd_quantization_csv": "/home/jovyan/ESSD_publication_dataset/CZ_CML_WVD_V6_LINK_QUANTIZATION_SERIES.csv",
+    "wvd_validation_pairs_csv": ""
+  }
+}

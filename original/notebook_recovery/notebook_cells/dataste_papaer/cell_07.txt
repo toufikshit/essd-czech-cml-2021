@@ -1,0 +1,17 @@
+
+
+!python blettner_event_rainfall_maps.py \
+  --cml-nc CML_S2020E2021_1MIN_CZ.nc \
+  --radar-nc RADAR_S2021E2021_5MIN_CZ.nc \
+  --gauge-nc CHMI_S2018E2025_10MIN_CZ.nc \
+  --out-dir blettner_event_20210621 \
+  --tstart "2021-06-21 12:00:00" \
+  --tend "2021-06-22 05:30:00" \
+  --grid-tstart "2021-06-21 21:50:00" \
+  --grid-tend "2021-06-22 04:50:00" \
+  --proc-line full \
+  --waa-model Leijnse \
+  --resolution 0.01 \
+  --nnear 15 \
+  --p 2 \
+  --max-dist 0.3

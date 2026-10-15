@@ -1,0 +1,22 @@
+!cd /home/jovyan
+
+!python -u /home/jovyan/run_filter_strategy_rainfall_experiment.py \
+  --legacy-cml /home/jovyan/cml_preprocessed_v3.nc \
+  --strict-cml /home/jovyan/CML_S2020E2021_1MIN_CZ_QC_STRICT_MINIMAL.nc \
+  --radar-nc /home/jovyan/RADAR_S2021E2021_5MIN_CZ.nc \
+  --estimator-script /home/jovyan/cml_estimate_and_grid_cml_radar_gauge_merged_parallel_timewindow_v2.py \
+  --out-dir /home/jovyan/filter_strategy_rainfall_experiment \
+  --tstart "2021-01-01 00:00:00" \
+  --tend "2021-12-31 23:59:00" \
+  --rain-variable R_mean_5min \
+  --radar-var R_radar \
+  --legacy-label "Legacy filter" \
+  --strict-label "Strict link/sublink/sample QC" \
+  --radar-wet-thr 0.1 \
+  --min-rain 0 \
+  --max-rain 100 \
+  --link-chunk 32 \
+  --time-chunk 2016 \
+  --max-plot-points 500000 \
+  --gridsize 50 \
+  --overwrite-estimation

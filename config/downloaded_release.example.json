@@ -1,0 +1,12 @@
+{
+  "description": "Place the seven NetCDF files in a local data/ directory at repo root and leave filenames unchanged. Modify these paths to match your download.",
+  "datasets": {
+    "raw": "../data/CZ_CML_RAW_1MIN_20200101_20211231.nc",
+    "qc": "../data/CZ_CML_PREPROCESSED_1MIN_20200101_20211231.nc",
+    "rain": "../data/CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_5MIN_20200101_20211231.nc",
+    "gauge": "../data/CZ_RAIN_GAUGE_10MIN_20200101_20211231.nc",
+    "radar": "../data/CZ_RADAR_CMLPATH_5MIN_20200101_20211231.nc",
+    "temperature": "../data/CHMI_10MIN_TEMPERATURE_2021.nc",
+    "humidity": "../data/CHMI_10MIN_HUMIDITY_2021.nc"
+  }
+}

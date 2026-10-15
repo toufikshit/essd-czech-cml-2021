@@ -1,0 +1,73 @@
+{
+  "stages": {
+    "exploration_complete": {
+      "relative_path": "00_exploration/cml/reviewer_f03_cml_characteristics.png",
+      "provenance": "reviewer network/frequency/path-length plots and optional availability",
+      "parameters": {},
+      "date_utc": "2026-10-13T15:19:40.843528+00:00"
+    },
+    "rainfall": {
+      "relative_path": "01_rainfall_rebuild/recomputed_CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_5MIN.nc",
+      "provenance": "recomputed-original-full-history",
+      "parameters": {
+        "workers": 4,
+        "science_python": "/home/jovyan/my-conda-envs/tf-env/bin/python"
+      },
+      "date_utc": "2026-10-14T10:44:18.478191+00:00"
+    },
+    "rain_timeline": {
+      "relative_path": "02_rainfall_figures/reviewer_cml_rain_timeseries.png",
+      "provenance": "direct visualization of stage-01 5-min rain, not manuscript event benchmark",
+      "parameters": {},
+      "date_utc": "2026-10-14T12:27:44.523024+00:00"
+    },
+    "spatial_grid": {
+      "relative_path": "03_gridded/reviewer_final_graf_IDW_5min.nc",
+      "provenance": "adapted final-5min Graf midpoint IDW using exact original IDW functions",
+      "parameters": {
+        "resolution": 0.02,
+        "nnear": 15,
+        "power": 2.0,
+        "max_dist": 0.3
+      },
+      "date_utc": "2026-10-14T13:02:10.406739+00:00"
+    },
+    "wvd_v6": {
+      "relative_path": "/home/jovyan/ESSD_publication_dataset/CZ_CML_WVD_EBAND_PROGRESSIVE_V6_2021.nc",
+      "provenance": "precomputed V6 supporting demonstration",
+      "parameters": {},
+      "date_utc": "2026-10-14T14:16:01.753210+00:00"
+    },
+    "map_hourly": {
+      "relative_path": "04_maps/hourly_1h/event04_instance01_multitime_hourly1h.png",
+      "provenance": "original renderer with adapted 5-min IDW input",
+      "parameters": {
+        "event_cache": "/home/jovyan/ESSD_publication_dataset/cmlonly_graf_nearby_comparison/apr_oct_2021/article_style/multiple_events_radar/selected_instances_cache.csv"
+      },
+      "date_utc": "2026-10-14T13:20:13.194392+00:00"
+    },
+    "wvd_binned_metrics": {
+      "relative_path": "WVD_V6_QUANTIZATION_BINNED_VALIDATION/binned_validation_metrics.csv",
+      "provenance": "original 33 WVD algorithm; 2 NetCDF single-series read adjustments",
+      "parameters": {
+        "branch": "GRAF",
+        "original_sha256": "76bf51f9f3d9dfaf31b320d4bdb0e7f27a8721329bf00a5490d902c83cc6f2dd",
+        "compat_sha256": "2e4815e4cf73e8c23ea40c468b8510b61d1e7b5941fe6d801563c874a60572f5"
+      },
+      "date_utc": "2026-10-14T14:47:05.400721+00:00"
+    },
+    "wvd_link_population": {
+      "relative_path": "WVD_V6_QUANTIZATION_BINNED_VALIDATION/validation_population_links.csv",
+      "provenance": "original 33 station matching; NetCDF read compatibility only",
+      "parameters": {},
+      "date_utc": "2026-10-14T14:47:05.404300+00:00"
+    },
+    "wvd_paper_metrics": {
+      "relative_path": "07_wvd_paper_population/wvp_support_metrics.csv",
+      "provenance": "original paper population L>=4 km, delta-rho-q<=0.20 g/m3, E-band, GRAF",
+      "parameters": {},
+      "date_utc": "2026-10-14T14:52:07.031892+00:00"
+    }
+  },
+  "source_config": "/home/jovyan/ESSD_publication_dataset/ESSD_CZ_2021_CONNECTED_WALKTHROUGH_V2/config/hpc_source.example.json"
+}

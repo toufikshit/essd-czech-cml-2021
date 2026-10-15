@@ -1,0 +1,9 @@
+!python cml_wet_dry_rsd_contingency_matrix_only.py \
+  --cml-nc cml_preprocessed_v3.nc \
+  --radar-nc RADAR_S2021E2021_5MIN_CZ.nc \
+  --out-dir rsd_detection_matrix_only \
+  --tstart "2021-04-10 00:00:00" \
+  --tend "2021-08-16 23:59:00" \
+  --rsd-window 60 \
+  --rsd-thr 0.8 \
+  --sublink-combine rsd_mean

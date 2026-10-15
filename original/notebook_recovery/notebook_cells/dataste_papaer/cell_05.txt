@@ -1,0 +1,15 @@
+!unzip cml_modular_pipeline_optimized_v3.zip
+!cd cml_modular_pipeline_optimized_v3
+
+CML=CML_S2020E2021_1MIN_CZ.nc \
+RADAR=RADAR_S2021E2021_5MIN_CZ.nc \
+GAUGE=CHMI_10MIN_v1.nc \
+RADAR_ROOT=dwd_radolan/2021 \
+OUT=full_dataset_cml_pipeline_selected \
+WORKERS=8 \
+GRID_TSTART="2021-06-21 21:50:00" \
+GRID_TEND="2021-06-22 04:50:00" \
+SNAPSHOT_TIME="2021-06-21 21:50:00" \
+FRAME_FREQ="10min" \
+MAKE_GIF=1 \
+!bash run_full_selected_product.sh

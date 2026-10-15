@@ -1,0 +1,8 @@
+# Minimum package names; exact successful HPC versions are recorded in README.
+numpy
+pandas
+xarray
+netCDF4
+matplotlib
+numba
+pycomlink

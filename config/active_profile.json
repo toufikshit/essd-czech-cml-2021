@@ -1,0 +1,8 @@
+{
+  "profile": "user",
+  "workspace": "results/connected_workflow_user",
+  "science_python_by_profile": {
+    "hpc": "/home/jovyan/my-conda-envs/tf-env/bin/python",
+    "user": null
+  }
+}

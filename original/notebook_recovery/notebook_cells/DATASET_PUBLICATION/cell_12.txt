@@ -1,0 +1,23 @@
+!cd /home/jovyan
+
+!python -u /home/jovyan/compare_two_cml_rain_products_same_samples_fast.py \
+  --new-rain-nc /home/jovyan/cml_rainrate_baseline_kr_waa_methods_june_v2.nc \
+  --old-rain-nc /home/jovyan/cml_rainrate_S2020_E2021_valid_cml_radar.nc \
+  --out-dir /home/jovyan/fair_old_vs_strict_qc_v2_fast \
+  --cml-var R_mean_5min \
+  --radar-var R_radar \
+  --radar-source new \
+  --baseline-method pycml_constant \
+  --kr-model ITU_2003 \
+  --waa-method pastorek_2021 \
+  --new-label "Strict QC V2" \
+  --old-label "Original product" \
+  --wet-only \
+  --radar-wet-thr 0.1 \
+  --min-rain 0 \
+  --max-rain 100 \
+  --link-chunk 32 \
+  --time-chunk 2016 \
+  --max-plot-points 500000 \
+  --plot-type hexbin \
+  --gridsize 50

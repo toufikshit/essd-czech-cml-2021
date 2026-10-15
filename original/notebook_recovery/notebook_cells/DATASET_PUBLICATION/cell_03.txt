@@ -1,0 +1,4 @@
+import xarray as xr
+
+ds= xr.open_dataset("ESSD_publication_dataset/CZ_CML_RAINRATE_5MIN_20200101_20211231.nc")
+ds.kr_model

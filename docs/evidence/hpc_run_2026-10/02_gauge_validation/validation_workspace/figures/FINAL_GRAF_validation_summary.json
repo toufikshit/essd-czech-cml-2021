@@ -1,0 +1,54 @@
+{
+  "inputs": {
+    "cml": "/home/jovyan/ESSD_publication_dataset/ESSD_CZ_2021_CONNECTED_WALKTHROUGH_V2/results/connected_workflow/02_gauge_validation/validation_workspace/CZ_CML_PREPROCESSED_1MIN_20200101_20211231.nc",
+    "gauge": "/home/jovyan/ESSD_publication_dataset/ESSD_CZ_2021_CONNECTED_WALKTHROUGH_V2/results/connected_workflow/02_gauge_validation/validation_workspace/CZ_RAIN_GAUGE_10MIN_20200101_20211231.nc",
+    "radar": "/home/jovyan/ESSD_publication_dataset/ESSD_CZ_2021_CONNECTED_WALKTHROUGH_V2/results/connected_workflow/02_gauge_validation/validation_workspace/CZ_RADAR_CMLPATH_5MIN_20200101_20211231.nc",
+    "temp": "/home/jovyan/ESSD_publication_dataset/ESSD_CZ_2021_CONNECTED_WALKTHROUGH_V2/results/connected_workflow/02_gauge_validation/validation_workspace/CHMI_10MIN_TEMPERATURE_2021.nc",
+    "hum": "/home/jovyan/ESSD_publication_dataset/ESSD_CZ_2021_CONNECTED_WALKTHROUGH_V2/results/connected_workflow/02_gauge_validation/validation_workspace/CHMI_10MIN_HUMIDITY_2021.nc",
+    "rain": "/home/jovyan/ESSD_publication_dataset/ESSD_CZ_2021_CONNECTED_WALKTHROUGH_V2/results/connected_workflow/01_rainfall_rebuild/recomputed_CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_5MIN.nc"
+  },
+  "analysis_period": [
+    "2021-04-01 00:00:00",
+    "2021-10-31 23:59:59"
+  ],
+  "shared_gauge_validation": {
+    "all_period": {
+      "N": 34565739,
+      "RMSE": 0.7015879171635514,
+      "MBE": -0.019137258902541213,
+      "PCC": 0.600310824601359
+    },
+    "gauge_wet_ge_0_1": {
+      "N": 1354953,
+      "RMSE": 3.3265412004784003,
+      "MBE": -0.9262826298328277,
+      "PCC": 0.5854077500694799
+    },
+    "confusion": {
+      "TP": 1026880,
+      "FP": 4014661,
+      "FN": 328073,
+      "TN": 29196125,
+      "N": 34565739,
+      "POD": 0.7578713062371906,
+      "FAR": 0.7963162453702152,
+      "CSI": 0.19123907230575607,
+      "MCC": 0.35023665204705356
+    },
+    "population": {
+      "assigned_midpoint_CMLs": 1144,
+      "matched_CMLs_in_final_rainfall": 1144,
+      "contributing_physical_CMLs": 1020,
+      "contributing_directional_sublinks": 2020,
+      "distinct_gauges": 218,
+      "rainvalid_pre_intersection": 34565739,
+      "detvalid_pre_intersection": 34584258
+    },
+    "reference": "nearest CHMI gauge to CML midpoint <=5km; end-labelled 10min *6; wet>=0.1",
+    "rainfall": "two complete final Graf ITU2005/Pastorek 5min bins at t-10 and t-5",
+    "detection": "original Graf RSTD, full 1min Q80 * 1.12; all 10min valid",
+    "validation_mask": "identical (link,gauge,sublink,10min timestamp) for confusion and all-period hexbin",
+    "in_plot_range": "0..150 mm/h inclusive",
+    "equality_check": "PASS"
+  }
+}

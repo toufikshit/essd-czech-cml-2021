@@ -1,0 +1,16 @@
+!cd /home/jovyan
+
+!python -u /home/jovyan/prepare_essd_publication_datasets_fast.py \
+  --cml-preprocessed /home/jovyan/cml_preprocessed_v3.nc \
+  --cml-raw /home/jovyan/CML_S2020E2021_1MIN_CZ.nc \
+  --radar /home/jovyan/RADAR_S2021E2021_5MIN_CZ.nc \
+  --gauge /home/jovyan/CHMI_10MIN_v1.nc \
+  --cml-rainrate /home/jovyan/cml_rainrate_S2020_E2021_valid_cml_radar.nc \
+  --out-dir /home/jovyan/ESSD_publication_dataset \
+  --time-chunk-1min 10080 \
+  --time-chunk-5min 2016 \
+  --time-chunk-10min 1008 \
+  --cml-chunk 64 \
+  --compression-level 1 \
+  --io-workers 4 \
+  --overwrite

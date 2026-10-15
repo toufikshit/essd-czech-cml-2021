@@ -1,0 +1,3 @@
+import xarray as xr
+ds = xr.open_dataset("/home/jovyan/RADAR_S2021E2021_5MIN_CZ.nc")
+ds

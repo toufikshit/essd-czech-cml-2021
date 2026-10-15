@@ -1,0 +1,16 @@
+{
+  "original_script": "/home/jovyan/ESSD_publication_dataset/ESSD_CZ_2021_CONNECTED_WALKTHROUGH_V2/original/code/wvd/33_v6_binned_validation_hexbins.py",
+  "original_sha256": "76bf51f9f3d9dfaf31b320d4bdb0e7f27a8721329bf00a5490d902c83cc6f2dd",
+  "compatibility_script": "/home/jovyan/ESSD_publication_dataset/ESSD_CZ_2021_CONNECTED_WALKTHROUGH_V2/results/connected_workflow/WVD_V6_QUANTIZATION_BINNED_VALIDATION/33_v6_binned_validation_hexbins_NETCDF4_COMPAT.py",
+  "compatibility_sha256": "2e4815e4cf73e8c23ea40c468b8510b61d1e7b5941fe6d801563c874a60572f5",
+  "only_changes": [
+    "v6[\"wvd_internal_anchor\"].isel(method=mi, series=vi).values",
+    "v6[\"retrieval_status\"].isel(method=mi, series=vi).values"
+  ],
+  "v6_nc": "/home/jovyan/ESSD_publication_dataset/CZ_CML_WVD_EBAND_PROGRESSIVE_V6_2021.nc",
+  "quantization_csv": "/home/jovyan/ESSD_publication_dataset/CZ_CML_WVD_V6_LINK_QUANTIZATION_SERIES.csv",
+  "diagnostics_csv": "/home/jovyan/ESSD_publication_dataset/CZ_CML_WVD_EBAND_PROGRESSIVE_V6_DIAGNOSTICS.csv",
+  "branch": "GRAF",
+  "n_v6_series": 1352,
+  "python": "/home/jovyan/my-conda-envs/tf-env/bin/python"
+}
