@@ -1,3 +1,0 @@
-# In addition to requirements.txt; used only to run offline/HPC tests.
-pytest
-scipy  # fallback NETCDF3 fixture when netCDF4 unavailable offline

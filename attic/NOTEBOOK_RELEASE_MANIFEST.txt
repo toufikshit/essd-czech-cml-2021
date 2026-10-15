@@ -1,6 +1,0 @@
-Release content:
-8 guided notebooks; 2 additive thin modules for plotting and CHMI v5 CLI safety;
-44 preserved source files/notebooks; original README, CLI and scientific algorithms unchanged.
-Manuscript figure names sourced from ESSD_manuscript_submission_surgical.tex.
-Numeric figure fidelity: reconstruction where marked; exact source workflows require missing external inputs.
-Previous one-link real-data numerical check passed on HPC; new notebook wrappers locally tested on fixture.

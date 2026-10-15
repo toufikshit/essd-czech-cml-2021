@@ -1,72 +1,65 @@
-# Source and code provenance map
+# Provenance map
 
-Classification of everything runnable in this repository. Categories:
+Everything runnable in this repository falls into one of four classes:
 
-* **UNCHANGED ORIGINAL** — byte-identical preserved scientific source
-  (hash-checked by `tools_verify_originals.py` against
-  `original/CONSOLIDATED_SOURCE_MANIFEST.json`).
-* **ADAPTER** — new, clearly separated wrapper code that calls originals or
-  re-applies original mathematics to the released products.
-* **HISTORICALLY UNRESOLVED** — the exact historical producer is not recovered;
-  no substitute is passed off as the original.
-* **DEMONSTRATION ONLY** — ran successfully, but on reduced/synthetic inputs;
-  not evidence of full-scale reproduction.
+* **Unchanged original.** A preserved scientific source, identical byte for
+  byte, hash checked by `tools_verify_originals.py` against
+  `original/CONSOLIDATED_SOURCE_MANIFEST.json`.
+* **Adapter.** New wrapper code that calls the originals or applies their
+  unchanged mathematics to the released files.
+* **Not recovered.** The exact historical producer is missing. No substitute
+  is passed off as the original.
+* **Demonstration.** Ran successfully, but on reduced or synthetic inputs.
+  Not evidence of full scale reproduction.
 
-## Preserved originals (`original/`, 44 files) — UNCHANGED ORIGINAL
+## Unchanged originals (`original/`, 44 files)
 
-Key entries (full list in `original/CONSOLIDATED_SOURCE_MANIFEST.json`):
+Key entries; the full list is in `original/CONSOLIDATED_SOURCE_MANIFEST.json`.
 
 | File | Role |
 |---|---|
-| `code/cml_rainfall/cml_graf_itu2005_rebuild.py` | Final Graf RSTD + constant baseline + Pastorek WAA + ITU-R P.838-3 (2005) rainfall producer |
-| `code/cml_qc/cml_full_fast_pipeline_no_availability_filter_parallel.py` + `related_versions/v3,v4_3,v5` | QC-related filters; **none confirmed as the March 2026 six-step QC producer** |
-| `code/chmi/chmi_historical_csv_to_netcdf_v5.py` | CHMI CSV→NetCDF4 converter (notebook 08 uses it unchanged) |
-| `code/radar/dwd_radolan_processor.py` | DWD RADKLIM replay script (original corrected run not proven) |
-| `code/figures/02_blettner_aproct_dataset_figures_grid.py` | source of the two IDW functions reused by the stage-03 adapter |
-| `code/figures/03_blettner_event_maps_timeseries.py` | original spatial map renderer (notebook 04 calls it unchanged) |
-| `code/wvd/19_wvd_eband_progressive_baseline_v6.py`, `13_...`, `20_...` | V6 E-band WVD retrieval |
-| `code/wvd/33_v6_binned_validation_hexbins.py`, `21_validate_wvd_v6_vs_original.py`, `plot_wvp_support_hexbins_no_titles.py` | WVD sensitivity, station matching and paper-population figures |
-| `code/publication/prepare_essd_publication_datasets*.py`, `harmonize_essd_cml_radar_metadata_v2.py` | historical publication-packaging scripts |
-| `notebooks/DATASET_PUBLICATION.ipynb`, `dataste_papaer.ipynb` + `notebook_recovery/`, `notebook_references/` | recovered historical notebooks and cell exports; **do not run as a pipeline** |
+| `code/cml_rainfall/cml_graf_itu2005_rebuild.py` | final rainfall producer: Graf wet and dry detection, constant baseline, Pastorek wet antenna correction, ITU R P.838 (2005) coefficients |
+| `code/cml_qc/...` and `related_versions/` v3, v4_3, v5 | filters related to quality control. None of them is confirmed as the March 2026 six step producer. |
+| `code/chmi/chmi_historical_csv_to_netcdf_v5.py` | CHMI CSV to NetCDF converter, used unchanged by notebook 08 |
+| `code/radar/dwd_radolan_processor.py` | DWD RADKLIM replay script. The original corrected run is not proven. |
+| `code/figures/02_blettner_aproct_dataset_figures_grid.py` | source of the two inverse distance weighting functions reused by notebook 03 |
+| `code/figures/03_blettner_event_maps_timeseries.py` | spatial map renderer, called unchanged by notebook 04 |
+| `code/wvd/19_...v6.py`, `13_...`, `20_...` | V6 E band water vapour retrieval |
+| `code/wvd/33_...hexbins.py`, `21_validate...py`, `plot_wvp_support...py` | water vapour sensitivity, station matching and paper figures |
+| `code/publication/prepare_essd_publication_datasets*.py`, `harmonize...v2.py` | historical packaging scripts |
+| `notebooks/` and `notebook_recovery/`, `notebook_references/` | recovered historical notebooks and exports. Do not run them as a pipeline. |
 
-## Adapters (`src/essd_cz/`, `notebooks/00–08`, `tests/`) — ADAPTER
+## Adapters (`src/essd_cz/`, `notebooks/`, `tests/`, `run.py`)
 
-* `src/essd_cz/config.py`, `catalog.py`, `cli.py`, `workflows.py`,
-  `compare.py`, `rainfall.py`, `metrics.py`, `plots.py`, `notebook_figures.py`,
-  `station_workflow.py`, `connected.py` — path handling, staging manifest,
-  CLI, and wrappers that invoke the unchanged originals.
-* Stage-03 gridding (`connected.grid_final_rain`) loads the two original IDW
-  functions **by AST from the preserved source**, then applies them to the
-  final 5-min rainfall. The historical manuscript grid came from an earlier
-  1-min workflow, so the grid output is adapted, **not asserted
-  byte-identical** to historic maps.
-* `results/.../33_v6_binned_validation_hexbins_NETCDF4_COMPAT.py` (evidence
-  copy in `docs/evidence/`) — a traceable compatibility copy of the original
-  WVD analysis changing only two single-series NetCDF reads; original and
-  compat SHA256 recorded in `docs/evidence/hpc_run_2026-10/pipeline_manifest.json`
-  and `indexing_compat_provenance.json`.
+Path handling, the pipeline manifest, the CLI, and wrappers that call the
+unchanged originals. Notebook 03 loads the two original gridding functions
+directly from the preserved source file and applies them to the released
+5 min rainfall. The historical manuscript grid came from an older 1 min
+workflow, so the grid output is an adapted product and no pixel identity is
+claimed. Notebook 06 uses a documented compatibility copy of the original
+analysis script that changes only two NetCDF reads; its hash and the original
+hash are recorded in the evidence files.
 
-## Historically unresolved — HISTORICALLY UNRESOLVED
+## Not recovered
 
 | Item | State |
 |---|---|
-| March 2026 six-step QC producer of `CZ_CML_PREPROCESSED_1MIN_*` | not recovered; July filter scripts are related but not attributable |
-| Exact historical gauge wet/dry Graf detector used for the publication's gauge validation | not recovered; `cml_graf_rstd_hess_radar_gauge_v3.py` is a **labelled-unverified** substitute behind an explicit opt-in |
-| Original corrected RADKLIM replay run | script recovered, run not proven |
-| Historic 1-min Blettner gridding workflow for the manuscript's spatial figure | replaced by the documented 5-min adapter |
-| Upstream raw telecom extraction log | unverified |
+| the March 2026 six step producer of the preprocessed file | not recovered; the July filter scripts are related but cannot be attributed |
+| the exact gauge wet and dry detector behind the paper's gauge validation | not recovered; `cml_graf_rstd_hess_radar_gauge_v3.py` is a labelled substitute behind an explicit switch |
+| the original corrected RADKLIM replay run | script recovered, run not proven |
+| the historical 1 min gridding workflow behind the manuscript map | replaced by the documented adapter |
+| the upstream raw telecom extraction log | not verified |
 
-## Demonstration-only results — DEMONSTRATION ONLY
+## Demonstrations
 
-* `docs/evidence/hpc_run_2026-10/05_wvd/reviewer_wvd_v6_small*` — a 3-series
-  V6 retrieval demonstration; **never** usable for paper figures (notebook 06
-  refuses mismatched populations).
-* `results/mini_connected_demo/` (regenerated locally) — fully synthetic
-  7-file chain test.
-* Notebook 04's explicit manual event selection — clearly marked; not the
-  historical event discovery.
+* `docs/evidence/hpc_run_2026-10/05_wvd/reviewer_wvd_v6_small*`: a 3 series
+  water vapour rerun. Never usable for paper figures; notebook 06 refuses
+  mismatched inputs.
+* `tests/run_connected_mini.py` outputs: a fully synthetic seven file chain.
+* The explicit manual event choice in notebook 04 when the historical event
+  cache is absent.
 
-## Real-data evidence
+## Numbers and proof
 
-Numeric results of the author's October 2026 HPC execution are summarised with
-file-level provenance in [EVIDENCE.md](EVIDENCE.md).
+See [EVIDENCE.md](EVIDENCE.md). The honest gap list above matches
+[06_PROVENANCE_GAPS.md](06_PROVENANCE_GAPS.md) from the handoff.

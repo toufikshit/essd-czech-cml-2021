@@ -11,7 +11,8 @@ venv/
 *.tar
 *.tar.gz
 *.zip
-data/
+data/*
+!data/README.md
 external_radar/
 
 # Generated results (each user's workspace); small HPC evidence lives in docs/evidence/

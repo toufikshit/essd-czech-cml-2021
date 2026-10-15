@@ -1,28 +1,47 @@
-# DRAFT — placeholders must be completed and approved by the authors before release.
 cff-version: 1.2.0
 message: >-
-  If you use this software, please cite both the software and the
-  accompanying ESSD data description paper (DOI pending).
+  If you use this software, please cite it and the dataset paper below.
+  The paper DOI and the dataset DOI will be added once they exist.
 type: software
-title: >-
-  ESSD Czech CML 2021 — connected reviewer workflow (TITLE TO BE CONFIRMED)
+title: "ESSD Czech CML 2021 processing and analysis workflow"
 authors:
-  - family-names: "TODO-FAMILY-NAME"
-    given-names: "TODO-GIVEN-NAME"
-    affiliation: "Czech Technical University in Prague (CONFIRM)"
-    email: "TODO@EXAMPLE"
-version: "0.1.0-rc1"
-date-released: "TODO"
-repository-code: "TODO-GITHUB-URL"
-license: "NOASSERTION"  # see LICENSING.md — licence not yet selected
+  - family-names: Shit
+    given-names: Taoufiq
+    affiliation: >-
+      Faculty of Civil Engineering, Czech Technical University in Prague,
+      Prague, Czech Republic
+version: "1.0.0-rc1"
+date-released: "2026-10-15"
+license: MIT
+keywords:
+  - commercial microwave links
+  - opportunistic sensing
+  - rainfall
+  - water vapour
+  - Czech Republic
 references:
   - type: article
     title: >-
-      (ESSD manuscript title — TODO)
-    journal: "Earth System Science Data"
-    doi: "TODO"
-  - type: dataset
-    title: >-
-      Czech Republic 2021 commercial microwave link rainfall and
-      environmental dataset (Zenodo deposit — TODO)
-    doi: "TODO"
+      Operational microwave links for hydrometeorological sensing: a
+      multisource dataset for the Czech Republic
+    authors:
+      - family-names: Shit
+        given-names: Taoufiq
+        affiliation: >-
+          Faculty of Civil Engineering, Czech Technical University in Prague,
+          Prague, Czech Republic
+      - family-names: Fencl
+        given-names: Martin
+        affiliation: >-
+          Faculty of Civil Engineering, Czech Technical University in Prague,
+          Prague, Czech Republic
+      - family-names: Bareš
+        given-names: Vojtěch
+        affiliation: >-
+          Faculty of Civil Engineering, Czech Technical University in Prague,
+          Prague, Czech Republic
+    journal: Earth System Science Data
+    status: in-preparation
+    notes: >-
+      Funded by the Czech Science Foundation (GACR), grant 24-13677L
+      (MERGOSAT).

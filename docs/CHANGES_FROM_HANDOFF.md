@@ -65,3 +65,30 @@ evidence of the real run.
   backup; superseded, still in the archive).
 * `results/mini_connected_demo/` (regenerated locally by
   `tests/run_connected_mini.py`).
+
+## Simplification pass (2026-10-15, second pass)
+
+Done on author instruction, after the first candidate was verified. No
+scientific code and no data values changed; the 44 originals still verify.
+
+* Root reduced to README, LICENSE, CITATION.cff, THIRD_PARTY_NOTICES,
+  pyproject.toml, requirements.txt, run.py, tools_verify_originals.py.
+  run.py and tools_verify_originals.py stay at the root because the notebooks
+  call them there.
+* `README_CONNECTED_WORKFLOW.md` moved to `docs/CONNECTED_WORKFLOW.md`;
+  `CHANGES_FROM_HANDOFF.md` (this file) moved into `docs/`;
+  `LICENSING.md` replaced by `docs/LICENCES.md` plus `THIRD_PARTY_NOTICES.md`.
+* Removed from the public tree and preserved in the internal archive next to
+  the repository (git history also keeps them): `attic/`, `docs/status/`,
+  `tools/release_prep/`, `examples/`,
+  `config/downloaded_release.example.json`, the split requirements files, the
+  large archive verification report, the empty `figures/` folder.
+* Added: MIT `LICENSE` (proposed), `THIRD_PARTY_NOTICES.md`, `pyproject.toml`
+  (installable package, extras: science, chmi, notebooks, test),
+  `data/README.md`, `docs/NOTEBOOK_GUIDE.md`, one "About this notebook"
+  markdown cell at the top of each notebook.
+* Edited for accuracy: `docs/01_FIRST_STEPS.md` and
+  `docs/05_FIGURES_AND_WVD.md` now point at `config/user_paths.json`;
+  `docs/ENVIRONMENT.md` points at the package extras; CI installs the package.
+* `docs/EVIDENCE.md` and `docs/PROVENANCE_MAP.md` rewritten in plainer
+  language, same facts.

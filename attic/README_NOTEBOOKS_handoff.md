@@ -1,1 +1,0 @@
-**Read `README_CONNECTED_WORKFLOW.md` first.** New connected order: `notebooks/00_Explore_Data.ipynb` through `08_CHMI_CSV_to_NetCDF4.ipynb`. Single profile setup per notebook; outputs registered in `results/connected_workflow/pipeline_manifest.json`. Existing originals unchanged.

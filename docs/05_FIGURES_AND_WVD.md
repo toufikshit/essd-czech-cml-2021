@@ -2,7 +2,7 @@
 
 ## Available from seven released files
 
-`python run.py --config config/downloaded_release.example.json availability`
+`python run.py --config config/user_paths.json availability`
 
 The original `availability_native_timestep_percentage.py` produces CML, radar-path, gauge, temperature and relative-humidity percentage time series and saves a PNG/PDF plus five CSVs. On the research HPC this completed on real data with means of **58.67%, 99.48%, 99.74%, 99.57%, 99.56%**, respectively. Those are time-mean values for the five different native cadences, not interchangeable rainfall metrics.
 

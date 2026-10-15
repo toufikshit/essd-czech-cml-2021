@@ -26,7 +26,7 @@ These are "known-good" pins, not strict requirements; `requirements.txt`
 deliberately stays unpinned minimums. Two environments are distinguished on
 purpose:
 
-* **Notebook kernel** — needs `requirements.txt` + `requirements-notebooks.txt`.
+* **Notebook kernel** — needs `pip install -e .[notebooks]` (or `requirements.txt`).
 * **Science producer interpreter** — the interpreter used for rainfall
   recomputation and WVD retrieval (`numba`, `pycomlink`); set it per profile in
   `config/active_profile.json → science_python_by_profile` if it differs from

@@ -1,8 +1,18 @@
-# Minimum package names; exact successful HPC versions are recorded in README.
+# Core packages. Same as `pip install -e .`
 numpy
 pandas
 xarray
 netCDF4
+scipy
 matplotlib
-numba
-pycomlink
+
+# Uncomment what you need:
+# numba            # rainfall recomputation (with pycomlink)
+# pycomlink        # rainfall recomputation
+# nbformat         # notebooks and tests
+# ipykernel        # notebooks
+# pytest           # tests
+# requests         # notebook 08 (CHMI download)
+# beautifulsoup4   # notebook 08
+# tqdm             # notebook 08
+# cartopy          # notebook 04 (radar maps), optional
