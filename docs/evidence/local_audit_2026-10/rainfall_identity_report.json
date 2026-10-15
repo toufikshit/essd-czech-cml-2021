@@ -1,6 +1,6 @@
 {
-  "published": "C:/Users/taouf/AppData/Local/Temp/essd/handoff_data/source_full_history/rain/CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_5MIN_20200101_20211231.nc",
-  "recomputed": "C:/Users/taouf/AppData/Local/Temp/essd/handoff_results/recomputed_CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_5MIN.nc",
+  "published": "CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_5MIN_20200101_20211231.nc (released product, full handoff archive)",
+  "recomputed": "recomputed_CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_5MIN.nc (HPC rebuild output, full handoff archive results/connected_workflow/01_rainfall_rebuild/)",
   "variables": {
     "R_sublink_5min": {
       "shared_finite_points": 137782581,
