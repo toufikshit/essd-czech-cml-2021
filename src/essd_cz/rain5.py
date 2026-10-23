@@ -142,15 +142,21 @@ def derive_5min_file(native_nc, output_nc, link_batch: int = 128) -> Path:
             raise ValueError(f'Not a native 1-minute rainfall product: {native_nc}')
         derived = derive_5min_dataset(rain, link_batch=link_batch)
         derived.attrs['derived_from'] = native_nc.name
+    # The legacy product stores time_5min as int64 epoch seconds; original
+    # scripts read those raw values, so the derived file keeps that encoding.
+    time_enc = {'units': 'seconds since 1970-01-01 00:00:00 UTC',
+                'calendar': 'standard', 'dtype': 'int64'}
     try:
         import netCDF4  # noqa: F401
         engine = 'netcdf4'
         enc = {k: {'zlib': True, 'complevel': 4, 'shuffle': True}
                for k in ('R_sublink_5min', 'R_mean_5min', 'graf_wet_5min',
                          'graf_valid_5min', 'wet_minutes_5min', 'valid_minutes_5min')}
+        enc['time_5min'] = time_enc
     except ImportError:
         engine = 'scipy'
-        enc = None
+        # Classic NetCDF has no int64; epoch seconds fit int32 (fixture path only).
+        enc = {'time_5min': dict(time_enc, dtype='int32')}
         # Classic NetCDF has no unsigned byte; keep flag VALUES, change dtype only.
         for key in ('graf_wet_5min', 'graf_valid_5min', 'wet_minutes_5min', 'valid_minutes_5min'):
             derived[key] = derived[key].astype(np.int16)
