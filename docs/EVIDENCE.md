@@ -18,16 +18,17 @@ notebooks match their recorded SHA256 hashes. This was checked after every
 restructuring step and on a fresh clone. The handoff archive itself was also
 verified file by file before any work started (257 of 257 files matched).
 
-## 2. The released rainfall file is reproduced exactly
+## 2. The validated 5-minute reference is reproduced exactly
 
 The HPC run recomputed all 2,219 links over the full 2020 to 2021 history
 with the unchanged original script
 (`original/code/cml_rainfall/cml_graf_itu2005_rebuild.py`; parameters and the
 525 skipped series with under 2 valid observations are in
 `hpc_run_2026-10/01_rainfall_rebuild/rebuild_summary.json`). The local audit
-then compared that recomputed file against the released rainfall file, value
-by value (`rainfall_identity_report.json`,
-`rainfall_static_vars_report.json`):
+then compared that recomputed file against the validated 5-minute reference
+(the author's internal benchmark, from which the released native 1-minute
+product was in turn verified in section 2b), value by value
+(`rainfall_identity_report.json`, `rainfall_static_vars_report.json`):
 
 | Check | Result |
 |---|---|
@@ -45,6 +46,37 @@ Caveat: this identity needs the full 2020 to 2021 history. The released April
 to October data alone cannot rebuild the thresholds. The thresholds are
 stored inside the rainfall file. There was no calibration against gauges or
 radar; the thresholds and dry baselines are derived from the CML data.
+
+## 2b. The native 1-minute release reproduces the 5-minute reference exactly
+
+The published rainfall product is the native 1-minute NetCDF
+(`CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_1MIN_20210401_20211031.nc`), written
+on the original HPC by the verified exporter (preserved byte-identical as
+`docs/evidence/hpc_run_2026-10/cml_graf_export_1min_verified.py`; its
+maintained, path-configurable copy is `src/essd_cz/export_1min.py`). The
+exporter reruns the unchanged retrieval on the full 2020 to 2021 history and
+compares every batch against the validated 5-minute file before keeping
+anything.
+
+The local audit (October 23, 2026,
+`local_audit_2026-10/verify_1min_release_20261023.json`) then independently
+verified the released file against the validated April to October 5-minute
+benchmark:
+
+| Check | Result |
+|---|---|
+| time axis: 308,160 regular 1-minute UTC slots, Apr 1 00:00 to Oct 31 23:59 | exact |
+| finite 1-minute directional rates | 648,844,578, matching the HPC run |
+| finite rate if and only if `graf_valid_1min` = 1; wet flag 255 exactly on invalid minutes | consistent everywhere |
+| derived `R_sublink_5min` (five complete valid minutes per block) | bit-identical, zero differences |
+| derived `R_mean_5min` (physical mean over finite directional 5-minute rates) | bit-identical |
+| derived wet/valid flags and minute counters | identical |
+| `R_mean_1min` versus mean of valid directional 1-minute rates | bit-identical |
+| geometry, thresholds, metadata versus the reference | bit-identical |
+
+Every 5-minute quantity used in the manuscript analysis is therefore exactly
+recoverable from the released 1-minute file alone (`src/essd_cz/rain5.py`);
+no separate 5-minute rainfall product is published.
 
 ## 3. Entity counts and coverage
 

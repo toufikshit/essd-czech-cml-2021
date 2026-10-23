@@ -10,6 +10,7 @@ import numpy as np
 import pandas as pd
 import xarray as xr
 from .rainfall import producer,aggregate_exact,normalize_id,as_list,select_link_index,code_sha256
+from .rain5 import check_native_axis,derive_link_5min
 from .metrics import rain_metrics,flag_metrics
 from .plots import comparison_plot
 
@@ -36,12 +37,18 @@ def compare(paths, output_dir, *, link_indices=(3,), start='2021-04-01', days=14
             'links':[]}
     with xr.open_dataset(paths['qc'],decode_times=True) as qc, \
          xr.open_dataset(paths['rain'],decode_times=True,mask_and_scale=False) as rain:
-        if 'R_sublink_5min' not in rain:raise KeyError('Published file lacks R_sublink_5min')
+        native='R_sublink_1min' in rain
+        if not native and 'R_sublink_5min' not in rain:
+            raise KeyError('Published file lacks R_sublink_1min/R_sublink_5min')
         kr=str(rain.attrs.get('kr_model',''))
         if '2005' not in kr:raise ValueError(f'Expected ITU2005 rain product, got kr_model={kr!r}')
+        report['published_resolution']='native 1-minute release; 5-minute values derived per link' if native else '5-minute product'
         ref_ids=as_list(rain['cml_id'].values)
         if len(set(ref_ids))!=len(ref_ids):raise ValueError('Duplicate published CML IDs')
-        ref_times=pd.DatetimeIndex(rain['time_5min'].values)
+        if native:
+            ref_times=check_native_axis(pd.DatetimeIndex(rain['time_1min'].values))
+        else:
+            ref_times=pd.DatetimeIndex(rain['time_5min'].values)
         if not ref_times.is_monotonic_increasing or ref_times.has_duplicates:
             raise ValueError('Published time axis not unique and increasing')
         ref_sl=as_list(rain['sublink_id'].values)
@@ -50,6 +57,10 @@ def compare(paths, output_dir, *, link_indices=(3,), start='2021-04-01', days=14
             index,cml_id=select_link_index(qc,index=int(idx))
             if cml_id not in ref_ids:raise KeyError(f'Published rainfall lacks QC CML ID {cml_id}')
             rid=ref_ids.index(cml_id)
+            # The released product is native 1-minute: the published 5-minute
+            # values are an exact derivation (rain5), not an independent file.
+            pub=derive_link_5min(rain,rid) if native else rain
+            prid=0 if native else rid
             print(f'COMPUTING full-history physical link index={index}, cml_id={cml_id}',flush=True)
             computed=aggregate_exact(model,qc,index,numba_threads=numba_threads)
             source_t=computed['time']
@@ -73,17 +84,17 @@ def compare(paths, output_dir, *, link_indices=(3,), start='2021-04-01', days=14
                 rsi=ref_sl.index(sl_name)
                 per={'sublink_id':sl_name}
                 for field in FIELDS:
-                    if field not in rain:
+                    if field not in pub:
                         per[field]={'skipped':'not present in released NetCDF'}
                         continue
                     src_arr=computed[field]
                     if field=='R_mean_5min':continue
                     if field in ('graf_threshold_db','graf_rstd_q80_db'):
                         recon=np.asarray([src_arr[si]])
-                        published=np.asarray([rain[field].isel(cml_id=rid,sublink_id=rsi).values])
+                        published=np.asarray([pub[field].isel(cml_id=prid,sublink_id=rsi).values])
                     else:
                         recon=np.asarray(src_arr[selected,si])
-                        published=np.asarray(rain[field].isel(cml_id=rid,sublink_id=rsi,time_5min=slice(r0,r1)).values)
+                        published=np.asarray(pub[field].isel(cml_id=prid,sublink_id=rsi,time_5min=slice(r0,r1)).values)
                     if field.startswith('R_') or field.endswith('_db'):
                         score=rain_metrics(recon,published,atol,rtol)
                         matched=score['numeric_pass']
@@ -101,9 +112,9 @@ def compare(paths, output_dir, *, link_indices=(3,), start='2021-04-01', days=14
                             'difference_mm_h':recon-published,
                         }).to_csv(output_dir/f'comparison_link_{index}_sublink_{si}.csv',index=False)
                 result['sublinks'].append(per)
-            if 'R_mean_5min' in rain:
+            if 'R_mean_5min' in pub:
                 recomputed=computed['R_mean_5min'][selected]
-                published=rain['R_mean_5min'].isel(cml_id=rid,time_5min=slice(r0,r1)).values
+                published=pub['R_mean_5min'].isel(cml_id=prid,time_5min=slice(r0,r1)).values
                 score=rain_metrics(recomputed,published,atol,rtol)
                 score['pass']=score['numeric_pass'];result['results']['R_mean_5min']=score
                 all_pass=all_pass and score['pass']

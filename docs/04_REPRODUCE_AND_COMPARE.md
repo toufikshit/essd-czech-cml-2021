@@ -1,5 +1,13 @@
 # 4. Numeric comparison to the released Graf rainfall NetCDF
 
+The released product is the **native 1-minute** rainfall NetCDF. The
+comparator recomputes a link with the original full-history functions and
+compares the aggregated 5-minute fields against the published values —
+deriving them per link from the 1-minute release with the exact
+complete-block rule (`src/essd_cz/rain5.py`). On the research HPC, where the
+configured rain role is the legacy full-history 5-minute reference, the same
+comparison runs directly against that file.
+
 ## First HPC run
 
 ```bash
@@ -14,7 +22,7 @@ This calculates **all source minutes for only link index 3** (both directional s
 ## What the report measures
 
 - `cml_id` is matched *exactly* across QC and final rainfall; order differences cannot masquerade as agreement.
-- `time_5min` is matched *exactly*. A missing timestamp is an error, not silently shifted.
+- `time_5min` (derived from `time_1min` for the native release) is matched *exactly*. A missing timestamp is an error, not silently shifted.
 - `R_sublink_5min` and `R_mean_5min`: finite-sample RMSE/bias/max difference, number outside tolerance (`atol=rtol=1e-4` by default), **and missing-value-mask disagreements**. An excellent RMSE with many extra NaNs does not pass.
 - `graf_wet_5min`, `graf_valid_5min`, `wet_minutes_5min`, `valid_minutes_5min`: exact flag/count equality where available.
 - Graf Q80 and threshold: numeric agreement per direction, if included in the published file.

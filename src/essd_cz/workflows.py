@@ -7,6 +7,7 @@ from .rainfall import ROOT
 
 AVAILABILITY = ROOT/'original/code/figures/availability_native_timestep_percentage.py'
 PRODUCER = ROOT/'original/code/cml_rainfall/cml_graf_itu2005_rebuild.py'
+EXPORT_1MIN = ROOT/'src/essd_cz/export_1min.py'
 VALIDATION = ROOT/'original/code/figures/rebuild_ESSD_FINAL_GRAF_shared_population_NEW_EVENT_FINAL_HEXBIN_SPACING.py'
 UNVERIFIED_V3 = ROOT/'original/notebook_references/wetdry_validation/cml_graf_rstd_hess_radar_gauge_v3.py'
 
@@ -47,6 +48,41 @@ def rebuild(paths, output, workers=4, python_executable=None):
             '--workers',str(workers)])
 
 
+def export_native_1min(paths, output, workers=8, python_executable=None):
+    """Regenerate the PUBLICATION native 1-minute rainfall NetCDF (author step).
+
+    Runs the verified exporter (src/essd_cz/export_1min.py): unchanged
+    Graf/Pastorek/ITU2005 retrieval on the FULL-HISTORY QC input, cropped to
+    April--October 2021, with a mandatory per-batch bit-for-bit comparison
+    against the validated full-history 5-minute reference. Refuses the public
+    (cropped) inputs: thresholds computed on a cropped history would differ.
+    """
+    from netCDF4 import Dataset
+    output=Path(output)
+    with Dataset(paths['qc']) as ds:
+        nt=len(ds.dimensions['time'])
+    if nt==308160:
+        raise RuntimeError('The 1-minute export needs the FULL-HISTORY QC input '
+                           '(hpc profile), not the cropped public release file.')
+    with Dataset(paths['rain']) as ds:
+        if 'time_5min' not in ds.variables:
+            raise RuntimeError('The configured rain role must be the validated full-history '
+                               '5-minute reference for the mandatory in-run comparison.')
+    target=output/'CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_1MIN_20210401_20211031.nc'
+    if target.exists():raise FileExistsError(f'Refusing to overwrite {target}')
+    science_python=Path(python_executable).expanduser() if python_executable else Path(sys.executable)
+    if not science_python.is_file():
+        raise FileNotFoundError(f'Scientific Python executable not found: {science_python}')
+    print('SCIENTIFIC PYTHON:',science_python,flush=True)
+    invoke([science_python,'-c',
+            'import numpy, numba, pycomlink, xarray, netCDF4; print("ESSD science imports: OK")'])
+    output.mkdir(parents=True,exist_ok=True)
+    invoke([science_python,EXPORT_1MIN,'--input-nc',paths['qc'],
+            '--reference-5min',paths['rain'],'--output-nc',target,
+            '--workers',str(workers)])
+    return target
+
+
 def stage_symlink(src, dest):
     """Small workspace uses links to existing files; does not copy multi-GB data."""
     dest=Path(dest);src=Path(src).resolve()
@@ -73,7 +109,17 @@ def validation(paths,output,detector=None,allow_unverified_v3=False,
     for key in ('qc','gauge','radar','temperature','humidity'):
         stage_symlink(paths[key],workspace/paths[key].name)
     stage_symlink(src,workspace/'cml_graf_rstd_hess_radar_gauge.py')
-    command=[sys.executable,VALIDATION,'--root',workspace,'--graf-rain-nc',paths['rain']]
+    # The original plotter consumes 5-minute rain; with the native 1-minute
+    # release configured, the analysis 5-minute file is derived first (rain5).
+    from . import rain5
+    rain_nc=Path(paths['rain'])
+    if rain5.is_native_1min(rain_nc):
+        derived=workspace/rain5.derived_5min_name(rain_nc.name)
+        if not derived.is_file():
+            print('Deriving analysis 5-minute rainfall for the validation plotter ...',flush=True)
+            rain5.derive_5min_file(rain_nc,derived)
+        rain_nc=derived
+    command=[sys.executable,VALIDATION,'--root',workspace,'--graf-rain-nc',rain_nc]
     if skip_event:command.append('--skip-event')
     if only_check_sources:command.append('--only-check-sources')
     invoke(command)

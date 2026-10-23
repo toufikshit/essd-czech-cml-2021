@@ -32,11 +32,17 @@ Key entries; the full list is in `original/CONSOLIDATED_SOURCE_MANIFEST.json`.
 ## Adapters (`src/essd_cz/`, `notebooks/`, `tests/`, `run.py`)
 
 Path handling, the pipeline manifest, the CLI, and wrappers that call the
-unchanged originals. Notebook 03 loads the two original gridding functions
-directly from the preserved source file and applies them to the released
-5 min rainfall. The historical manuscript grid came from an older 1 min
-workflow, so the grid output is an adapted product and no pixel identity is
-claimed. Notebook 06 uses a documented compatibility copy of the original
+unchanged originals. `src/essd_cz/export_1min.py` is the verified HPC
+exporter of the released native 1-minute rainfall with its hard-coded paths
+replaced by required arguments (the byte-identical original sits in
+`docs/evidence/hpc_run_2026-10/cml_graf_export_1min_verified.py`).
+`src/essd_cz/rain5.py` applies the producer's unchanged aggregation
+semantics to derive the analysis 5-minute series from the 1-minute release;
+it was verified bit for bit against the validated 5-minute reference.
+Notebook 03 loads the two original gridding functions directly from the
+preserved source file and applies them to the derived 5 min rainfall. The
+historical manuscript grid came from an older 1 min workflow, so the grid
+output is an adapted product and no pixel identity is claimed. Notebook 06 uses a documented compatibility copy of the original
 analysis script that changes only two NetCDF reads; its hash and the original
 hash are recorded in the evidence files.
 

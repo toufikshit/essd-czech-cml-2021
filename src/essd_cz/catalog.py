@@ -10,17 +10,21 @@ END_EXCLUSIVE = datetime(2021, 11, 1)
 CONTRACT = {
     'raw': ('time', 1, 308160, 'cml_id', 2580),
     'qc': ('time', 1, 308160, 'cml_id', 2219),
-    'rain': ('time_5min', 5, 61632, 'cml_id', 2219),
+    'rain': ('time_1min', 1, 308160, 'cml_id', 2219),
     'radar': ('time', 5, 61632, 'cml_id', 1132),
     'gauge': ('time', 10, 30816, 'WSI', 424),
     'temperature': ('time', 10, 30816, 'station', 251),
     'humidity': ('time', 10, 30816, 'station', 247),
 }
+# The hpc profile keeps the author's legacy full-history 5-minute reference
+# in the rain role; it is inspected with its own contract, not relabelled.
+LEGACY_RAIN_5MIN = ('time_5min', 5, 61632, 'cml_id', 2219)
 REQUIRED = {
-    'qc': ('trsl',), 'rain': ('R_sublink_5min',),
+    'qc': ('trsl',), 'rain': ('R_sublink_1min',),
     'gauge': ('rr',), 'radar': ('rr',),
     'temperature': ('T',), 'humidity': ('H',),
 }
+LEGACY_RAIN_REQUIRED = ('R_sublink_5min',)
 
 
 def inspect_one(role, filename):
@@ -29,11 +33,16 @@ def inspect_one(role, filename):
     Only a 1D time axis is loaded. Existence/coverage is not scientific identity.
     """
     td, step_minutes, expected_slots, entity, nentity = CONTRACT[role]
+    required = REQUIRED.get(role, ())
     with Dataset(filename) as ds:
         problems=[]
+        if role=='rain' and 'time_1min' not in ds.variables and 'time_5min' in ds.variables:
+            # Author's legacy full-history 5-minute reference (hpc profile only).
+            td, step_minutes, expected_slots, entity, nentity = LEGACY_RAIN_5MIN
+            required = LEGACY_RAIN_REQUIRED
         if entity not in ds.dimensions or len(ds.dimensions[entity])!=nentity:
             problems.append(f'Expected {entity}={nentity}')
-        for v in REQUIRED.get(role, ()):
+        for v in required:
             if v not in ds.variables: problems.append(f'Missing variable {v}')
         if td not in ds.variables:
             problems.append(f'Missing coordinate {td}')

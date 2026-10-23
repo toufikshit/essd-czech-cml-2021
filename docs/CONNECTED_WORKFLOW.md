@@ -15,7 +15,7 @@ Change the paths **once** in `config/user_paths.json` (copied from example), and
 | Notebook | Previous input → written output | Important condition |
 |---|---|---|
 | 00 | 7 NetCDF → network map, characteristics, availability monthly CSV/PNG | five-sensor source availability script unmodified |
-| 01 | QC + (optional full-history retrieval) → `rainfall` manifest entry | default uses existing published final rain for fast demo; opt-in expensive original Graf producer |
+| 01 | released native 1-min rain → `rainfall_1min` + derived 5-min `rainfall` manifest entries (optional full-history retrieval) | default registers the published 1-min release and its exact 5-min derivation; opt-in expensive original Graf producer |
 | 02 | staged rainfall → review rain time series; optional exact full-history comparison and gauge validation | historical Graf detector missing; compatibility v3 unverified |
 | 03 | stage-01 **5-min Graf rainfall** + QC geometry → `R(time,y,x)` IDW grid NetCDF | reuses unchanged original IDW mathematical functions; **adapter not same as historic 1-min grid** |
 | 04 | stage-03 grid + separately configured *native* RADKLIM daily YW → native/hourly map PNG/PDF | `cartopy` + native YW external directory required; if exact selected-event cache absent, opt-in explicit demonstration selection from grid extent is clearly marked (not historical event discovery) |

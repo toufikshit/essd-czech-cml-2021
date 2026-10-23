@@ -5,16 +5,20 @@ import json
 
 ROLES = ('raw', 'qc', 'rain', 'gauge', 'radar', 'temperature', 'humidity')
 # Public release files (April to October 2021), as published on Zenodo.
+# The single published CML rainfall product is the NATIVE 1-MINUTE NetCDF; the
+# analysis 5-minute series are derived from it (src/essd_cz/rain5.py).
 EXPECTED_NAMES = {
     'raw': 'CZ_CML_RAW_1MIN_20210401_20211031.nc',
     'qc': 'CZ_CML_PREPROCESSED_1MIN_20210401_20211031.nc',
-    'rain': 'CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_5MIN_20210401_20211031.nc',
+    'rain': 'CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_1MIN_20210401_20211031.nc',
     'gauge': 'CZ_RAIN_GAUGE_10MIN_20210401_20211031.nc',
     'radar': 'CZ_RADAR_CMLPATH_5MIN_20210401_20211031.nc',
     'temperature': 'CHMI_10MIN_TEMPERATURE_20210401_20211031.nc',
     'humidity': 'CHMI_10MIN_HUMIDITY_20210401_20211031.nc',
 }
-# The author's full history source files (2020 to 2021), used by the hpc profile.
+# The author's full history source files (2020 to 2021), used by the hpc
+# profile. The full-history rain role stays the legacy 5-minute reference
+# product; it is an internal regression benchmark, not a Zenodo file.
 FULL_HISTORY_NAMES = {
     'raw': 'CZ_CML_RAW_1MIN_20200101_20211231.nc',
     'qc': 'CZ_CML_PREPROCESSED_1MIN_20200101_20211231.nc',

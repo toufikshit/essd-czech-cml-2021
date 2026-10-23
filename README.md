@@ -70,7 +70,7 @@ of every notebook runs in seconds to minutes.
 |---|---|---|
 | `CZ_CML_RAW_1MIN_20210401_20211031.nc` | 1 min | raw signal levels, 2,580 CMLs |
 | `CZ_CML_PREPROCESSED_1MIN_20210401_20211031.nc` | 1 min | quality controlled signals, 2,219 CMLs |
-| `CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_5MIN_20210401_20211031.nc` | 5 min | final CML rainfall in mm/h |
+| `CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_1MIN_20210401_20211031.nc` | 1 min | final CML rainfall in mm/h, native 1-minute |
 | `CZ_RAIN_GAUGE_10MIN_20210401_20211031.nc` | 10 min | 424 CHMI rain gauges; `rr` is the amount in mm per 10 min |
 | `CZ_RADAR_CMLPATH_5MIN_20210401_20211031.nc` | 5 min | RADKLIM radar rainfall averaged along 1,132 CML paths, amount in mm per 5 min |
 | `CHMI_10MIN_TEMPERATURE_20210401_20211031.nc` | 10 min | 251 CHMI temperature stations |
@@ -80,13 +80,22 @@ The rainfall retrieval uses CML data only, without gauge or radar
 calibration. The method is described in the manuscript and in
 [docs/CONNECTED_WORKFLOW.md](docs/CONNECTED_WORKFLOW.md).
 
+The CML rainfall product is released at its **native 1-minute** resolution.
+Every 5-minute rainfall series used in the manuscript analysis (validation,
+event series, gridding) is derived from it by the notebooks: a directional
+5-minute rate exists only where all five 1-minute samples are valid, and the
+physical-link mean is computed from the directional 5-minute rates. See
+[docs/03_RAINFALL_EXPLAINED.md](docs/03_RAINFALL_EXPLAINED.md).
+
 ## Reproducibility
 
-The released rainfall file was reproduced exactly: a full recomputation of
-all 2,219 links with the preserved original script matched the released file
-in every value and every mask. The verification numbers and proof files are
-in [docs/EVIDENCE.md](docs/EVIDENCE.md), and the provenance of every piece of
-code is in [docs/PROVENANCE_MAP.md](docs/PROVENANCE_MAP.md).
+The released rainfall was reproduced exactly: a full recomputation of all
+2,219 links with the preserved original script matched the validated
+reference in every value and every mask, and the released native 1-minute
+file reproduces that same 5-minute reference bit for bit under the documented
+five-complete-samples aggregation. The verification numbers and proof files
+are in [docs/EVIDENCE.md](docs/EVIDENCE.md), and the provenance of every
+piece of code is in [docs/PROVENANCE_MAP.md](docs/PROVENANCE_MAP.md).
 
 ## Troubleshooting
 

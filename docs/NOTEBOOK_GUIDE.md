@@ -24,18 +24,23 @@ The proof for every "exact" claim is in [EVIDENCE.md](EVIDENCE.md).
 
 ## 01 Graf Rainfall
 
-* Needs: the preprocessed CML file; the released rainfall file.
+* Needs: the released native 1-minute rainfall file (the preprocessed CML
+  file only for the optional recomputation).
 * Parameters: `RECOMPUTE` (off by default), `WORKERS`.
-* Makes: registers the rainfall product for the next notebooks. With
-  `RECOMPUTE=True` it reruns the full original retrieval.
-* Cost: seconds by default. The full recomputation of 2,219 links takes hours.
-* Fidelity: exact. The full recomputation reproduced the released rainfall
-  file in every value and mask.
+* Makes: registers the released 1-minute product and materializes its exact
+  analysis 5-minute derivation (five complete valid minutes per block) for the
+  next notebooks. With `RECOMPUTE=True` it reruns the full original retrieval.
+* Cost: about a minute for the one-time derivation. The full recomputation of
+  2,219 links takes hours.
+* Fidelity: exact. The 5-minute derivation reproduced the validated reference
+  bit for bit on all 2,219 links, and the full recomputation reproduced that
+  reference in every value and mask.
 
 ## 02 Rainfall Validation
 
-* Needs: the registered rainfall, gauges; optional full history comparison
-  needs the science extras installed.
+* Needs: the registered analysis 5-minute rainfall (derived from the 1-minute
+  release in notebook 01), gauges; optional full history comparison needs the
+  science extras installed.
 * Parameters: `RUN_FULL_HISTORY_COMPARISON`, `RUN_GAUGE_VALIDATION`,
   `ALLOW_UNVERIFIED_V3` (all off by default).
 * Makes: rainfall time series figure; optional one link numerical regression;

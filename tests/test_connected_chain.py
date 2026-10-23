@@ -19,10 +19,17 @@ def make(tmp_path,scenario='baseline'):
 def test_manifest_independent_of_hpc(tmp_path):
     d,p=make(tmp_path)
     assert 'raw' in p.paths and all(x.is_file() for x in p.paths.values())
-    assert p.source_rainfall().is_file()
+    staged=p.source_rainfall()
+    assert staged.is_file()
+    # the released product is native 1-min; the registered analysis file is its derivation
+    assert '_5MIN_DERIVED_' in staged.name
+    assert p.get('rainfall_1min')==p.paths['rain']
     again=Project(d/'data_paths.json',tmp_path/'results')
-    assert again.get('rainfall')==p.paths['rain']
+    assert again.get('rainfall')==staged
+    assert again.get('rainfall')!=p.paths['rain']
     assert not str(p.paths['rain']).startswith('/home/jovyan')
+    # re-staging reuses the existing derived file instead of recomputing
+    assert p.source_rainfall()==staged
 
 
 def test_idw_original_math_and_missing():
@@ -35,9 +42,9 @@ def test_idw_original_math_and_missing():
 
 def test_grid_produces_native_schema(tmp_path):
     d,p=make(tmp_path)
-    p.source_rainfall()
+    rain5min=p.source_rainfall()   # derived analysis 5-min file, not the 1-min release
     dest=tmp_path/'grid.nc'
-    grid_final_rain(p.paths['rain'],p.paths['qc'],dest,'2021-04-01 08:15','2021-04-01 09:15',resolution=.04,max_grid_cells=10000)
+    grid_final_rain(rain5min,p.paths['qc'],dest,'2021-04-01 08:15','2021-04-01 09:15',resolution=.04,max_grid_cells=10000)
     assert dest.is_file()
     with xr.open_dataset(dest) as ds:
         assert {'R','nvalid'}<=set(ds.data_vars)
@@ -46,16 +53,17 @@ def test_grid_produces_native_schema(tmp_path):
         assert ds.sizes['time']==13
         assert np.isfinite(ds.R.values).any()
     with pytest.raises(FileExistsError):
-        grid_final_rain(p.paths['rain'],p.paths['qc'],dest,'2021-04-01 08:15','2021-04-01 09:15')
+        grid_final_rain(rain5min,p.paths['qc'],dest,'2021-04-01 08:15','2021-04-01 09:15')
     p.register('spatial_grid',dest,'synthetic test')
     assert Project(d/'data_paths.json',tmp_path/'results').get('spatial_grid')==dest
 
 
 def test_grid_same_when_rain_cml_ids_reordered(tmp_path):
     d,p=make(tmp_path)
+    rain5min=p.source_rainfall()
     baseline=tmp_path/'normal.nc'
-    grid_final_rain(p.paths['rain'],p.paths['qc'],baseline,'2021-04-01 08:15','2021-04-01 09:15',resolution=.05)
-    with xr.open_dataset(p.paths['rain']) as rain:
+    grid_final_rain(rain5min,p.paths['qc'],baseline,'2021-04-01 08:15','2021-04-01 09:15',resolution=.05)
+    with xr.open_dataset(rain5min) as rain:
         reordered=rain.isel(cml_id=[2,0,1]).load()
     try:import netCDF4;engine='netcdf4'  # match mini_fixture: uint8 flags need NETCDF4
     except ImportError:engine='scipy'

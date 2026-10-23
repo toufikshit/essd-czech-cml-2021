@@ -103,3 +103,39 @@ revalidated against the sources after; no data value changed.
 keeps the author's full history names working through `FULL_HISTORY_NAMES`
 (the hpc profile and `ACCEPTED_NAMES`). The user paths example, the test
 fixture runner and the documentation use the new names.
+
+## Native 1-minute rainfall release (2026-10-23, fourth pass)
+
+The single published CML rainfall product became the **native 1-minute**
+NetCDF `CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_1MIN_20210401_20211031.nc`,
+produced on the original HPC by the verified exporter (handoff 2026-10-23).
+The previously planned 5-minute release file is no longer published; it stays
+an internal regression reference. The six other primary products are
+byte-identical to the previous staging. No scientific formula, threshold,
+population or unit changed; the 44 preserved originals still verify.
+
+* New `src/essd_cz/rain5.py`: exact derivation of the analysis 5-minute
+  series from the 1-minute release (five complete valid samples per block,
+  any-wet flag, physical mean over finite directional 5-minute rates).
+  Verified bit for bit against the validated 5-minute reference on all 2,219
+  links (`docs/evidence/local_audit_2026-10/verify_1min_release_20261023.json`).
+* New `src/essd_cz/export_1min.py`: the verified HPC exporter with the three
+  hard-coded `/home/jovyan` path defaults replaced by required arguments; the
+  byte-identical original is preserved under
+  `docs/evidence/hpc_run_2026-10/cml_graf_export_1min_verified.py`. New CLI
+  commands `derive-5min` and `export-1min-rainfall`
+  (`workflows.export_native_1min`).
+* `config.py` points the public `rain` role at the 1-minute name (the hpc
+  profile keeps the full-history 5-minute reference); `catalog.py` inspects
+  the 1-minute contract and the legacy reference separately.
+* `connected.Project.source_rainfall()` registers the 1-minute release and
+  materializes the derived 5-minute file once per workspace; `compare.py`
+  derives the published 5-minute values per link when the rain role is the
+  native release; `workflows.validation` derives before calling the original
+  5-minute plotter.
+* Tests: the synthetic rain fixture is now native 1-minute, with the
+  corruption scenarios applied to 1-minute values; a new regression test pins
+  the complete-block derivation semantics.
+* Notebooks 01/02 and the documentation describe the 1-minute release and the
+  derivation; no notebook result or figure population changed, because every
+  derived 5-minute value is bit-identical to the previous product.

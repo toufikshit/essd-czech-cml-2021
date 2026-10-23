@@ -82,8 +82,27 @@ class Project:
         return p
 
     def source_rainfall(self):
-        """Stage the published rain product without suggesting it was recomputed."""
-        return self.register('rainfall', self.paths['rain'], 'published-final-ITU2005-Pastorek-Graf')
+        """Stage the published rain product without suggesting it was recomputed.
+
+        The published product is the NATIVE 1-MINUTE rainfall NetCDF. The
+        notebooks, gauge/radar validation and gridding consume 5-minute
+        series, which are an exact derivation of the release (rain5): the
+        derived file is materialized once in this workspace and registered.
+        A legacy 5-minute file (hpc profile reference) is staged directly.
+        """
+        from . import rain5
+        rain = self.paths['rain']
+        if not rain5.is_native_1min(rain):
+            return self.register('rainfall', rain, 'published-final-ITU2005-Pastorek-Graf')
+        self.register('rainfall_1min', rain, 'published-final-ITU2005-Pastorek-Graf-native-1min')
+        target = self.stage_dir('01_rainfall_5min_derived') / rain5.derived_5min_name(rain.name)
+        if target.is_file():
+            print(f'[REUSED] existing derived 5-minute file: {target}', flush=True)
+        else:
+            print('Deriving analysis 5-minute rainfall from the released 1-minute product ...', flush=True)
+            rain5.derive_5min_file(rain, target)
+        return self.register('rainfall', target, 'derived-5min-from-published-1min-release',
+                             source_file=rain.name, derivation=rain5.AGGREGATION_NOTE)
 
     def recompute_rainfall(self, workers=4, python_executable=None):
         """Opt-in ORIGINAL full-history producer; optional separate scientific Python."""

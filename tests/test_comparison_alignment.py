@@ -11,6 +11,7 @@ import pytest
 import xarray as xr
 from mini_fixture import create,sha
 from essd_cz import compare as cmp
+from essd_cz import rain5
 
 
 def fake_recompute_factory(canonical):
@@ -36,12 +37,15 @@ def fake_recompute_factory(canonical):
 @pytest.fixture
 def canonical(tmp_path,monkeypatch):
     paths=create(tmp_path/'baseline')
-    ds=xr.open_dataset(paths['rain'],mask_and_scale=False)
+    # The published fixture is native 1-minute; the canonical "recomputation"
+    # is its exact 5-minute derivation, so an untouched release must PASS and
+    # any mutation of the released 1-minute values must FAIL.
+    with xr.open_dataset(paths['rain'],mask_and_scale=False) as native:
+        ds=rain5.derive_5min_dataset(native)
     monkeypatch.setattr(cmp,'producer',lambda: object())
     monkeypatch.setattr(cmp,'aggregate_exact',fake_recompute_factory(ds))
     monkeypatch.setattr(cmp,'code_sha256',lambda:'FAKE_PURE_COMPARISON_TEST')
     yield paths,ds
-    ds.close()
 
 
 def test_baseline_and_order_shuffle_pass(canonical,tmp_path):
@@ -69,5 +73,5 @@ def test_corruptions_are_detected(canonical,tmp_path,scenario,expected):
 
 def test_timestamp_shift_is_rejected(canonical,tmp_path):
     paths=create(tmp_path/'shift',scenario='time_shift')
-    with pytest.raises(ValueError,match='missing timestamp'):
+    with pytest.raises(ValueError,match='regular 1-minute grid'):
         cmp.compare(paths,tmp_path/'out_shift',link_indices=[0],days=2,make_plot=False)

@@ -1,0 +1,114 @@
+{
+  "file_1min": "C:\\Users\\taouf\\Downloads\\CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_1MIN_20210401_20211031.nc",
+  "benchmark_5min": "C:\\Users\\taouf\\ESSD_RELEASE\\zenodo_staging\\primary\\CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_5MIN_20210401_20211031.nc",
+  "checks": {
+    "time_1min_count": {
+      "ok": true,
+      "detail": "n=308160"
+    },
+    "time_1min_regular": {
+      "ok": true,
+      "detail": ""
+    },
+    "time_1min_start": {
+      "ok": true,
+      "detail": "start=1617235200 (expect 2021-04-01T00:00Z=1617235200)"
+    },
+    "time_1min_end": {
+      "ok": true,
+      "detail": "end=1635724740 (expect 2021-10-31T23:59Z=1635724740)"
+    },
+    "time_5min_alignment": {
+      "ok": true,
+      "detail": "n5=61632"
+    },
+    "cml_id_identical": {
+      "ok": true,
+      "detail": "n=2219"
+    },
+    "sublink_id_identical": {
+      "ok": true,
+      "detail": "['0', '1']"
+    },
+    "meta_length_bitident": {
+      "ok": true,
+      "detail": ""
+    },
+    "meta_frequency_bitident": {
+      "ok": true,
+      "detail": ""
+    },
+    "meta_site_a_latitude_bitident": {
+      "ok": true,
+      "detail": ""
+    },
+    "meta_site_a_longitude_bitident": {
+      "ok": true,
+      "detail": ""
+    },
+    "meta_site_b_latitude_bitident": {
+      "ok": true,
+      "detail": ""
+    },
+    "meta_site_b_longitude_bitident": {
+      "ok": true,
+      "detail": ""
+    },
+    "meta_graf_threshold_db_bitident": {
+      "ok": true,
+      "detail": ""
+    },
+    "meta_graf_rstd_q80_db_bitident": {
+      "ok": true,
+      "detail": ""
+    },
+    "meta_polarization_identical": {
+      "ok": true,
+      "detail": ""
+    },
+    "R1_finite_iff_valid_flag": {
+      "ok": true,
+      "detail": "inconsistent=0"
+    },
+    "wet_flag_consistency": {
+      "ok": true,
+      "detail": "inconsistent=0"
+    },
+    "total_finite_648844578": {
+      "ok": true,
+      "detail": "total_finite=648,844,578"
+    },
+    "derived_R_sublink_5min_bitident": {
+      "ok": true,
+      "detail": "mismatches=0"
+    },
+    "derived_graf_wet_5min_ident": {
+      "ok": true,
+      "detail": "mismatches=0"
+    },
+    "derived_graf_valid_5min_ident": {
+      "ok": true,
+      "detail": "mismatches=0"
+    },
+    "derived_wet_minutes_ident": {
+      "ok": true,
+      "detail": "mismatches=0"
+    },
+    "derived_valid_minutes_ident": {
+      "ok": true,
+      "detail": "mismatches=0"
+    },
+    "derived_R_mean_5min_bitident": {
+      "ok": true,
+      "detail": "mismatches=0"
+    },
+    "R_mean_1min_consistent": {
+      "ok": true,
+      "detail": "mismatches=0"
+    }
+  },
+  "errors": [],
+  "total_finite_directional_1min": 648844578,
+  "elapsed_seconds": 147.0,
+  "overall": "PASS"
+}

@@ -33,7 +33,8 @@ def netcdf_write(ds, target):
     else:engine='netcdf4'
     if engine=='scipy':
         # Classic NetCDF has no native unsigned byte. Preserve flag VALUES, not dtype.
-        for key in ('graf_wet_5min','graf_valid_5min','wet_minutes_5min','valid_minutes_5min'):
+        for key in ('graf_wet_1min','graf_valid_1min',
+                    'graf_wet_5min','graf_valid_5min','wet_minutes_5min','valid_minutes_5min'):
             if key in ds:ds[key]=ds[key].astype(np.int16)
     ds.to_netcdf(target,engine=engine)
 
@@ -43,39 +44,36 @@ def sha(path):
 
 
 def produce_reference(qc, rain, original):
-    """Write paper-like synthetic rainfall using original source functions DIRECTLY.
+    """Write paper-like synthetic NATIVE 1-MINUTE rainfall using original functions DIRECTLY.
 
-    This deliberately does not call the new aggregate_exact() wrapper.  It is a
-    separate baseline implementation of the aggregation in the original main().
+    This deliberately does not call the new aggregate_exact() wrapper and mirrors
+    the verified 1-minute exporter: R is the per-minute retrieval, the wet flag is
+    255 wherever the estimate is invalid, and the valid flag marks a finite rate.
     """
     tt=pd.DatetimeIndex(qc['time'].values)
     tr=np.asarray(qc['trsl'].transpose('time','sublink_id','cml_id').values,np.float32)
-    nt, ns, nl=tr.shape; n5=nt//5
+    nt, ns, nl=tr.shape
     wet, valid, thr, q80, *_ = original.graf(np.ascontiguousarray(tr.reshape(nt,ns*nl)),60,.8,1.12,60,45)
     L=original.meta2(qc,'length','sublink_id','cml_id',ns,nl)
     f=original.meta2(qc,'frequency','sublink_id','cml_id',ns,nl)*1e6
     pol=original.meta2(qc,'polarization','sublink_id','cml_id',ns,nl,True)
-    R=np.full((n5,ns,nl),np.nan,np.float32);WF=np.full((n5,ns,nl),255,np.uint8)
-    VF=np.zeros((n5,ns,nl),np.uint8); WM=np.zeros((n5,ns,nl),np.uint8);VM=np.zeros((n5,ns,nl),np.uint8)
+    R=np.full((nt,ns,nl),np.nan,np.float32);WF=np.full((nt,ns,nl),255,np.uint8)
+    VF=np.zeros((nt,ns,nl),np.uint8)
     for si in range(ns*nl):
         sl=si//nl; link=si%nl
         r,err=original.estimate(tr[:,sl,link],wet[:,si],valid[:,si],tt.values,L[sl,link],f[sl,link],pol[sl,link])
         good=valid[:,si] & np.isfinite(r)
-        v=good.reshape(n5,5); w=(wet[:,si]&good).reshape(n5,5)
-        count=v.sum(1).astype(np.uint8); wc=w.sum(1).astype(np.uint8); full=count==5
-        R[full,sl,link]=np.mean(r.reshape(n5,5)[full],axis=1,dtype=np.float64).astype(np.float32)
-        WF[full,sl,link]=(wc[full]>0).astype(np.uint8)
-        VF[:,sl,link]=full.astype(np.uint8);WM[:,sl,link]=wc;VM[:,sl,link]=count
+        R[:,sl,link]=r
+        WF[:,sl,link]=np.where(good,(wet[:,si]&good).astype(np.uint8),np.uint8(255))
+        VF[:,sl,link]=good.astype(np.uint8)
         if err:print('Expected original calculation warning:',sl,link,err,flush=True)
     cnt=np.sum(np.isfinite(R),axis=1);sm=np.nansum(R,axis=1)
-    rmean=np.full((n5,nl),np.nan,np.float32);good=cnt>0
+    rmean=np.full((nt,nl),np.nan,np.float32);good=cnt>0
     rmean[good]=(sm[good]/cnt[good]).astype(np.float32)
-    rain['R_sublink_5min'].values[:]=R
-    rain['R_mean_5min'].values[:]=rmean
-    rain['graf_wet_5min'].values[:]=WF
-    rain['graf_valid_5min'].values[:]=VF
-    rain['wet_minutes_5min'].values[:]=WM
-    rain['valid_minutes_5min'].values[:]=VM
+    rain['R_sublink_1min'].values[:]=R
+    rain['R_mean_1min'].values[:]=rmean
+    rain['graf_wet_1min'].values[:]=WF
+    rain['graf_valid_1min'].values[:]=VF
     rain['graf_threshold_db'].values[:]=thr.reshape(ns,nl).astype(np.float32)
     rain['graf_rstd_q80_db'].values[:]=q80.reshape(ns,nl).astype(np.float32)
 
@@ -119,51 +117,55 @@ def create(root:Path, *, scientific_reference=False, scenario='baseline'):
     raw=xr.Dataset({'trsl':(('time','sublink_id','cml_id'),
           np.concatenate([signal,signal[:,:,:1]],axis=2))},
           coords={'time':tt,'sublink_id':SUBS,'cml_id':np.r_[IDS,['extra_unfiltered_link']]})
-    coords={'time_5min':t5,'sublink_id':SUBS,'cml_id':IDS}
+    # The published rain product is NATIVE 1-MINUTE; 5-minute analysis values
+    # are derived from it (essd_cz.rain5), exactly like the real release.
+    coords={'time_1min':tt,'sublink_id':SUBS,'cml_id':IDS}
     rainfall=xr.Dataset({
-       'R_sublink_5min':(('time_5min','sublink_id','cml_id'),np.full((n5,2,3),np.nan,np.float32),{'units':'mm h-1'}),
-       'R_mean_5min':(('time_5min','cml_id'),np.full((n5,3),np.nan,np.float32),{'units':'mm h-1'}),
-       'graf_wet_5min':(('time_5min','sublink_id','cml_id'),np.full((n5,2,3),255,np.uint8)),
-       'graf_valid_5min':(('time_5min','sublink_id','cml_id'),np.zeros((n5,2,3),np.uint8)),
-       'wet_minutes_5min':(('time_5min','sublink_id','cml_id'),np.zeros((n5,2,3),np.uint8)),
-       'valid_minutes_5min':(('time_5min','sublink_id','cml_id'),np.zeros((n5,2,3),np.uint8)),
+       'R_sublink_1min':(('time_1min','sublink_id','cml_id'),np.full((MINUTES,2,3),np.nan,np.float32),{'units':'mm h-1'}),
+       'R_mean_1min':(('time_1min','cml_id'),np.full((MINUTES,3),np.nan,np.float32),{'units':'mm h-1'}),
+       'graf_wet_1min':(('time_1min','sublink_id','cml_id'),np.full((MINUTES,2,3),255,np.uint8)),
+       'graf_valid_1min':(('time_1min','sublink_id','cml_id'),np.zeros((MINUTES,2,3),np.uint8)),
        'graf_threshold_db':(('sublink_id','cml_id'),np.full((2,3),np.nan,np.float32)),
        'graf_rstd_q80_db':(('sublink_id','cml_id'),np.full((2,3),np.nan,np.float32))},
        coords=coords,attrs={'kr_model':'ITU_2005', 'wet_dry_method':'GRAF_RSTD_Q80',
+                            'aggregation_to_5min':'arithmetic mean of five complete valid 1-minute directional samples',
                             'scientific_status':'SYNTHETIC fixture; no scientific claim'})
     if scientific_reference:
         from essd_cz.rainfall import producer
         produce_reference(qc,rainfall,producer())
     else:
         # This placeholder tests ONLY data plumbing; not a scientific reference.
-        A=np.zeros((n5,2,3),np.float32)
-        A[100:130,:,:]=2.3
-        A[222:225,0,0]=np.nan
-        A[:,:,1]=np.nan
-        rainfall['R_sublink_5min'].values[:]=A
-        counts=np.isfinite(A).sum(axis=1)
+        A=np.zeros((MINUTES,2,3),np.float32)
+        A[500:650,:,:]=2.3
+        A[1112:1115,0,0]=np.nan   # incomplete 5-minute blocks after derivation
+        A[:,:,1]=np.nan           # link without any directional retrieval
+        valid=np.isfinite(A)
+        rainfall['R_sublink_1min'].values[:]=A
+        counts=valid.sum(axis=1)
         totals=np.nansum(A,axis=1)
-        means=np.full((n5,3),np.nan,np.float32)
+        means=np.full((MINUTES,3),np.nan,np.float32)
         good=counts>0
         means[good]=(totals[good]/counts[good]).astype(np.float32)
-        rainfall['R_mean_5min'].values[:]=means
-        rainfall['graf_wet_5min'].values[:]=np.where(np.isfinite(A),(A>0).astype('u1'),255)
-        rainfall['graf_valid_5min'].values[:]=np.isfinite(A).astype('u1')
-        rainfall['valid_minutes_5min'].values[:]=np.isfinite(A).astype('u1')*5
-        rainfall['wet_minutes_5min'].values[:]=(A>0).astype('u1')*5
+        rainfall['R_mean_1min'].values[:]=means
+        rainfall['graf_wet_1min'].values[:]=np.where(valid,(A>0).astype('u1'),255)
+        rainfall['graf_valid_1min'].values[:]=valid.astype('u1')
         rainfall['graf_threshold_db'].values[:]=np.full((2,3),0.3,'f4')
         rainfall['graf_rstd_q80_db'].values[:]=np.full((2,3),0.26785715,'f4')
     if scenario=='reordered':
         rainfall=rainfall.isel(cml_id=[2,0,1],sublink_id=[1,0])
     elif scenario=='numeric_corruption':
-        rainfall['R_sublink_5min'].values[125,0,0]=19.0
+        # one corrupted minute inside a complete valid block (5-min index 125)
+        rainfall['R_sublink_1min'].values[627,0,0]=19.0
     elif scenario=='mask_corruption':
-        rainfall['R_sublink_5min'].values[125,0,0]=np.nan
+        rainfall['R_sublink_1min'].values[627,0,0]=np.nan
+        rainfall['graf_valid_1min'].values[627,0,0]=0
+        rainfall['graf_wet_1min'].values[627,0,0]=255
     elif scenario=='flag_corruption':
-        rainfall['graf_wet_5min'].values[125,0,0]=42
+        a=rainfall['graf_wet_1min'].values
+        a[627,0,0]=np.uint8(1-int(a[627,0,0]))
     elif scenario=='time_shift':
-        arr=rainfall.time_5min.values.copy();arr[125]=arr[125]+np.timedelta64(60,'s')
-        rainfall=rainfall.assign_coords(time_5min=arr)
+        arr=rainfall.time_1min.values.copy();arr[627]=arr[627]+np.timedelta64(7,'s')
+        rainfall=rainfall.assign_coords(time_1min=arr)
     elif scenario!='baseline':raise ValueError(f'Unknown scenario {scenario}')
     gw=np.full((len(t10),3),0.,np.float32);gw[30:65,0]=0.5;gw[20,2]=np.nan
     radar=np.zeros((len(t5),2),np.float32);radar[100:125,0]=0.3;radar[15,1]=np.nan

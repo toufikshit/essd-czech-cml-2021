@@ -11,7 +11,7 @@ checks the names.
 ```
 CZ_CML_RAW_1MIN_20210401_20211031.nc
 CZ_CML_PREPROCESSED_1MIN_20210401_20211031.nc
-CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_5MIN_20210401_20211031.nc
+CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_1MIN_20210401_20211031.nc
 CZ_RAIN_GAUGE_10MIN_20210401_20211031.nc
 CZ_RADAR_CMLPATH_5MIN_20210401_20211031.nc
 CHMI_10MIN_TEMPERATURE_20210401_20211031.nc
@@ -19,6 +19,12 @@ CHMI_10MIN_HUMIDITY_20210401_20211031.nc
 ```
 
 The file names state the coverage: 1 April to 31 October 2021.
+
+The CML rainfall product is **native 1-minute**. Every 5-minute rainfall
+series used in the notebooks (validation, event series, gridding) is derived
+from it on first use — mean of five complete valid 1-minute samples per
+directional sublink — so no separate 5-minute rainfall download exists or is
+needed. See `docs/03_RAINFALL_EXPLAINED.md`.
 
 Then copy `config/user_paths.example.json` to `config/user_paths.json` and
 set the seven paths. For example, with the data in `data/` inside this

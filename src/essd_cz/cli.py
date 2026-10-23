@@ -7,7 +7,7 @@ from pathlib import Path
 from .config import load_paths,make_output_dir
 from .catalog import inspect_all
 from .compare import compare
-from .workflows import availability,rebuild,validation
+from .workflows import availability,rebuild,validation,export_native_1min
 
 
 def build_parser():
@@ -27,9 +27,13 @@ def build_parser():
     c.add_argument('--atol',type=float,default=1e-4)
     c.add_argument('--rtol',type=float,default=1e-4)
     c.add_argument('--no-plot',action='store_true')
-    rr=subs.add_parser('rebuild-all-rainfall',help='Very expensive 2219-link rerun; needs explicit consent')
+    d5=subs.add_parser('derive-5min',help='Materialize the analysis 5-minute rainfall from the released native 1-minute product')
+    d5.add_argument('--link-batch',type=int,default=128,help='Links per read batch (memory control)')
+    rr=subs.add_parser('rebuild-all-rainfall',help='Very expensive 2219-link legacy 5-min rerun; needs explicit consent')
     rr.add_argument('--workers',type=int,default=4)
     rr.add_argument('--i-understand-full-source-cost',action='store_true',help='Allow 2020--2021 source to be processed; no original input modified')
+    ex=subs.add_parser('export-1min-rainfall',help='Author step: regenerate the published native 1-minute rainfall from FULL-HISTORY sources with mandatory 5-min comparison')
+    ex.add_argument('--workers',type=int,default=8)
     v=subs.add_parser('validate-gauge',help='Paper gauge plots (original detector required for exact replay)')
     v.add_argument('--detector',type=Path,help='Exact historical helper, if recovered')
     v.add_argument('--allow-unverified-v3',action='store_true',help='Use explicitly unverified experimental v3 helper')
@@ -59,6 +63,16 @@ def main(argv=None):
                        numba_threads=a.threads,make_plot=not a.no_plot)
         print('COMPARISON RESULT:', 'PASS (within numeric tolerance)' if report['all_pass'] else 'DIFFERENCES DETECTED')
         return 0 if report['all_pass'] else 1
+    elif a.task=='derive-5min':
+        from .rain5 import derive_5min_file,derived_5min_name,is_native_1min
+        if not is_native_1min(paths['rain']):
+            raise RuntimeError('Configured rain role is already a 5-minute product; nothing to derive.')
+        dest=target/'derived_5min'/derived_5min_name(paths['rain'].name)
+        derive_5min_file(paths['rain'],dest,link_batch=a.link_batch)
+        print('DERIVED:',dest)
+    elif a.task=='export-1min-rainfall':
+        out=export_native_1min(paths,target/'native_1min_export',workers=a.workers)
+        print('EXPORTED:',out)
     elif a.task=='rebuild-all-rainfall':
         from netCDF4 import Dataset
         with Dataset(paths['qc']) as ds:nt=len(ds.dimensions['time'])

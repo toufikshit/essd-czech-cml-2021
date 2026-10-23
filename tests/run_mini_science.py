@@ -20,6 +20,7 @@ sys.path.insert(0,str(ROOT/'src'))
 sys.path.insert(0,str(ROOT/'tests'))
 from mini_fixture import create,sha
 from essd_cz.compare import compare
+from essd_cz import rain5
 
 
 def run(root):
@@ -30,7 +31,7 @@ def run(root):
     base=root/'baseline'
     paths=create(base,scientific_reference=True)
     before={r:sha(p) for r,p in paths.items()}
-    print('GATE 3a: exact matching source functions versus independently assembled 5-min reference',flush=True)
+    print('GATE 3a: exact matching source functions versus 5-min values derived from the native 1-min fixture',flush=True)
     baseline=compare(paths,root/'compare_baseline',link_indices=[0,2],days=2,
                      atol=1e-4,rtol=1e-4,numba_threads=2,make_plot=True)
     if not baseline['all_pass']:
@@ -38,12 +39,13 @@ def run(root):
     print('PASS: both sublinks, links 0 and 2',flush=True)
     print('GATE 3a-extra: missing direction must be preserved, never crash or be invented',flush=True)
     from essd_cz.rainfall import aggregate_exact, producer
-    with xr.open_dataset(paths['qc']) as qc, xr.open_dataset(paths['rain'],mask_and_scale=False) as published:
+    with xr.open_dataset(paths['qc']) as qc, xr.open_dataset(paths['rain'],mask_and_scale=False) as native:
         sparse=aggregate_exact(producer(),qc,1,numba_threads=2)
+        published=rain5.derive_link_5min(native,1)
         assert sparse['estimate_errors'], 'Expected one recorded all-missing directional failure'
-        np.testing.assert_array_equal(sparse['graf_wet_5min'][:,1],published['graf_wet_5min'].isel(sublink_id=1,cml_id=1).values)
+        np.testing.assert_array_equal(sparse['graf_wet_5min'][:,1],published['graf_wet_5min'].isel(sublink_id=1,cml_id=0).values)
         np.testing.assert_array_equal(np.isnan(sparse['R_sublink_5min'][:,1]),
-            np.isnan(published['R_sublink_5min'].isel(sublink_id=1,cml_id=1).values))
+            np.isnan(published['R_sublink_5min'].isel(sublink_id=1,cml_id=0).values))
         assert np.isnan(sparse['R_sublink_5min'][:,1]).all()
         assert np.isfinite(sparse['R_sublink_5min'][:,0]).any()
     print('PASS: one all-missing direction reported, other direction retained',flush=True)
@@ -68,8 +70,8 @@ def run(root):
     print('PASS: shuffled indices',flush=True)
 
     def corrupt_numeric(ds):
-        arr=ds['R_sublink_5min'].values
-        pos=np.flatnonzero(np.isfinite(arr[:,0,0]))
+        arr=ds['R_sublink_1min'].values
+        pos=np.flatnonzero(np.isfinite(arr[:,0,0])&(ds['graf_valid_1min'].values[:,0,0]==1))
         if not len(pos):raise AssertionError('No finite synthetic values for negative control')
         arr[pos[len(pos)//2],0,0]+=4.0
         return ds
@@ -82,10 +84,14 @@ def run(root):
     print('PASS: corruption detected',flush=True)
 
     def corrupt_flag(ds):
-        a=ds['graf_wet_5min'].values
-        pos=np.flatnonzero(a[:,0,0]!=255)
-        if not len(pos):raise AssertionError('No valid flags for negative control')
-        i=int(pos[len(pos)//2]);a[i,0,0]=np.uint8(1-int(a[i,0,0]))
+        a=ds['graf_wet_1min'].values
+        # flip a wet minute inside a complete valid 5-minute block so the
+        # derived wet-minute count (and possibly the wet flag) must change
+        valid=(ds['graf_valid_1min'].values[:,0,0]==1)
+        complete=np.repeat(valid.reshape(-1,5).all(axis=1),5)
+        cand=np.flatnonzero(complete&(a[:,0,0]==1))
+        if not len(cand):raise AssertionError('No wet minute in a complete block for negative control')
+        a[int(cand[len(cand)//2]),0,0]=np.uint8(0)
         return ds
     print('GATE 3d: changed wet/dry flag must NOT pass',flush=True)
     badflag=publish_variant('corrupted_flags',corrupt_flag)

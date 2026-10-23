@@ -20,20 +20,20 @@ def test_seven_role_names_axes_units_and_masks(tmp_path):
         assert qc['trsl'].dims==('time','sublink_id','cml_id')
         assert qc['length'].dims==('sublink_id','cml_id')
         assert qc['frequency'].attrs['units']=='MHz'
-        assert rain['R_sublink_5min'].dims==('time_5min','sublink_id','cml_id')
-        assert rain['R_sublink_5min'].attrs['units']=='mm h-1'
+        assert rain['R_sublink_1min'].dims==('time_1min','sublink_id','cml_id')
+        assert rain['R_sublink_1min'].attrs['units']=='mm h-1'
         assert rain.attrs['kr_model']=='ITU_2005'
         assert qc.sizes=={'time':2880,'sublink_id':2,'cml_id':3}
-        assert rain.sizes=={'time_5min':576,'sublink_id':2,'cml_id':3}
+        assert rain.sizes=={'time_1min':2880,'sublink_id':2,'cml_id':3}
         assert as_list(qc.cml_id.values)==list(IDS)
         assert as_list(rain.cml_id.values)==list(IDS)
         assert len(np.unique(qc.sublink_id.values))==2
         assert np.isfinite(qc.trsl.values).sum()<qc.trsl.size
         assert np.isnan(qc.trsl.isel(sublink_id=1,cml_id=1).values).all()
-        assert (rain.graf_wet_5min.values==255).any()
-        assert np.isnan(rain.R_sublink_5min.values).any()
+        assert (rain.graf_wet_1min.values==255).any()
+        assert np.isnan(rain.R_sublink_1min.values).any()
         assert np.all(np.diff(pd.DatetimeIndex(qc.time.values).asi8)==60_000_000_000)
-        assert np.all(np.diff(pd.DatetimeIndex(rain.time_5min.values).asi8)==300_000_000_000)
+        assert np.all(np.diff(pd.DatetimeIndex(rain.time_1min.values).asi8)==60_000_000_000)
     for role,n in [('gauge',10),('temperature',10),('humidity',10),('radar',5)]:
         with xr.open_dataset(paths[role]) as ds:
             t=pd.DatetimeIndex(ds.time.values)
@@ -43,6 +43,46 @@ def test_seven_role_names_axes_units_and_masks(tmp_path):
         assert ds.rr.attrs['units']=='mm per 10 min'
     with xr.open_dataset(paths['radar']) as ds:
         assert ds.rr.attrs['units']=='mm per 5 min'
+
+
+def test_derived_5min_follows_complete_block_semantics(tmp_path):
+    """Analysis 5-min values are an exact function of the released 1-min product."""
+    from essd_cz import rain5
+    paths=create(tmp_path/'fixture')
+    with xr.open_dataset(paths['rain'],mask_and_scale=False) as rain:
+        assert rain5.is_native_1min(rain)
+        derived=rain5.derive_5min_dataset(rain)
+        t1=rain['time_1min'].values.copy()
+        R1=rain['R_sublink_1min'].values
+        V1=(rain['graf_valid_1min'].values==1)&np.isfinite(R1)
+        W1=(rain['graf_wet_1min'].values==1)&V1
+    assert derived.sizes=={'time_5min':576,'sublink_id':2,'cml_id':3}
+    assert np.array_equal(derived.time_5min.values,t1[::5])
+    vm=V1.reshape(576,5,2,3).sum(1)
+    wm=W1.reshape(576,5,2,3).sum(1)
+    complete=vm==5
+    # a 5-min rate exists exactly where all five minutes are valid
+    assert np.array_equal(np.isfinite(derived.R_sublink_5min.values),complete)
+    assert np.array_equal(derived.graf_valid_5min.values==1,complete)
+    assert np.array_equal(derived.valid_minutes_5min.values,vm.astype(np.uint8))
+    assert np.array_equal(derived.wet_minutes_5min.values,wm.astype(np.uint8))
+    assert np.array_equal(derived.graf_wet_5min.values==255,~complete)
+    assert np.array_equal((derived.graf_wet_5min.values==1),complete&(wm>0))
+    # mean of the five 1-min rates, and physical mean AFTER directional 5-min masking
+    means=np.where(V1,R1,0.).reshape(576,5,2,3).sum(axis=1)/5.  # exact only where complete
+    assert np.allclose(derived.R_sublink_5min.values[complete],means[complete],rtol=0,atol=1e-6)
+    cnt=np.isfinite(derived.R_sublink_5min.values).sum(axis=1)
+    some=cnt>0
+    expected=np.where(some,np.nansum(derived.R_sublink_5min.values,axis=1)/np.maximum(cnt,1),np.nan)
+    assert np.allclose(derived.R_mean_5min.values[some],expected[some],rtol=0,atol=1e-6)
+    assert np.isnan(derived.R_mean_5min.values[cnt==0]).all()
+    # round trip through the file writer keeps every value and mask
+    out=tmp_path/'derived.nc'
+    rain5.derive_5min_file(paths['rain'],out)
+    with xr.open_dataset(out,mask_and_scale=False) as back:
+        a=back['R_sublink_5min'].values;b=derived['R_sublink_5min'].values
+        assert np.array_equal(np.isnan(a),np.isnan(b)) and np.array_equal(a[~np.isnan(a)],b[~np.isnan(b)])
+        assert np.array_equal(np.asarray(back['graf_wet_5min'].values,np.uint8),derived['graf_wet_5min'].values)
 
 
 def test_numerical_metrics_reject_mask_flag_and_value_differences():
