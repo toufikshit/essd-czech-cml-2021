@@ -11,15 +11,16 @@ validation, rainfall maps and E band water vapour analysis. The original
 scientific scripts are preserved unchanged under `original/` and the notebooks
 call them directly.
 
-> Status: the dataset is not yet on Zenodo. The Zenodo link and the DOIs will
-> be added here after the deposit is published.
+> Dataset: https://doi.org/10.5281/zenodo.23398309 (Zenodo). The article DOI
+> will be added once the paper has one.
 
 ## Quick start
 
 1. **Get the code.** Clone this repository.
 
-2. **Get the data.** Download the seven NetCDF files (Zenodo link will appear
-   here). Put them in one folder. Do not rename them. Details: [data/README.md](data/README.md).
+2. **Get the data.** Download `ESSD_CZ_CML_2021_dataset.zip` from
+   https://doi.org/10.5281/zenodo.23398309 and extract it. Keep the file
+   names. Details: [data/README.md](data/README.md).
 
 3. **Install.** Python 3.10 or newer.
 

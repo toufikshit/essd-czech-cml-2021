@@ -1,7 +1,10 @@
 # Getting the data
 
 The data is not in this repository and never will be. It is distributed as a
-Zenodo deposit. The Zenodo link and DOI will be added here after publication.
+Zenodo deposit: https://doi.org/10.5281/zenodo.23398309. Download
+`ESSD_CZ_CML_2021_dataset.zip` from the record and extract it; it contains
+the folders and files below plus this documentation and the checksums.
+Verify the extracted files with `sha256sum -c SHA256SUMS.txt`.
 
 ## The seven main files
 

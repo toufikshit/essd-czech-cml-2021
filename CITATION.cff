@@ -1,7 +1,8 @@
 cff-version: 1.2.0
 message: >-
-  If you use this software, please cite it and the dataset paper below.
-  The paper DOI and the dataset DOI will be added once they exist.
+  If you use this software, please cite it, the dataset
+  (https://doi.org/10.5281/zenodo.23398309) and the dataset paper below.
+  The paper DOI will be added once it exists.
 type: software
 title: "ESSD Czech CML 2021 processing and analysis workflow"
 authors:
@@ -36,6 +37,11 @@ references:
         affiliation: >-
           Faculty of Civil Engineering, Czech Technical University in Prague,
           Prague, Czech Republic
+      - family-names: Mudroch
+        given-names: Martin
+        affiliation: >-
+          Faculty of Civil Engineering, Czech Technical University in Prague,
+          Prague, Czech Republic
       - family-names: Bareš
         given-names: Vojtěch
         affiliation: >-
@@ -46,3 +52,17 @@ references:
     notes: >-
       Funded by the Czech Science Foundation (GACR), grant 24-13677L
       (MERGOSAT).
+  - type: data
+    title: >-
+      Operational microwave links for hydrometeorological sensing: a
+      multisource dataset for the Czech Republic (April to October 2021)
+    doi: "10.5281/zenodo.23398309"
+    authors:
+      - family-names: Shit
+        given-names: Taoufiq
+      - family-names: Fencl
+        given-names: Martin
+      - family-names: Mudroch
+        given-names: Martin
+      - family-names: Bareš
+        given-names: Vojtěch
