@@ -119,7 +119,7 @@ DWD derived data files are CC BY 4.0. Per file details:
 ## Citation
 
 See [CITATION.cff](CITATION.cff). Software by Taoufiq Shit. Dataset and
-paper by Taoufiq Shit, Martin Fencl and Vojtěch Bareš (Faculty of Civil
-Engineering, Czech Technical University in Prague). Please cite both the
+paper by Taoufiq Shit, Martin Fencl, Martin Mudroch and Vojtěch Bareš
+(Czech Technical University in Prague). Please cite both the
 paper and the dataset once their DOIs exist. Funded by the Czech Science
 Foundation (GAČR), grant 24-13677L (MERGOSAT).

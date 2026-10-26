@@ -9,8 +9,8 @@ authors:
   - family-names: Shit
     given-names: Taoufiq
     affiliation: >-
-      Faculty of Civil Engineering, Czech Technical University in Prague,
-      Prague, Czech Republic
+      Department of Hydraulics and Hydrology, Czech Technical University in
+      Prague, Prague, Czech Republic
 version: "1.0.0-rc1"
 date-released: "2026-10-15"
 license: MIT
@@ -30,23 +30,23 @@ references:
       - family-names: Shit
         given-names: Taoufiq
         affiliation: >-
-          Faculty of Civil Engineering, Czech Technical University in Prague,
-          Prague, Czech Republic
+          Department of Hydraulics and Hydrology, Czech Technical University
+          in Prague, Prague, Czech Republic
       - family-names: Fencl
         given-names: Martin
         affiliation: >-
-          Faculty of Civil Engineering, Czech Technical University in Prague,
-          Prague, Czech Republic
+          Department of Hydraulics and Hydrology, Czech Technical University
+          in Prague, Prague, Czech Republic
       - family-names: Mudroch
         given-names: Martin
         affiliation: >-
-          Faculty of Civil Engineering, Czech Technical University in Prague,
-          Prague, Czech Republic
+          Department of Electromagnetic Field, Czech Technical University in
+          Prague, Prague, Czech Republic
       - family-names: Bareš
         given-names: Vojtěch
         affiliation: >-
-          Faculty of Civil Engineering, Czech Technical University in Prague,
-          Prague, Czech Republic
+          Department of Hydraulics and Hydrology, Czech Technical University
+          in Prague, Prague, Czech Republic
     journal: Earth System Science Data
     status: in-preparation
     notes: >-
