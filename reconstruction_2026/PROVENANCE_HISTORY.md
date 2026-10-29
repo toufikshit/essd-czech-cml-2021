@@ -100,7 +100,7 @@ Water vapour: unchanged (`04_validation/WVD_VERIFICATION_REPORT.md`).
 | 2026-10-28 | Stage 4 | Rainfall approved as computed; blackout minutes kept and flagged; very high short-link rates documented, not filtered |
 | 2026-10-28 | Stage 5A | Headline validation with blackout-reconstructed samples; the values without them reported alongside |
 | 2026-10-29 | Stage 6 | Keep the Graf method. Figs. 2, 3 (with the approved axis correction), 5 and 6 regenerated; Fig. 8 unchanged |
-| 2026-10-29 | Stage 6 | Figs. 1 and 7 to be regenerated from the released QC network and the released Graf rainfall (Fig. 1 redrawn in the published style; Fig. 7 with the unchanged IDW and renderer). The documentation describes the released dataset only |
+| 2026-10-29 | Stage 6 | Figs. 1 and 7 regenerated from the released QC network and the released Graf rainfall (Fig. 1 redrawn in the published style, radar coverage from the corrected RADKLIM 2021 supplement; Fig. 7 with the unchanged IDW and renderer, radar row from the corrected supplement). The documentation describes the released dataset only |
 
 The stage reports were written during the work; where a report says
 "awaiting approval", the decision is the one in this table.

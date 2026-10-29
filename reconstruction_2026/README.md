@@ -196,8 +196,12 @@ QC file (`--expected-input-sha256`). The QC exclusion lists are written by
 
 **Figures.**
 
-* Fig. 1: map of the released QC network (1,987 CMLs), redrawn in the
-  published style.
+* Fig. 1: `05_figures/fig1_fig7/fig1_study_area.py` draws the 1,987 QC CMLs,
+  the 424 rain gauges, the 251 weather stations (temperature and humidity
+  positions) and the radar coverage in the published style. The radar coverage
+  is the set of RADKLIM YW 2017.002 (corrected 2021 supplement) cells with data
+  on at least one day from 1 April to 13 July 2021; the 1,132 radar paths lie
+  inside it.
 * Fig. 2: `05_figures/fig2_fig3/run_fig2.sh` runs the unchanged
   `original/code/figures/availability_native_timestep_percentage.py` with
   `--cml-file` set to the QC file (it expects a copy of that script next to
@@ -221,8 +225,11 @@ QC file (`--expected-input-sha256`). The QC exclusion lists are written by
   `4cfb45975c9798f801339ccf406bc7f0e410c861d554bf93749990714167080d`). The
   helper `fig4_fig7/f7_03_safe_singleopen_grid.py` uses only its three
   gridding functions (`build_grid`, `load_midpoints`, `idw_fast_series`) on the
-  Graf 5-minute rainfall; the grid builder's own argument defaults name an
-  older input file and are not used.
+  Graf 5-minute rainfall; the grid builder's own argument defaults are not
+  used. `05_figures/fig1_fig7/fig7_run.sh` draws the figure (event 4,
+  instance 1, 13 July 2021 16:05-23:05 UTC) with the radar row from the
+  corrected RADKLIM YW 2017.002 2021 supplement (`YW_2017.002_20210713.nc`).
+  Run outputs and figure checksums are in the same folder.
 * Fig. 8: water vapour, `original/code/wvd/plot_wvp_support_hexbins_no_titles.py`.
 
 ## 6. Hard-coded paths
@@ -241,6 +248,8 @@ author's computer. All are plain defaults unless marked.
 | `C:\Users\taouf\Downloads\DISDRODB\extracted\matched_code\matched_code\cml_grid_essd_publication_safe_singleopen.py` | f7_03 | `--src 05_figures/fig7_grid_builder/cml_grid_essd_publication_safe_singleopen.py` |
 | `C:\Users\taouf\ESSD_RELEASE\FINAL_RECONSTRUCTION_20261027\...` | fig2/fig3 helpers, f4_02, f7_05 | command-line options where present |
 | `/home/jovyan/...` | grid builder argument defaults (HPC) | `--input-nc`, `--coords-nc`, `--output-nc` options of the grid builder |
+| `C:Users	aoufESSD_RELEASE...` (QC file, released station files; RADKLIM supplement days in `external_downloads
+| `C:\Users\taouf\ESSD_RELEASE\...` (QC file, released station files; RADKLIM supplement days in `external_downloads\radklim_2021_supplement`) | fig1_study_area.py, fig7_run.sh | `--qc`, `--gauge`, `--temp`, `--hum`, `--radar-nc` of fig1; the variable `R` in fig7_run.sh |
 
 The `*_output.txt` logs and the two validation summaries also contain these
 paths. They are records of the actual runs and are kept unchanged.
