@@ -1,0 +1,16 @@
+[F] audit rows 5160 (CMLs 2580); any of the 13 in RAW: 0
+[F] sublink classes: {1: 4943, 2: 150, 3: 7, 4: 16, 5: 14, 6: 30}
+[F] CML classes: {1: 2507, 2: 59, 3: 5, 4: 8, 6: 1}
+  class 2: 150 sublinks in 94 CMLs; flags [('2:no both-finite minute in 2021-04-01..10-31', 149), ('2:no run of 60 consecutive both-finite minutes', 1)]
+  class 3: 7 sublinks in 5 CMLs; flags [('3:TX entirely missing, RX present', 6), ('3:RX entirely missing, TX present', 1)]
+  class 4: 16 sublinks in 8 CMLs; flags [('4:no frequency', 16)]
+  class 5: 14 sublinks in 14 CMLs; flags [('5:empty', 14)]
+  class 6: 30 sublinks in 29 CMLs; flags [('6:TX = 0 dBm at every valid minute (author decision, cf. the 13)', 16), ('6:TX > 60 dBm in 1 minutes', 12), ('6:TX > 60 dBm in 2 minutes', 2)]
+[F] all flags (multi-label) counts: [('2:no both-finite minute in 2021-04-01..10-31', 150), ('6:TX = 0 dBm at every valid minute (author decision, cf. the 13)', 16), ('4:no frequency', 16), ('5:empty', 14), ('6:TX > 60 dBm in 1 minutes', 12), ('3:TX entirely missing, RX present', 6), ('6:TX > 60 dBm in 2 minutes', 2), ('3:RX entirely missing, TX present', 1), ('2:no run of 60 consecutive both-finite minutes', 1)]
+[F] RAW sublinks with TX = 0 at every valid minute: 16 in 16 CMLs; other sublink of these CMLs: 10082_10484_3157 s0 (TX min..max of other sublink -10.0..-7.0, both finite 8337); 10353_12366_3259 s1 (TX min..max of other sublink -10.0..0.0, both finite 321031); 10865_15580_3375 s1 (TX min..max of other sublink -7.0..0.0, both finite 321099); 11690_13107_3431 s1 (TX min..max of other sublink -1.0..0.0, both finite 320620); 13115_343002_3498 s1 (TX min..max of other sublink -10.0..0.0, both finite 320532); 20004_20124_3525 s0 (TX min..max of other sublink -5.0..0.0, both finite 320790); 33002_33181_3943 s1 (TX min..max of other sublink -5.0..0.0, both finite 321095); 41920_323338_4235 s1 (TX min..max of other sublink 0.0..127.5, both finite 320754); 42085_42113_4282 s1 (TX min..max of other sublink -10.0..0.0, both finite 260574); 43066_332410_4309 s1 (TX min..max of other sublink -10.0..0.0, both finite 321099); 45234_346862_4373 s1 (TX min..max of other sublink -10.0..0.0, both finite 321019); 48120_48218_4463 s0 (TX min..max of other sublink -10.0..-6.0, both finite 320280); 50086_345222_4507 s0 (TX min..max of other sublink -10.0..-6.0, both finite 8338); 58006_58060_4634 s0 (TX min..max of other sublink -10.0..-2.0, both finite 39545); 78036_78211_110024 s1 (TX min..max of other sublink 2.0..2.0, both finite 41599); 78097_346713_110049 s0 (TX min..max of other sublink -4.0..7.0, both finite 41585)
+[F] P1: 0 rows (-); CMLs 2580->2580, sublinks 5160->5160 (cumulative); both-finite minutes affected 0
+[F] P2: 5 rows (whole CML); CMLs 2580->2575, sublinks 5160->5150 (cumulative); both-finite minutes affected 0
+[F] P3: 8 rows (whole CML); CMLs 2575->2567, sublinks 5150->5134 (cumulative); both-finite minutes affected 3,049,403
+[F] P4: 11 rows (one sublink); CMLs 2567->2567, sublinks 5134->5123 (cumulative); both-finite minutes affected 0
+[F] P5: 16 rows (one sublink); CMLs 2567->2567, sublinks 5123->5107 (cumulative); both-finite minutes affected 1,806,630
+[F] P6: 14 rows (individual observations); CMLs 2567->2567, sublinks 5107->5107 (cumulative); both-finite minutes affected 16

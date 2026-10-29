@@ -1,0 +1,4 @@
+source C:\Users\taouf\Downloads\DISDRODB\extracted\matched_code\matched_code\cml_grid_essd_publication_safe_singleopen.py sha256 4cfb45975c9798f801339ccf406bc7f0e410c861d554bf93749990714167080d
+Links for IDW : 1987/1987; grid (239, 609); times 2021-07-13 15:05:00 -> 2021-07-13 23:05:00 (97)
+lattice x0 12.1764869690 y0 48.6223278046
+WROTE ..\work\grid_safe_stage4_0p01_ownlattice.nc sha256 72317865f3f96930eb7473ee79cc646b12aac6a1b9e2d4a1a44e5cb67f00bf9a

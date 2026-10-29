@@ -1,0 +1,37 @@
+file QC_CORRECTED_CANDIDATE_REV1.nc
+size_bytes 2409368783
+sha256 ca8afa95aacb50dacbd5f7d96f776c56a78c63d1a4888e9f721a29cdcfafde65
+format NETCDF4
+dimensions {'time': 308160, 'sublink_id': 2, 'cml_id': 1987}
+variables ['time', 'sublink_id', 'cml_id', 'length', 'site_a_latitude', 'site_b_latitude', 'site_a_longitude', 'site_b_longitude', 'frequency', 'polarization', 'tx', 'rx', 'trsl', 'qc_flag', 'qc_detection_limit_mmhr', 'qc_sublink_status', 'qc_fraction_5h_windows_std_gt_2dB', 'qc_fraction_1h_windows_std_gt_0p8dB']
+missing required []
+  tx: float32 ('time', 'sublink_id', 'cml_id') chunks=[10080, 2, 64] filters={'zlib': True, 'shuffle': True, 'complevel': 4}
+  rx: float32 ('time', 'sublink_id', 'cml_id') chunks=[10080, 2, 64] filters={'zlib': True, 'shuffle': True, 'complevel': 4}
+  trsl: float32 ('time', 'sublink_id', 'cml_id') chunks=[10080, 2, 64] filters={'zlib': True, 'shuffle': True, 'complevel': 4}
+  qc_flag: uint8 ('time', 'sublink_id', 'cml_id') chunks=[10080, 2, 64] filters={'zlib': True, 'shuffle': True, 'complevel': 4}
+qc_flag flag_masks [np.uint8(1), np.uint8(2), np.uint8(4), np.uint8(8), np.uint8(16)] invalid_value_masked mixed_placeholder_minute_masked low_rsl_plateau_masked blackout_total_loss_reconstructed short_gap_interpolated
+qc_sublink_status retained excluded_p5_tx_zero_nonoperational excluded_no_observed_total_loss_in_period excluded_fluctuation excluded_detection_limit excluded_fluctuation_and_detection_limit
+  attr qc_period: 2021-04-01T00:00 to 2021-10-31T23:59 UTC
+  attr population: Approved RAW 2574 CMLs; 8 without frequency excluded before QC; 2566 assessed; 1987 retained
+  attr n_cml_assessed: 2566
+  attr n_cml_retained: 1987
+  attr source_raw_sha256: 6acfeed2a2864b8c0e69807e9834dd03368d012fac4a2cae3d430c27b71be8aa
+  attr qc_script_sha256: 3765739a7319c3cad7d73509ce97bc888bb827400c3e0f3c6e69c4d246fe1004
+  attr time_coverage_start: 2021-04-01T00:00:00Z
+  attr time_coverage_end: 2021-10-31T23:59:00Z
+  qc_parameters_json keys 24 long_min_valid 300 short_min_valid 60 plateau_min_valid 2
+time minutes since 2020-01-01 00:00:00 656640 964799 step1 True
+status counts {0: 3731, 1: 7, 2: 26, 3: 170, 4: 40}
+every CML has a retained sublink True
+cml ids unique True 10001_10066_3107 89221_347241_5030
+polarization values {'Vertical'}
+  start  cml[0] 10001_10066_3107: finite tx 461 rx 461 trsl 462; flags 2; max|trsl-(tx-rx)| at unflagged 0.00e+00
+  start  cml[993] 40009_316455_4170: finite tx 922 rx 922 trsl 924; flags 2; max|trsl-(tx-rx)| at unflagged 0.00e+00
+  start  cml[1986] 89221_347241_5030: finite tx 920 rx 920 trsl 922; flags 2; max|trsl-(tx-rx)| at unflagged 0.00e+00
+  middle cml[0] 10001_10066_3107: finite tx 1439 rx 1439 trsl 1440; flags 2; max|trsl-(tx-rx)| at unflagged 0.00e+00
+  middle cml[993] 40009_316455_4170: finite tx 0 rx 0 trsl 0; flags 0; max|trsl-(tx-rx)| at unflagged 0.00e+00
+  middle cml[1986] 89221_347241_5030: finite tx 2876 rx 2876 trsl 2880; flags 4; max|trsl-(tx-rx)| at unflagged 0.00e+00
+  end    cml[0] 10001_10066_3107: finite tx 1439 rx 1439 trsl 1439; flags 0; max|trsl-(tx-rx)| at unflagged 0.00e+00
+  end    cml[993] 40009_316455_4170: finite tx 0 rx 0 trsl 0; flags 0; max|trsl-(tx-rx)| at unflagged 0.00e+00
+  end    cml[1986] 89221_347241_5030: finite tx 2878 rx 2878 trsl 2878; flags 0; max|trsl-(tx-rx)| at unflagged 0.00e+00
+FILE VERIFICATION PASS

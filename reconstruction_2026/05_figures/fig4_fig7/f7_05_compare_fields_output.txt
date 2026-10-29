@@ -1,0 +1,217 @@
+         panel_end_utc    old_max  old_mean_all  old_wet_frac  old_mean_wet  old_n_ge_10mm  old_n_ge_20mm    new_max  new_mean_all  new_wet_frac  new_mean_wet  new_n_ge_10mm  new_n_ge_20mm  mean_diff_mm  mean_abs_diff_mm  max_increase_mm  max_decrease_mm  frac_nodes_class_changed  n_nodes
+0  2021-07-13 16:05:00   0.475734      0.011149      0.026984      0.158065              0              0   0.475819      0.010594      0.030853      0.157902              0              0     -0.000555          0.003162         0.161860        -0.184662                  0.005456    10080
+1  2021-07-13 17:05:00  12.893185      0.399691      0.274603      1.435462              9              0  12.030906      0.449400      0.270040      1.647715              6              0      0.049709          0.118678         9.319386        -2.364745                  0.088790    10080
+2  2021-07-13 18:05:00  73.670097      1.825090      0.548909      3.318877            324            121  61.696766      3.074432      0.566270      5.424447            877            243      1.249342          1.296739        45.042561       -28.465126                  0.355357    10080
+3  2021-07-13 19:05:00  50.162029      4.381257      0.954563      4.588163            982            166  55.311932      7.153227      0.956944      7.473773           2610            483      2.771970          2.899592        53.287624       -11.807671                  0.709921    10080
+4  2021-07-13 20:05:00  18.913105      1.463646      0.666369      2.179568            206              0  23.230572      2.251522      0.877579      2.561074            602             14      0.787876          0.815607        14.210061        -3.853493                  0.521131    10080
+5  2021-07-13 21:05:00   5.852467      0.332732      0.541369      0.586145              0              0   7.659049      0.564170      0.742758      0.749331              0              0      0.231437          0.255729         7.615162        -1.794273                  0.319345    10080
+6  2021-07-13 22:05:00   3.244283      0.054445      0.127976      0.317587              0              0   3.424283      0.091013      0.223115      0.323805              0              0      0.036568          0.041419         3.419612        -0.282480                  0.107044    10080
+7  2021-07-13 23:05:00   0.143055      0.003805      0.000496      0.134392              0              0   2.677490      0.008276      0.007242      0.269464              0              0      0.004471          0.005056         2.676426        -0.039519                  0.006944    10080
+{
+  "window_5min_steps": 96,
+  "window": [
+    "2021-07-13 15:10:00",
+    "2021-07-13 23:05:00"
+  ],
+  "old_total_cmls_in_idw": 2219,
+  "new_total_cmls_in_idw": 1987,
+  "near_extent": {
+    "old": 1105,
+    "new": 994,
+    "removed": 221,
+    "added": 110,
+    "old_with_any_finite": 647,
+    "new_with_any_finite": 659,
+    "old_all_finite": 318,
+    "new_all_finite": 523,
+    "common_with_acc_change_gt_0p1mm": 259,
+    "new_cmls_with_blackout_minutes": 240,
+    "new_blackout_minutes_total": 2233.0,
+    "new_interpolated_minutes_total": 537.0
+  },
+  "inside_extent": {
+    "old": 601,
+    "new": 554,
+    "removed": 119,
+    "added": 72,
+    "old_with_any_finite": 352,
+    "new_with_any_finite": 373
+  },
+  "top10_common_acc_changes": [
+    {
+      "cml_id": "28063_331097_3795",
+      "old_event_acc_mm": 0.0,
+      "new_event_acc_mm": 107.74936247058213,
+      "new_blackout_minutes": 21.0
+    },
+    {
+      "cml_id": "44135_349632_2735",
+      "old_event_acc_mm": 0.41057337765960256,
+      "new_event_acc_mm": 56.95272504094464,
+      "new_blackout_minutes": 21.0
+    },
+    {
+      "cml_id": "11751_11752_2352",
+      "old_event_acc_mm": 0.0007020986280015981,
+      "new_event_acc_mm": 41.55310554864021,
+      "new_blackout_minutes": 9.0
+    },
+    {
+      "cml_id": "45234_346613_4372",
+      "old_event_acc_mm": 7.956139402153592,
+      "new_event_acc_mm": 43.10488265706226,
+      "new_blackout_minutes": 9.0
+    },
+    {
+      "cml_id": "11350_350446_3416",
+      "old_event_acc_mm": 0.028439707433183987,
+      "new_event_acc_mm": 29.41657193020607,
+      "new_blackout_minutes": 8.0
+    },
+    {
+      "cml_id": "43032_43113_4297",
+      "old_event_acc_mm": 0.8604713566601276,
+      "new_event_acc_mm": 29.398634916792314,
+      "new_blackout_minutes": 17.0
+    },
+    {
+      "cml_id": "12429_15098_3495",
+      "old_event_acc_mm": 0.6517376899719238,
+      "new_event_acc_mm": 26.80386757850647,
+      "new_blackout_minutes": 8.0
+    },
+    {
+      "cml_id": "11429_338875_3429",
+      "old_event_acc_mm": 0.007019635833178957,
+      "new_event_acc_mm": 24.826920330291614,
+      "new_blackout_minutes": 19.0
+    },
+    {
+      "cml_id": "28038_28079_2496",
+      "old_event_acc_mm": 0.05093760839857472,
+      "new_event_acc_mm": 22.873975778512733,
+      "new_blackout_minutes": 11.0
+    },
+    {
+      "cml_id": "11350_11382_3409",
+      "old_event_acc_mm": 0.2689335992715011,
+      "new_event_acc_mm": 22.866795142918516,
+      "new_blackout_minutes": 28.0
+    }
+  ],
+  "top10_removed_by_old_acc": [
+    {
+      "cml_id": "10033_11436_3151",
+      "old_event_acc_mm": 13.518522833784422,
+      "old_n_finite_5min": 96
+    },
+    {
+      "cml_id": "42127_42186_4287",
+      "old_event_acc_mm": 10.050940317256996,
+      "old_n_finite_5min": 96
+    },
+    {
+      "cml_id": "43036_332113_4303",
+      "old_event_acc_mm": 10.015804196087023,
+      "old_n_finite_5min": 96
+    },
+    {
+      "cml_id": "26040_26063_2450",
+      "old_event_acc_mm": 7.6726886432540296,
+      "old_n_finite_5min": 96
+    },
+    {
+      "cml_id": "42007_42129_2706",
+      "old_event_acc_mm": 6.567983995482791,
+      "old_n_finite_5min": 96
+    },
+    {
+      "cml_id": "44003_44067_2724",
+      "old_event_acc_mm": 5.549973228252687,
+      "old_n_finite_5min": 96
+    },
+    {
+      "cml_id": "28019_28050_2493",
+      "old_event_acc_mm": 5.337334692322959,
+      "old_n_finite_5min": 94
+    },
+    {
+      "cml_id": "28037_28225_2494",
+      "old_event_acc_mm": 4.519898988583009,
+      "old_n_finite_5min": 93
+    },
+    {
+      "cml_id": "29054_29235_2535",
+      "old_event_acc_mm": 3.9552442983937603,
+      "old_n_finite_5min": 96
+    },
+    {
+      "cml_id": "85101_85225_3059",
+      "old_event_acc_mm": 3.918010872672312,
+      "old_n_finite_5min": 94
+    }
+  ],
+  "top10_added_by_new_acc": [
+    {
+      "cml_id": "44135_349571_4338",
+      "new_event_acc_mm": 80.65159289725125,
+      "new_n_finite_5min": 96,
+      "new_blackout_minutes": 0.0
+    },
+    {
+      "cml_id": "45232_312551_4371",
+      "new_event_acc_mm": 63.8115818623531,
+      "new_n_finite_5min": 96,
+      "new_blackout_minutes": 5.0
+    },
+    {
+      "cml_id": "44135_44142_4339",
+      "new_event_acc_mm": 58.38316375700136,
+      "new_n_finite_5min": 96,
+      "new_blackout_minutes": 9.0
+    },
+    {
+      "cml_id": "45053_45205_4356",
+      "new_event_acc_mm": 54.57682171192331,
+      "new_n_finite_5min": 96,
+      "new_blackout_minutes": 19.0
+    },
+    {
+      "cml_id": "44101_44135_4335",
+      "new_event_acc_mm": 53.57898184633814,
+      "new_n_finite_5min": 96,
+      "new_blackout_minutes": 7.0
+    },
+    {
+      "cml_id": "45234_348564_4374",
+      "new_event_acc_mm": 47.342595283097275,
+      "new_n_finite_5min": 93,
+      "new_blackout_minutes": 0.0
+    },
+    {
+      "cml_id": "28001_28101_3770",
+      "new_event_acc_mm": 37.37749951146543,
+      "new_n_finite_5min": 96,
+      "new_blackout_minutes": 0.0
+    },
+    {
+      "cml_id": "10391_343741_3275",
+      "new_event_acc_mm": 36.00721558330891,
+      "new_n_finite_5min": 96,
+      "new_blackout_minutes": 2.0
+    },
+    {
+      "cml_id": "27009_27099_3735",
+      "new_event_acc_mm": 34.781313452869654,
+      "new_n_finite_5min": 96,
+      "new_blackout_minutes": 2.0
+    },
+    {
+      "cml_id": "41063_41077_4227",
+      "new_event_acc_mm": 34.35702079348266,
+      "new_n_finite_5min": 96,
+      "new_blackout_minutes": 0.0
+    }
+  ]
+}
+WROTE C:\Users\taouf\ESSD_RELEASE\FINAL_RECONSTRUCTION_20261027\stage5b\fig47\comparison\event04_instance01_multitime_hourly1h_old_vs_new.png

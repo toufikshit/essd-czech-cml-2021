@@ -1,0 +1,20 @@
+frame rows [np.float64(69.5), np.float64(219.5), np.float64(418.5), np.float64(569.5), np.float64(781.0)]
+frame cols [np.float64(214.5), np.float64(523.5), np.float64(526.0), np.float64(834.5), np.float64(837.0), np.float64(1146.5), np.float64(1149.0), np.float64(1457.5), np.float64(1460.5), np.float64(1770.0), np.float64(1772.5), np.float64(2081.0), np.float64(2083.5), np.float64(2392.5), np.float64(2395.5), np.float64(2703.5)]
+grid_original_0p02.nc: res 0.020  overall same-class agreement 96.6326%
+    {'panel': '2021-07-13 16:05:00', 'pixels_compared': 42300, 'same_class': 42163, 'agreement': 0.9967612293144208, 'within_one_class_or_same': 0.9967612293144208}
+    {'panel': '2021-07-13 17:05:00', 'pixels_compared': 42300, 'same_class': 41202, 'agreement': 0.9740425531914894, 'within_one_class_or_same': 0.9901182033096927}
+    {'panel': '2021-07-13 18:05:00', 'pixels_compared': 42441, 'same_class': 39642, 'agreement': 0.9340496218279494, 'within_one_class_or_same': 0.9745057845008365}
+    {'panel': '2021-07-13 19:05:00', 'pixels_compared': 42300, 'same_class': 37566, 'agreement': 0.8880851063829788, 'within_one_class_or_same': 0.9568321513002364}
+    {'panel': '2021-07-13 20:05:00', 'pixels_compared': 42441, 'same_class': 40977, 'agreement': 0.9655050540750689, 'within_one_class_or_same': 0.9803256285195919}
+    {'panel': '2021-07-13 21:05:00', 'pixels_compared': 42300, 'same_class': 41436, 'agreement': 0.9795744680851064, 'within_one_class_or_same': 0.988321513002364}
+    {'panel': '2021-07-13 22:05:00', 'pixels_compared': 42300, 'same_class': 41996, 'agreement': 0.9928132387706856, 'within_one_class_or_same': 0.9938770685579196}
+    {'panel': '2021-07-13 23:05:00', 'pixels_compared': 42159, 'same_class': 42159, 'agreement': 1.0, 'within_one_class_or_same': 1.0}
+grid_original_0p01.nc: res 0.010  overall same-class agreement 92.1230%
+    {'panel': '2021-07-13 16:05:00', 'pixels_compared': 42300, 'same_class': 42067, 'agreement': 0.9944917257683216, 'within_one_class_or_same': 0.9944917257683216}
+    {'panel': '2021-07-13 17:05:00', 'pixels_compared': 42300, 'same_class': 40391, 'agreement': 0.954869976359338, 'within_one_class_or_same': 0.9862174940898345}
+    {'panel': '2021-07-13 18:05:00', 'pixels_compared': 42441, 'same_class': 37553, 'agreement': 0.884828349944629, 'within_one_class_or_same': 0.9673900237977427}
+    {'panel': '2021-07-13 19:05:00', 'pixels_compared': 42300, 'same_class': 32079, 'agreement': 0.7583687943262412, 'within_one_class_or_same': 0.9312765957446808}
+    {'panel': '2021-07-13 20:05:00', 'pixels_compared': 42441, 'same_class': 37173, 'agreement': 0.8758747437619283, 'within_one_class_or_same': 0.9446997007610565}
+    {'panel': '2021-07-13 21:05:00', 'pixels_compared': 42300, 'same_class': 39231, 'agreement': 0.9274468085106383, 'within_one_class_or_same': 0.9556737588652482}
+    {'panel': '2021-07-13 22:05:00', 'pixels_compared': 42300, 'same_class': 41231, 'agreement': 0.9747281323877068, 'within_one_class_or_same': 0.9771394799054374}
+    {'panel': '2021-07-13 23:05:00', 'pixels_compared': 42159, 'same_class': 42149, 'agreement': 0.9997628027230248, 'within_one_class_or_same': 0.9997628027230248}
