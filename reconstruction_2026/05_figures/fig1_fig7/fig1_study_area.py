@@ -5,7 +5,8 @@ layout and style: CML paths (black lines), radar coverage (light blue shading), 
 weather stations (blue circles), country borders and rivers (Natural Earth via cartopy), dashed graticule,
 legend above the map, Europe inset at the upper right, scale bar at the lower right, DejaVu Sans.
 Data:
-  * CML paths: the 1987 quality controlled CMLs (QC_CORRECTED_CANDIDATE_REV1.nc endpoint coordinates);
+  * CML paths: the 2574 CMLs of the RAW dataset (endpoint coordinates of the released RAW file, restricted to the
+    approved RAW population stage2/RAW_APPROVED_POPULATION.csv; the file also holds 6 R1 CMLs that are not plotted);
   * rain gauges: the 424 stations of the released precipitation file;
   * weather stations: the union of the released temperature (251) and humidity (247) station positions;
   * radar coverage: RADKLIM YW 2017.002 corrected 2021 supplement, cells with finite data in at least one of the
@@ -29,11 +30,13 @@ import cartopy.io.shapereader as shpreader
 R = Path(r'C:\Users\taouf\ESSD_RELEASE')
 FH = R / 'extracted' / 'full' / 'ESSD_CZ_2021_HANDOFF' / 'data' / 'source_full_history'
 ap = argparse.ArgumentParser()
-ap.add_argument('--qc', default=str(R / 'FINAL_RECONSTRUCTION_20261027' / 'stage3' / 'QC_CORRECTED_CANDIDATE_REV1.nc'))
+ap.add_argument('--cml-nc', default=str(R / 'zenodo_staging' / 'primary' / 'CZ_CML_RAW_1MIN_20210401_20211031.nc'))
+ap.add_argument('--cml-ids', default=str(R / 'FINAL_RECONSTRUCTION_20261027' / 'stage2' / 'RAW_APPROVED_POPULATION.csv'))
 ap.add_argument('--gauge', default=str(R / 'zenodo_staging' / 'primary' / 'CZ_RAIN_GAUGE_10MIN_20210401_20211031.nc'))
 ap.add_argument('--temp', default=str(R / 'zenodo_staging' / 'primary' / 'CHMI_10MIN_TEMPERATURE_20210401_20211031.nc'))
 ap.add_argument('--hum', default=str(R / 'zenodo_staging' / 'primary' / 'CHMI_10MIN_HUMIDITY_20210401_20211031.nc'))
 ap.add_argument('--radar-nc', required=True, nargs='+', help='one or more daily RADKLIM files; coverage = cells valid in any of them')
+ap.add_argument('--coverage-cache', default=None, help='npz with the coverage mask and lon/lat; written if missing, read if present')
 ap.add_argument('--out', required=True)
 a = ap.parse_args()
 
@@ -41,7 +44,10 @@ C_CML, C_RADAR, C_GAUGE, C_STATION = '#222222', '#d6e6f2', '#d95f02', '#1f6fb0'
 EXT = [11.9, 19.05, 48.4, 51.2]
 plt.rcParams.update({'font.family': 'DejaVu Sans', 'font.size': 11})
 
-qc = xr.open_dataset(a.qc)
+import csv
+ids = sorted({r['cml_id'] for r in csv.DictReader(open(a.cml_ids, encoding='utf-8'))})
+qc = xr.open_dataset(a.cml_nc)[['site_a_longitude', 'site_a_latitude', 'site_b_longitude', 'site_b_latitude']].sel(cml_id=ids)
+assert qc.sizes['cml_id'] == len(ids) == 2574
 segs = np.stack([np.c_[qc.site_a_longitude.values, qc.site_a_latitude.values],
                  np.c_[qc.site_b_longitude.values, qc.site_b_latitude.values]], axis=1)
 g = xr.open_dataset(a.gauge)
@@ -54,6 +60,10 @@ st = np.unique(np.round(np.vstack(st), 6), axis=0)
 
 # radar coverage: RADKLIM polar stereographic grid -> lon/lat of cells with finite data on the day
 valid = None
+cache = Path(a.coverage_cache) if a.coverage_cache else None
+if cache is not None and cache.exists():
+    z = np.load(cache); valid, rlon, rlat = z['valid'], z['lon'], z['lat']; a.radar_nc = []
+    print('coverage read from', cache, 'days', int(z['ndays']))
 for f in a.radar_nc:
     rd = xr.open_dataset(f)
     var = next(v for v in ['YW', 'RR', 'rainfall_rate', 'R', 'rainrate', 'precip'] if v in rd)
@@ -61,14 +71,16 @@ for f in a.radar_nc:
         valid = np.zeros(rd[var].shape[1:], bool)
     for t0 in range(0, rd.sizes['time'], 24):   # read in time chunks (memory)
         valid |= np.isfinite(np.asarray(rd[var].isel(time=slice(t0, t0 + 24)).values)).any(axis=0)
-if {'lat', 'lon'} <= set(rd.variables):
+if a.radar_nc and {'lat', 'lon'} <= set(rd.variables):
     rlon, rlat = np.asarray(rd['lon'].values), np.asarray(rd['lat'].values)
-else:
+elif a.radar_nc:
     X, Y = np.meshgrid(rd['x'].values, rd['y'].values)
     stp = ccrs.Stereographic(central_latitude=90, central_longitude=10, true_scale_latitude=60,
                              globe=ccrs.Globe(ellipse=None, semimajor_axis=6370040, semiminor_axis=6370040))
     p = ccrs.PlateCarree().transform_points(stp, X, Y); rlon, rlat = p[..., 0], p[..., 1]
 
+if cache is not None and a.radar_nc:
+    np.savez_compressed(cache, valid=valid, lon=rlon, lat=rlat, ndays=len(a.radar_nc))
 proj = ccrs.PlateCarree()
 fig = plt.figure(figsize=(13.6, 6.75))
 ax = fig.add_axes([0.05, 0.06, 0.92, 0.76], projection=proj)

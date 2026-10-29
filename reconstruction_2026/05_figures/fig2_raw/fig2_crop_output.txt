@@ -1,0 +1,3 @@
+[crop] fig2_out/availability_native_timestep_percentage.png (6848, 1633); non-white rows inside the removed band: 18-75
+[crop] non-white columns in removed band: 3654-3833 (year label only expected)
+[crop] saved fig2_out/availability_native_timestep_percentage_v1.png (6848, 1508) sha256 5a3478ae0229322a76d58bba2e38f39634087ba99e6245acbac034f9116ec3d6

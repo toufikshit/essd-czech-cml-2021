@@ -24,9 +24,9 @@ Supporting scripts are under `original/code/wvd/`, notably `13_wvd_raw_60_100_in
 
 All figures show the released dataset. The figure runners and the figure provenance table are in `reconstruction_2026/05_figures/`.
 
-* Fig. 1: map of the released quality controlled network (1,987 CMLs), drawn in the published style.
-* Fig. 2: availability, with the unchanged original script (CML mean 66.35%).
-* Fig. 3: frequencies and path lengths of the 1,987 QC CMLs and their 3,731 sublinks.
+* Fig. 1: map of the raw dataset (2,574 CMLs), drawn in the published style.
+* Fig. 2: availability, with the unchanged original script; CML row from the raw TX and RX of the 2,574 CMLs (mean 67.83%).
+* Fig. 3: frequencies and path lengths of the 2,574 raw CMLs (5,132 sublinks with frequency; 8 CMLs without frequency appear only in the path-length panel).
 * Fig. 4: event time series (13–14 July 2021), with the original producer.
 * Figs. 5 and 6: gauge detection and gauge-wet hexbin with the original plotting functions, all samples: N = 1,331,687, RMSE 3.63 mm/h, bias −0.91 mm/h, correlation 0.633, POD 74.6 %, correct negatives 88.6 %.
 * Fig. 7: rainfall fields of the released Graf rainfall, gridded with the unchanged IDW (`reconstruction_2026/05_figures/fig7_grid_builder/cml_grid_essd_publication_safe_singleopen.py`) and drawn with the unchanged renderer `original/code/figures/03_blettner_event_maps_timeseries.py`.

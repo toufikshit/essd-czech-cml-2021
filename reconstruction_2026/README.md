@@ -196,21 +196,27 @@ QC file (`--expected-input-sha256`). The QC exclusion lists are written by
 
 **Figures.**
 
-* Fig. 1: `05_figures/fig1_fig7/fig1_study_area.py` draws the 1,987 QC CMLs,
+* Figs. 1-3 describe the raw dataset: the 2,574 CMLs of the approved RAW
+  population (the released RAW file without its 6 R1 CMLs).
+* Fig. 1: `05_figures/fig1_fig7/fig1_study_area.py` draws the 2,574 RAW CMLs,
   the 424 rain gauges, the 251 weather stations (temperature and humidity
   positions) and the radar coverage in the published style. The radar coverage
   is the set of RADKLIM YW 2017.002 (corrected 2021 supplement) cells with data
   on at least one day from 1 April to 13 July 2021; the 1,132 radar paths lie
   inside it.
-* Fig. 2: `05_figures/fig2_fig3/run_fig2.sh` runs the unchanged
-  `original/code/figures/availability_native_timestep_percentage.py` with
-  `--cml-file` set to the QC file (it expects a copy of that script next to
-  it); `fig2_pixel_compare.py --apply-crop` applies the published 125-row top
-  crop.
-* Fig. 3: `05_figures/fig3_axis_correction/fig3_axis_corrected.py --population qc`
-  draws the 1,987 QC CMLs and their 3,731 sublinks with the verbatim notebook
-  cell (`fig2_fig3/fig3_cell22_cml_dataset_runing.py`) and the approved axis
-  correction.
+* Fig. 2: `05_figures/fig2_raw/fig2_raw_availability.py` runs the unchanged
+  `original/code/figures/availability_native_timestep_percentage.py` on the
+  released RAW file, restricted to the 2,574 RAW CMLs. A CML is available at a
+  minute when at least one sublink has both TX and RX (raw values, no QC
+  mask). The radar, gauge, temperature and humidity inputs are the same as in
+  `05_figures/fig2_fig3/run_fig2.sh`; `fig2_pixel_compare.py --apply-crop`
+  applies the published 125-row top crop.
+* Fig. 3: `05_figures/fig3_axis_correction/fig3_axis_corrected.py --population raw2574
+  --raw-full <released RAW file>` draws the 2,574 RAW CMLs (panel b) and their
+  5,132 sublinks with frequency (panels a and c; 8 CMLs without frequency are
+  left out there) with the verbatim notebook cell
+  (`fig2_fig3/fig3_cell22_cml_dataset_runing.py`) and the approved axis
+  correction (`fig3_raw2574_output.txt`).
 * Fig. 4: `05_figures/fig4_fig7/f4_01_event_plot_run.py` runs the original
   event-plot producer on the QC and 5-minute rainfall (event CML
   `45035_45097_2740`, 13-14 July 2021).
