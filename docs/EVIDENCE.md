@@ -1,15 +1,14 @@
 # Evidence
 
-This page lists what was verified, with the numbers and where the proof files
-sit. Two sources of evidence are kept apart on purpose:
+This page lists what was verified for the released dataset, with the numbers
+and where the proof files sit. The processing reports, tables and scripts are
+in `reconstruction_2026/`. Every processing step was checked by an
+independent second implementation.
 
-* **HPC run, October 2026.** The real data execution of the whole workflow on
-  the original HPC. Small outputs are committed unchanged under
-  `docs/evidence/hpc_run_2026-10/` (see `EVIDENCE_MANIFEST.json`). Large
-  outputs stay in the project archive, not in git.
-* **Local audit, October 2026.** An independent check on a second machine
-  (Windows, see `ENVIRONMENT.md`) against the verified archive data. Reports
-  under `docs/evidence/local_audit_2026-10/`.
+Older verification records (an HPC run and a local audit of an earlier,
+unpublished staging, kept unchanged under `docs/evidence/`) are explained in
+[reconstruction_2026/PROVENANCE_HISTORY.md](../reconstruction_2026/PROVENANCE_HISTORY.md).
+Their numbers do not describe the released dataset.
 
 ## 1. The preserved code is unchanged
 
@@ -18,74 +17,46 @@ notebooks match their recorded SHA256 hashes. This was checked after every
 restructuring step and on a fresh clone. The handoff archive itself was also
 verified file by file before any work started (257 of 257 files matched).
 
-## 2. The validated 5-minute reference is reproduced exactly
+## 2. Populations and quality control
 
-The HPC run recomputed all 2,219 links over the full 2020 to 2021 history
-with the unchanged original script
-(`original/code/cml_rainfall/cml_graf_itu2005_rebuild.py`; parameters and the
-525 skipped series with under 2 valid observations are in
-`hpc_run_2026-10/01_rainfall_rebuild/rebuild_summary.json`). The local audit
-then compared that recomputed file against the validated 5-minute reference
-(the author's internal benchmark, from which the released native 1-minute
-product was in turn verified in section 2b), value by value
-(`rainfall_identity_report.json`, `rainfall_static_vars_report.json`):
+`reconstruction_2026/02_qc/STAGE3_QC_REPORT.md`,
+`STAGE3_REVISION1_REPORT.md`:
 
 | Check | Result |
 |---|---|
-| `R_sublink_5min`, 137,782,581 shared finite values | identical, zero differences, identical masks |
-| `R_mean_5min`, 84,656,385 values | identical |
-| wet flags, validity flags, minute counters (up to 934,323,264 values each) | identical |
-| per link thresholds `graf_threshold_db`, `graf_rstd_q80_db`, geometry, metadata | identical |
+| RAW population | 2,574 CMLs, 5,148 sublink slots; 2,566 with frequency metadata, 904 E band |
+| QC population | 1,987 CMLs, 3,731 retained sublinks, 810 E band CMLs; 2,574 = 8 + 579 + 1,987 and 5,148 = 16 + 1,158 + 243 + 3,731 |
+| Every QC CML is in RAW | yes |
+| QC file | `QC_CORRECTED_CANDIDATE_REV1.nc`, sha256 `ca8afa95…`; time 308,160 one-minute steps; `trsl` = `tx − rx` at every unflagged minute |
+| Independent implementation | 70 CMLs: decisions, statistics, `tx`, `rx`, `trsl` and `qc_flag` bit-identical; detection limits of all 5,132 assessed sublinks identical |
 
-The earlier single link gate is contained in this result and was also rerun
-from scratch on the second machine (`run.py compare-rainfall`, link
-`10004_311866_3129`): 7,666 shared samples, zero error, zero mask mismatches
-(`one_link_comparison_report.json`).
+## 3. Rainfall
 
-Caveat: this identity needs the full 2020 to 2021 history. The released April
-to October data alone cannot rebuild the thresholds. The thresholds are
-stored inside the rainfall file. There was no calibration against gauges or
-radar; the thresholds and dry baselines are derived from the CML data.
-
-## 2b. The native 1-minute release reproduces the 5-minute reference exactly
-
-The published rainfall product is the native 1-minute NetCDF
-(`CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_1MIN_20210401_20211031.nc`), written
-on the original HPC by the verified exporter (preserved byte-identical as
-`docs/evidence/hpc_run_2026-10/cml_graf_export_1min_verified.py`; its
-maintained, path-configurable copy is `src/essd_cz/export_1min.py`). The
-exporter reruns the unchanged retrieval on the full 2020 to 2021 history and
-compares every batch against the validated 5-minute file before keeping
-anything.
-
-The local audit (October 23, 2026,
-`local_audit_2026-10/verify_1min_release_20261023.json`) then independently
-verified the released file against the validated April to October 5-minute
-benchmark:
+`reconstruction_2026/03_rainfall_graf/STAGE4_RAINFALL_REPORT.md`:
 
 | Check | Result |
 |---|---|
-| time axis: 308,160 regular 1-minute UTC slots, Apr 1 00:00 to Oct 31 23:59 | exact |
-| finite 1-minute directional rates | 648,844,578, matching the HPC run |
-| finite rate if and only if `graf_valid_1min` = 1; wet flag 255 exactly on invalid minutes | consistent everywhere |
-| derived `R_sublink_5min` (five complete valid minutes per block) | bit-identical, zero differences |
-| derived `R_mean_5min` (physical mean over finite directional 5-minute rates) | bit-identical |
-| derived wet/valid flags and minute counters | identical |
-| `R_mean_1min` versus mean of valid directional 1-minute rates | bit-identical |
-| geometry, thresholds, metadata versus the reference | bit-identical |
+| Code | `s4_01_rain_1min.py`; its scientific block (Graf, baseline, Pastorek, ITU 2005; 122 lines) is byte-identical to `src/essd_cz/export_1min.py` |
+| Input | the QC file above, checked by sha256 |
+| Output | 1,987 CMLs, 631,742,984 valid directional 1-minute values, 0 retrieval errors, sha256 `9014567c…` |
+| Independent implementation | 37 sublinks, 11.4 M rates: bit-identical; wet, valid and source flags identical |
+| Whole-file checks | ids equal the QC ids; excluded sublinks missing; finite rate if and only if `graf_valid_1min` = 1; `trsl_source_flag_1min` = `qc_flag & 24` at every minute |
+| 5-minute derivation | the whole 5-minute series re-derived independently: all 244.9 M values identical |
 
-Every 5-minute quantity used in the manuscript analysis is therefore exactly
-recoverable from the released 1-minute file alone (`src/essd_cz/rain5.py`);
-no separate 5-minute rainfall product is published.
+The Graf thresholds and the dry baselines are computed over the QC period
+(1 April to 31 October 2021) and are stored in the rainfall file. There is
+no calibration against gauges or radar.
 
-## 3. Entity counts and coverage
+## 4. Entity counts and coverage
 
-`run.py check` on the real files: raw 2,580 CMLs, preprocessed 2,219,
-rainfall 2,219, path radar 1,132, gauges 424, temperature 251, humidity 247.
-All seven files hold a complete April to October axis at native resolution
-(308,160 slots at 1 min, 61,632 at 5 min, 30,816 at 10 min).
+`run.py check` (metadata only) on the QC and rainfall files and the four
+reference files: QC 1,987 CMLs, rainfall 1,987, path radar 1,132, gauges
+424, temperature 251, humidity 247. All hold a complete April to October axis
+at native resolution (308,160 slots at 1 min, 61,632 at 5 min, 30,816 at
+10 min). The release RAW file (2,574 CMLs) is listed in
+`reconstruction_2026/DATA_RELEASE_MANIFEST.md`.
 
-## 4. Water vapour
+## 5. Water vapour
 
 Local audit of the support files (`wvd_support_audit.json`): the V6 NetCDF
 holds 1,352 directional series over April to October; the diagnostics and
@@ -95,58 +66,41 @@ station matched validation within 5 km gives 587 directional links and
 (`hpc_run_2026-10/WVD_V6_QUANTIZATION_BINNED_VALIDATION/run_summary.json`);
 the paper population (E band, length at least 4 km, quantization at most
 0.20 g per cubic metre, GRAF branch) is 45 directional sublinks from 31
-physical CMLs with N = 236,793 and correlation 0.598
-(`hpc_run_2026-10/07_wvd_paper_population/wvp_support_metrics.csv`). These
-counts were measured, not forced.
+physical CMLs with N = 236,793, RMSE 3.46 g per cubic metre and correlation
+0.598 (`hpc_run_2026-10/07_wvd_paper_population/wvp_support_metrics.csv`).
+These counts were measured, not forced. The WVD retrieval reads the RAW
+signals only, and all WVD links are in the released RAW population
+(`reconstruction_2026/04_validation/WVD_VERIFICATION_REPORT.md`).
 
-## 5. Gauge validation (substitute detector, read the caveat)
+## 6. Gauge validation
 
-`hpc_run_2026-10/02_gauge_validation/.../FINAL_GRAF_validation_summary.json`:
-validation of the recomputed rainfall against CHMI gauges over April to
-October 2021 (1,020 contributing physical CMLs, 218 gauges, N = 34.6
-million): all period RMSE 0.70 mm/h and correlation 0.60; wet periods RMSE
-3.33 and correlation 0.59; detection POD 0.758, FAR 0.796, MCC 0.350. The
-exact historical detector used for the paper is not recovered, so these
-numbers come from the documented substitute and must not be labelled
-identical to the paper.
+`reconstruction_2026/04_validation/STAGE5A_REPORT.md`: nearest CHMI gauge
+within 5 km of the CML midpoint, two complete 5-minute CML bins against the
+end-labelled 10-minute gauge amount, Graf detection from the QC `trsl` with
+`original/notebook_references/wetdry_validation/cml_graf_rstd_hess_radar_gauge_v3.py`.
+1,074 contributing CMLs, 2,015 sublinks, 217 gauges.
 
-## 6. Availability
+| Samples | N | RMSE (mm/h) | MBE (mm/h) | PCC |
+|---|---:|---:|---:|---:|
+| Gauge wet (≥ 0.1 mm/h), all samples | 1,331,687 | 3.63 | −0.91 | 0.633 |
+| Gauge wet, without blackout-reconstructed intervals | 1,327,998 | 3.38 | −0.89 | 0.606 |
+| All period, all samples | 34,249,231 | 0.768 | −0.019 | 0.634 |
 
-The unchanged availability script, run on the real files during the local
-audit, reproduced every mean from the HPC walkthrough to the last digit:
-CML 58.67 percent, path radar 99.48, gauges 99.74, temperature 99.57,
-humidity 99.56. Figures and tables: `hpc_run_2026-10/00_exploration/` and
-`local_audit_2026-10/availability_native_timestep_percentage.png`. The
-network holds 4,438 directional sublinks, of which 1,804 are E band.
+Detection: POD 74.6 %, false alarms 11.4 % of gauge-dry samples, correct
+negatives 88.6 %, FAR 0.791, CSI 0.195, MCC 0.354. The independent check
+recomputed every metric from the saved samples and reproduced the samples
+bit for bit for 30 CMLs.
 
-## 7. Tests
+## 7. Availability
 
-20 of 20 regression tests pass, and the synthetic seven file chain
+The unchanged availability script on the QC file and the four reference
+files gives these means of the native-step percentage: CML 66.35 percent,
+path radar 99.48, gauges 99.74, temperature 99.57, humidity 99.56
+(`reconstruction_2026/05_figures/fig2_fig3/fig2_numeric_summary_output.txt`).
+
+## 8. Tests
+
+21 of 21 regression tests pass, and the synthetic seven file chain
 (`tests/run_connected_mini.py`) runs end to end. These use synthetic
 fixtures, so they prove plumbing, not science; the science evidence is the
 sections above.
-
-## 8. Corrected processing (October 2026)
-
-Sections 2 to 6 describe the earlier 2,219-CML release. The corrected
-processing of October 2026 keeps the Graf method and changes the population
-and the quality control. Every step was approved by the author and
-reproduced by an independent second implementation; the reports are in
-`reconstruction_2026/`.
-
-| Check | Result |
-|---|---|
-| RAW population | 2,574 CMLs, 5,148 sublink slots (2,580 minus 6 non-operational CMLs) |
-| QC population | 1,987 CMLs, 3,731 retained sublinks; 2,574 = 8 + 579 + 1,987 |
-| Old vs new QC | 1,804 CMLs in both, 415 only in the old QC, 183 only in the new |
-| QC file | `QC_CORRECTED_CANDIDATE_REV1.nc`, sha256 `ca8afa95…`; second implementation on 70 CMLs bit-identical |
-| 1-minute rainfall | 1,987 CMLs, 631,742,984 valid directional values, 0 retrieval errors, sha256 `9014567c…`; second implementation on 37 sublinks bit-identical |
-| Validation control | the earlier inputs reproduce the published validation exactly (N 1,354,953, RMSE 3.33, MBE −0.93, PCC 0.585) |
-| Validation, Case A (headline) | gauge-wet N 1,331,687, RMSE 3.63 mm/h, MBE −0.91 mm/h, PCC 0.633; POD 74.6 %, correct negatives 88.6 % |
-| Validation, Case B (no blackout samples) | gauge-wet N 1,327,998, RMSE 3.38 mm/h, MBE −0.89 mm/h, PCC 0.606 |
-| Identical samples (30,750,879) | gauge-wet RMSE 3.357 → 3.296, PCC 0.594 → 0.612 |
-| Water vapour | inputs unchanged (RAW only); Table S13 and Fig. 8 unchanged |
-
-The rerun commands, parameters and checksums are in
-`reconstruction_2026/README.md`; the release files are listed in
-`reconstruction_2026/DATA_RELEASE_MANIFEST.md`.

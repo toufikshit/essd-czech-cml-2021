@@ -1,7 +1,7 @@
 # Provenance map
 
 Everything runnable in this repository falls into one of four classes (plus
-the corrected processing of October 2026, described at the end):
+the processing scripts of the released products, described at the end):
 
 * **Unchanged original.** A preserved scientific source, identical byte for
   byte, hash checked by `tools_verify_originals.py` against
@@ -33,13 +33,17 @@ Key entries; the full list is in `original/CONSOLIDATED_SOURCE_MANIFEST.json`.
 ## Adapters (`src/essd_cz/`, `notebooks/`, `tests/`, `run.py`)
 
 Path handling, the pipeline manifest, the CLI, and wrappers that call the
-unchanged originals. `src/essd_cz/export_1min.py` is the verified HPC
-exporter of the released native 1-minute rainfall with its hard-coded paths
-replaced by required arguments (the byte-identical original sits in
-`docs/evidence/hpc_run_2026-10/cml_graf_export_1min_verified.py`).
+unchanged originals. `src/essd_cz/export_1min.py` is a verified HPC
+exporter with its hard-coded paths replaced by required arguments (the
+byte-identical original sits in
+`docs/evidence/hpc_run_2026-10/cml_graf_export_1min_verified.py`); it belongs
+to the provenance history. The released rainfall was produced by
+`reconstruction_2026/03_rainfall_graf/scripts/s4_01_rain_1min.py`, which
+shares its scientific block byte for byte.
 `src/essd_cz/rain5.py` applies the producer's unchanged aggregation
 semantics to derive the analysis 5-minute series from the 1-minute release;
-it was verified bit for bit against the validated 5-minute reference.
+an independent re-derivation of the whole released file gave identical
+values.
 Notebook 03 loads the two original gridding functions directly from the
 preserved source file and applies them to the derived 5 min rainfall. The
 historical manuscript grid came from an older 1 min workflow, so the grid
@@ -51,8 +55,8 @@ hash are recorded in the evidence files.
 
 | Item | State |
 |---|---|
-| the March 2026 six step producer of the preprocessed file | not recovered; the July filter scripts are related but cannot be attributed |
-| the exact gauge wet and dry detector behind the paper's gauge validation | not recovered; `cml_graf_rstd_hess_radar_gauge_v3.py` is a labelled substitute behind an explicit switch |
+| the six step producer of an earlier staged QC file | not recovered (see `reconstruction_2026/PROVENANCE_HISTORY.md`); the released QC producer is known |
+| the original file of the gauge wet and dry helper | not recovered; the released validation uses `cml_graf_rstd_hess_radar_gauge_v3.py`, behind an explicit switch in notebook 02 |
 | the original corrected RADKLIM replay run | script recovered, run not proven |
 | the historical 1 min gridding workflow behind the manuscript map | replaced by the documented adapter |
 | the upstream raw telecom extraction log | not verified |
@@ -66,18 +70,19 @@ hash are recorded in the evidence files.
 * The explicit manual event choice in notebook 04 when the historical event
   cache is absent.
 
-## Corrected processing, October 2026 (`reconstruction_2026/`)
+## Processing of the released products (`reconstruction_2026/`)
 
-Byte-identical copies of the scripts, tables and reports of the corrected
-processing (population, QC revision 1, Graf rainfall, validation, figures).
+Byte-identical copies of the scripts, tables and reports that produced the
+released CML products (population, QC revision 1, Graf rainfall, validation,
+figures).
 `reconstruction_2026/FILE_PROVENANCE.csv` gives the source and SHA-256 of
 every file. The QC script is new code that follows the standalone v3 filter
 with documented changes; the rainfall script is a copy of
-`src/essd_cz/export_1min.py` in which only the input checks, the removed
-comparison with the old 5-minute reference and the new source flag differ. The Fig. 7 grid builder
+`src/essd_cz/export_1min.py` in which only the input checks and the new
+source flag differ. The Fig. 7 grid builder
 `reconstruction_2026/05_figures/fig7_grid_builder/cml_grid_essd_publication_safe_singleopen.py`
-is a verbatim copy from the author's notebook archive; its attribution to the
-published Fig. 7 grid is strongly supported but not proven. Nothing in
+is a verbatim copy from the author's notebook archive. The history of the
+processing is in `reconstruction_2026/PROVENANCE_HISTORY.md`. Nothing in
 `original/` changed, and the new files are not added to
 `original/CONSOLIDATED_SOURCE_MANIFEST.json`.
 

@@ -1,5 +1,11 @@
 # Changes from the verified HPC handoff tree
 
+> This page is a build log of the repository. Numbers in the passes before
+> 2026-10-29 (for example 2,580 raw and 2,219 quality controlled links)
+> describe an earlier, unpublished staging of the files, not the released
+> dataset. See
+> [reconstruction_2026/PROVENANCE_HISTORY.md](../reconstruction_2026/PROVENANCE_HISTORY.md).
+
 This repository was assembled mechanically from the full handoff archive
 `ESSD_CZ_2021_FULL_HANDOFF.tar`
 (SHA256 `b9b76cf49f62189c2456ed88a5db50ed86c628355fc2ad8d2fdf8efa0e26565f`),
