@@ -4,7 +4,7 @@
 
 `python run.py --config config/user_paths.json availability`
 
-The original `availability_native_timestep_percentage.py` produces CML, radar-path, gauge, temperature and relative-humidity percentage time series and saves a PNG/PDF plus five CSVs. On the research HPC this completed on real data with means of **58.67%, 99.48%, 99.74%, 99.57%, 99.56%**, respectively. Those are time-mean values for the five different native cadences, not interchangeable rainfall metrics.
+The original `availability_native_timestep_percentage.py` produces CML, radar-path, gauge, temperature and relative-humidity percentage time series and saves a PNG/PDF plus five CSVs. On the research HPC this completed on real data with means of **58.67%, 99.48%, 99.74%, 99.57%, 99.56%**, respectively. Those are time-mean values for the five different native cadences, not interchangeable rainfall metrics. With the corrected QC (1,987 CMLs, October 2026) the CML mean is **66.35%**; the other four rows do not change (`reconstruction_2026/05_figures/`).
 
 `python run.py --config ... validate-gauge --detector /path/to/exact/cml_graf_rstd_hess_radar_gauge.py`
 
@@ -19,3 +19,7 @@ Supporting scripts are under `original/code/wvd/`, notably `13_wvd_raw_60_100_in
 ## Upstream CHMI / DWD
 
 `original/code/chmi/chmi_historical_csv_to_netcdf_v5.py` is the confirmed converter from CHMI original CSV. `original/code/radar/dwd_radolan_processor.py` is recovered, but the exact corrected 2021 RADKLIM replay is not established; neither upstream script is necessary just to read the released NetCDF products.
+
+## Corrected processing (October 2026)
+
+The figure runners, the figure provenance table and the old/new comparisons of the corrected processing are in `reconstruction_2026/05_figures/`. Figures 2, 3, 5 and 6 were regenerated with the unchanged original plotting code; Figures 1, 4, 7 and 8 keep the published files. Figures 5 and 6 show Case A (with blackout-reconstructed samples): N = 1,331,687, RMSE 3.63 mm/h, bias −0.91 mm/h, correlation 0.633, POD 74.6 %, correct negatives 88.6 %. The Fig. 7 CML grid builder `cml_grid_essd_publication_safe_singleopen.py` is kept there with its provenance. The WVD inputs (RAW only) are unchanged, so Table S13 and Fig. 8 stay as published.

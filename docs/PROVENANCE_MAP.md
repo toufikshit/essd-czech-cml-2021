@@ -1,6 +1,7 @@
 # Provenance map
 
-Everything runnable in this repository falls into one of four classes:
+Everything runnable in this repository falls into one of four classes (plus
+the corrected processing of October 2026, described at the end):
 
 * **Unchanged original.** A preserved scientific source, identical byte for
   byte, hash checked by `tools_verify_originals.py` against
@@ -64,6 +65,21 @@ hash are recorded in the evidence files.
 * `tests/run_connected_mini.py` outputs: a fully synthetic seven file chain.
 * The explicit manual event choice in notebook 04 when the historical event
   cache is absent.
+
+## Corrected processing, October 2026 (`reconstruction_2026/`)
+
+Byte-identical copies of the scripts, tables and reports of the corrected
+processing (population, QC revision 1, Graf rainfall, validation, figures).
+`reconstruction_2026/FILE_PROVENANCE.csv` gives the source and SHA-256 of
+every file. The QC script is new code that follows the standalone v3 filter
+with documented changes; the rainfall script is a copy of
+`src/essd_cz/export_1min.py` in which only the input checks, the removed
+comparison with the old 5-minute reference and the new source flag differ. The Fig. 7 grid builder
+`reconstruction_2026/05_figures/fig7_grid_builder/cml_grid_essd_publication_safe_singleopen.py`
+is a verbatim copy from the author's notebook archive; its attribution to the
+published Fig. 7 grid is strongly supported but not proven. Nothing in
+`original/` changed, and the new files are not added to
+`original/CONSOLIDATED_SOURCE_MANIFEST.json`.
 
 ## Numbers and proof
 

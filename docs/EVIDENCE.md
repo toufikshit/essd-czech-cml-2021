@@ -125,3 +125,28 @@ network holds 4,438 directional sublinks, of which 1,804 are E band.
 (`tests/run_connected_mini.py`) runs end to end. These use synthetic
 fixtures, so they prove plumbing, not science; the science evidence is the
 sections above.
+
+## 8. Corrected processing (October 2026)
+
+Sections 2 to 6 describe the earlier 2,219-CML release. The corrected
+processing of October 2026 keeps the Graf method and changes the population
+and the quality control. Every step was approved by the author and
+reproduced by an independent second implementation; the reports are in
+`reconstruction_2026/`.
+
+| Check | Result |
+|---|---|
+| RAW population | 2,574 CMLs, 5,148 sublink slots (2,580 minus 6 non-operational CMLs) |
+| QC population | 1,987 CMLs, 3,731 retained sublinks; 2,574 = 8 + 579 + 1,987 |
+| Old vs new QC | 1,804 CMLs in both, 415 only in the old QC, 183 only in the new |
+| QC file | `QC_CORRECTED_CANDIDATE_REV1.nc`, sha256 `ca8afa95…`; second implementation on 70 CMLs bit-identical |
+| 1-minute rainfall | 1,987 CMLs, 631,742,984 valid directional values, 0 retrieval errors, sha256 `9014567c…`; second implementation on 37 sublinks bit-identical |
+| Validation control | the earlier inputs reproduce the published validation exactly (N 1,354,953, RMSE 3.33, MBE −0.93, PCC 0.585) |
+| Validation, Case A (headline) | gauge-wet N 1,331,687, RMSE 3.63 mm/h, MBE −0.91 mm/h, PCC 0.633; POD 74.6 %, correct negatives 88.6 % |
+| Validation, Case B (no blackout samples) | gauge-wet N 1,327,998, RMSE 3.38 mm/h, MBE −0.89 mm/h, PCC 0.606 |
+| Identical samples (30,750,879) | gauge-wet RMSE 3.357 → 3.296, PCC 0.594 → 0.612 |
+| Water vapour | inputs unchanged (RAW only); Table S13 and Fig. 8 unchanged |
+
+The rerun commands, parameters and checksums are in
+`reconstruction_2026/README.md`; the release files are listed in
+`reconstruction_2026/DATA_RELEASE_MANIFEST.md`.

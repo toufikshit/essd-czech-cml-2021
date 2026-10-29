@@ -1,7 +1,12 @@
 # Getting the data
 
 The data is not in this repository and never will be. It is distributed as a
-Zenodo deposit. The Zenodo link and DOI will be added here after publication.
+Zenodo record (DOI to be added when the data release is published).
+
+The next release contains the corrected products of October 2026: raw
+signals for 2,574 CMLs, quality controlled signals and rainfall for 1,987
+CMLs. The planned files, sizes and checksums are listed in
+`reconstruction_2026/DATA_RELEASE_MANIFEST.md`.
 
 ## The seven main files
 
@@ -23,8 +28,9 @@ The file names state the coverage: 1 April to 31 October 2021.
 The CML rainfall product is **native 1-minute**. Every 5-minute rainfall
 series used in the notebooks (validation, event series, gridding) is derived
 from it on first use — mean of five complete valid 1-minute samples per
-directional sublink — so no separate 5-minute rainfall download exists or is
-needed. See `docs/03_RAINFALL_EXPLAINED.md`.
+directional sublink — so a separate 5-minute rainfall download is not needed.
+The next release may also include this derived 5-minute file for
+convenience; it holds the same values. See `docs/03_RAINFALL_EXPLAINED.md`.
 
 Then copy `config/user_paths.example.json` to `config/user_paths.json` and
 set the seven paths. For example, with the data in `data/` inside this

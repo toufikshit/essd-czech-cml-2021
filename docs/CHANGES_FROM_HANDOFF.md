@@ -139,3 +139,18 @@ population or unit changed; the 44 preserved originals still verify.
 * Notebooks 01/02 and the documentation describe the 1-minute release and the
   derivation; no notebook result or figure population changed, because every
   derived 5-minute value is bit-identical to the previous product.
+
+## Corrected processing (2026-10-29, fifth pass)
+
+Added `reconstruction_2026/` with the author-approved corrected processing
+(Graf method kept): approved RAW population of 2,574 CMLs, QC revision 1 with
+1,987 CMLs and 3,731 retained sublinks, the 1-minute Graf rainfall from that
+QC, the gauge validation (Case A headline: N 1,331,687, RMSE 3.63 mm/h,
+MBE −0.91 mm/h, PCC 0.633) and the figure runners. All files there are
+byte-identical copies from the reconstruction workspace
+(`reconstruction_2026/FILE_PROVENANCE.csv`), including the Fig. 7 grid
+builder, which was not in the repository before. The README, data
+dictionary and evidence pages now give the corrected numbers. No file in
+`original/`, `src/`, `notebooks/` or `docs/evidence/` changed; the 44
+originals still verify. No NetCDF is in git; the proposed release files are
+listed in `reconstruction_2026/DATA_RELEASE_MANIFEST.md`.

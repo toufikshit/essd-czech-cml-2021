@@ -4,15 +4,17 @@ Code and notebooks for the dataset paper *Operational microwave links for
 hydrometeorological sensing: a multisource dataset for the Czech Republic*
 (Shit, Fencl and Bareš; Earth System Science Data, in preparation).
 
-The dataset contains observations from 2,219 commercial microwave links (CML)
-and reference sensors in the Czech Republic for April to October 2021. Nine
+The dataset contains observations from commercial microwave links (CML) and
+reference sensors in the Czech Republic for April to October 2021: 2,574 CMLs
+in the raw signal product and 1,987 CMLs after quality control. Nine
 notebooks walk from the released NetCDF files to rainfall retrieval, gauge
 validation, rainfall maps and E band water vapour analysis. The original
 scientific scripts are preserved unchanged under `original/` and the notebooks
 call them directly.
 
-> Status: the dataset is not yet on Zenodo. The Zenodo link and the DOIs will
-> be added here after the deposit is published.
+> Status: the dataset is not yet on Zenodo. It will be published in a Zenodo
+> record (DOI to be added when the data release is published). The article
+> DOI will be added once the paper has one.
 
 ## Quick start
 
@@ -68,9 +70,9 @@ of every notebook runs in seconds to minutes.
 
 | File | Step | Content |
 |---|---|---|
-| `CZ_CML_RAW_1MIN_20210401_20211031.nc` | 1 min | raw signal levels, 2,580 CMLs |
-| `CZ_CML_PREPROCESSED_1MIN_20210401_20211031.nc` | 1 min | quality controlled signals, 2,219 CMLs |
-| `CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_1MIN_20210401_20211031.nc` | 1 min | final CML rainfall in mm/h, native 1-minute |
+| `CZ_CML_RAW_1MIN_20210401_20211031.nc` | 1 min | raw signal levels, 2,574 CMLs |
+| `CZ_CML_PREPROCESSED_1MIN_20210401_20211031.nc` | 1 min | quality controlled signals, 1,987 CMLs (3,731 sublinks) |
+| `CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_1MIN_20210401_20211031.nc` | 1 min | final CML rainfall in mm/h, native 1-minute, 1,987 CMLs |
 | `CZ_RAIN_GAUGE_10MIN_20210401_20211031.nc` | 10 min | 424 CHMI rain gauges; `rr` is the amount in mm per 10 min |
 | `CZ_RADAR_CMLPATH_5MIN_20210401_20211031.nc` | 5 min | RADKLIM radar rainfall averaged along 1,132 CML paths, amount in mm per 5 min |
 | `CHMI_10MIN_TEMPERATURE_20210401_20211031.nc` | 10 min | 251 CHMI temperature stations |
@@ -87,20 +89,42 @@ event series, gridding) is derived from it by the notebooks: a directional
 physical-link mean is computed from the directional 5-minute rates. See
 [docs/03_RAINFALL_EXPLAINED.md](docs/03_RAINFALL_EXPLAINED.md).
 
+## Corrected processing (October 2026)
+
+The CML population, quality control and rainfall were reprocessed in October
+2026, with the same Graf rainfall method. The raw population is 2,574 CMLs
+(six non-operational CMLs removed), and quality control keeps 1,987 CMLs
+(earlier: 2,219). Against the nearest rain gauge over gauge wet intervals the
+rainfall gives N = 1,331,687, RMSE 3.63 mm/h, mean bias -0.91 mm/h and
+Pearson correlation 0.633. Without the samples that use reconstructed
+blackout minutes: N = 1,327,998, RMSE 3.38, bias -0.89, correlation 0.606.
+The water vapour results are unchanged.
+
+The code, parameters, reports and rerun commands are in
+[reconstruction_2026/](reconstruction_2026/README.md). The data files for the
+next release are listed in
+[reconstruction_2026/DATA_RELEASE_MANIFEST.md](reconstruction_2026/DATA_RELEASE_MANIFEST.md).
+A raw file with exactly 2,574 CMLs still has to be written before release.
+
 ## Reproducibility
 
-The released rainfall was reproduced exactly: a full recomputation of all
-2,219 links with the preserved original script matched the validated
-reference in every value and every mask, and the released native 1-minute
-file reproduces that same 5-minute reference bit for bit under the documented
-five-complete-samples aggregation. The verification numbers and proof files
-are in [docs/EVIDENCE.md](docs/EVIDENCE.md), and the provenance of every
-piece of code is in [docs/PROVENANCE_MAP.md](docs/PROVENANCE_MAP.md).
+The earlier 2,219-CML rainfall was reproduced exactly: a full recomputation
+of all 2,219 links with the preserved original script matched the validated
+reference in every value and every mask, and the native 1-minute file
+reproduces that same 5-minute reference bit for bit under the documented
+five-complete-samples aggregation. The corrected 1,987-CML rainfall uses the
+same retrieval code and was checked by an independent second implementation.
+The verification numbers and proof files are in
+[docs/EVIDENCE.md](docs/EVIDENCE.md), and the provenance of every piece of
+code is in [docs/PROVENANCE_MAP.md](docs/PROVENANCE_MAP.md).
 
 ## Troubleshooting
 
 * `wrong filename` from `run.py check`: fix the paths in
   `config/user_paths.json`. Do not rename the data files.
+* `Expected cml_id=2219` (or `2580`) from `run.py check` on the corrected
+  files: the count check in `src/essd_cz/catalog.py` still holds the earlier
+  counts. It will be updated together with the corrected data release.
 * `No output registered for 'X'`: run the previous notebook first.
 * `This output manifest was created with another configuration`: change
   `workspace` in `config/active_profile.json` instead of reusing another
