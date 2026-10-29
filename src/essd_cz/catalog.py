@@ -8,9 +8,9 @@ from .config import ROLES
 START = datetime(2021, 4, 1)
 END_EXCLUSIVE = datetime(2021, 11, 1)
 CONTRACT = {
-    'raw': ('time', 1, 308160, 'cml_id', 2580),
-    'qc': ('time', 1, 308160, 'cml_id', 2219),
-    'rain': ('time_1min', 1, 308160, 'cml_id', 2219),
+    'raw': ('time', 1, 308160, 'cml_id', 2574),
+    'qc': ('time', 1, 308160, 'cml_id', 1987),
+    'rain': ('time_1min', 1, 308160, 'cml_id', 1987),
     'radar': ('time', 5, 61632, 'cml_id', 1132),
     'gauge': ('time', 10, 30816, 'WSI', 424),
     'temperature': ('time', 10, 30816, 'station', 251),
