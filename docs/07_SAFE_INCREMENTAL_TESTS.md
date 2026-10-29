@@ -11,7 +11,7 @@ make a comparison pass; if they differ, record and investigate the discrepancy.
 checking, ID/timestamp alignment, plotting entry points and metrics. These
 modules call the original functions rather than reimplementing Graf, baseline,
 Pastorek or ITU2005. Test code lives in `tests/` and writes to new `results/`
-folders only. The original QC producer from March 2026 remains unconfirmed.
+folders only. The QC producer is `reconstruction_2026/02_qc/scripts/s3_04_qc_corrected_rev1.py`.
 
 ## Test fixture: comparable structure, NOT a claim of scientific identity
 
@@ -90,33 +90,31 @@ Do not edit the original formulas to suppress differences. **Gate 3 was executed
 local build environment, which lacks netCDF4 and pycomlink. Re-run it after
 any new scientific-wrapper changes.**
 
-### Gate 4 — real-file numerical comparison (HPC only; after Gate 3 passes)
+### Gate 4 — real-file numerical comparison (after Gate 3 passes)
 
 ```bash
-PY=/home/jovyan/my-conda-envs/tf-env/bin/python
-$PY run.py --config config/hpc_source.example.json check
-$PY run.py --config config/hpc_source.example.json \
+python run.py --config config/user_paths.json check
+python run.py --config config/user_paths.json \
     compare-rainfall --link-index 3 --days 14 --threads 2 \
     --no-plot
 ```
 
 The Q80 Graf threshold and constant baseline are computed from **the entire
-available 2020–2021 QC history** for that one link, *then* 1–14 April 2021
-5-minute results are compared. Both directional series, wet flags and masks
+QC file (1 April to 31 October 2021)** for that one link, *then* 1–14 April
+2021 5-minute results are compared. Both directional series, wet flags and masks
 must be checked. No source arrays are written. The first command requires
 full 2021-04-01 to 2021-10-31 coverage but accepts longer source files.
 
-The earlier April-only smoke test shows the algorithm runs; it is **not**
+A short smoke test shows the algorithm runs; it is **not**
 proof of numerical identity to the actual source output. Even a passing
 2-day synthetic test does not prove historical numerical reproduction.
 If the full-period comparison differs, record the exact disagreement before
 making a scientific or version change. Many published scripts require
-additional intermediate data, and the exact March 2026 QC producer remains
-unconfirmed.
+additional intermediate data.
 
 ## After each intended wrapper change
 
-Repeat **Gate 0 → 1 → 2 → 3**. Do not re-run a full 2219-link rainfall rebuild
+Repeat **Gate 0 → 1 → 2 → 3**. Do not re-run a full 1,987-link rainfall rebuild
 just to test a path change. Keep the synthetic fixture files outside the
 published data directories. Commit/record the source hash, test report and
 Python/environment versions. Only then run Gate 4 again as needed.

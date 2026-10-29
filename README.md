@@ -89,32 +89,29 @@ event series, gridding) is derived from it by the notebooks: a directional
 physical-link mean is computed from the directional 5-minute rates. See
 [docs/03_RAINFALL_EXPLAINED.md](docs/03_RAINFALL_EXPLAINED.md).
 
-## Corrected processing (October 2026)
+## Processing and validation
 
-The CML population, quality control and rainfall were reprocessed in October
-2026, with the same Graf rainfall method. The raw population is 2,574 CMLs
-(six non-operational CMLs removed), and quality control keeps 1,987 CMLs
-(earlier: 2,219). Against the nearest rain gauge over gauge wet intervals the
-rainfall gives N = 1,331,687, RMSE 3.63 mm/h, mean bias -0.91 mm/h and
-Pearson correlation 0.633. Without the samples that use reconstructed
-blackout minutes: N = 1,327,998, RMSE 3.38, bias -0.89, correlation 0.606.
-The water vapour results are unchanged.
+The raw product holds 2,574 CMLs (2,566 with frequency metadata, 904 of them
+E band). Quality control keeps 1,987 CMLs with 3,731 directional sublinks
+(810 E band CMLs), and the rainfall covers the same 1,987 CMLs. Against the
+nearest rain gauge over gauge wet intervals the rainfall gives N = 1,331,687,
+RMSE 3.63 mm/h, mean bias -0.91 mm/h and Pearson correlation 0.633. Without
+the intervals that use reconstructed blackout minutes: N = 1,327,998, RMSE
+3.38, bias -0.89, correlation 0.606. Detection: 74.6 % of gauge-wet intervals
+are detected and 88.6 % of gauge-dry intervals are correctly dry. Water
+vapour from 31 E band CMLs (45 sublinks, 236,793 pairs) gives RMSE
+3.46 g/m3 and correlation 0.598.
 
-The code, parameters, reports and rerun commands are in
-[reconstruction_2026/](reconstruction_2026/README.md). The data files for the
-next release are listed in
-[reconstruction_2026/DATA_RELEASE_MANIFEST.md](reconstruction_2026/DATA_RELEASE_MANIFEST.md).
-A raw file with exactly 2,574 CMLs still has to be written before release.
+The code, parameters, reports and rerun commands of the processing are in
+[reconstruction_2026/](reconstruction_2026/README.md).
 
 ## Reproducibility
 
-The earlier 2,219-CML rainfall was reproduced exactly: a full recomputation
-of all 2,219 links with the preserved original script matched the validated
-reference in every value and every mask, and the native 1-minute file
-reproduces that same 5-minute reference bit for bit under the documented
-five-complete-samples aggregation. The corrected 1,987-CML rainfall uses the
-same retrieval code and was checked by an independent second implementation.
-The verification numbers and proof files are in
+The released rainfall was computed from the released quality controlled file
+with the Graf retrieval code, and an independent second implementation
+reproduced it bit for bit on the sublinks it checked. The 5-minute series
+derived from the 1-minute file were re-derived independently with identical
+values. The verification numbers and proof files are in
 [docs/EVIDENCE.md](docs/EVIDENCE.md), and the provenance of every piece of
 code is in [docs/PROVENANCE_MAP.md](docs/PROVENANCE_MAP.md).
 
@@ -122,9 +119,6 @@ code is in [docs/PROVENANCE_MAP.md](docs/PROVENANCE_MAP.md).
 
 * `wrong filename` from `run.py check`: fix the paths in
   `config/user_paths.json`. Do not rename the data files.
-* `Expected cml_id=2219` (or `2580`) from `run.py check` on the corrected
-  files: the count check in `src/essd_cz/catalog.py` still holds the earlier
-  counts. It will be updated together with the corrected data release.
 * `No output registered for 'X'`: run the previous notebook first.
 * `This output manifest was created with another configuration`: change
   `workspace` in `config/active_profile.json` instead of reusing another

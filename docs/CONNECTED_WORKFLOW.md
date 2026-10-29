@@ -16,8 +16,8 @@ Change the paths **once** in `config/user_paths.json` (copied from example), and
 |---|---|---|
 | 00 | 7 NetCDF → network map, characteristics, availability monthly CSV/PNG | five-sensor source availability script unmodified |
 | 01 | released native 1-min rain → `rainfall_1min` + derived 5-min `rainfall` manifest entries (optional full-history retrieval) | default registers the published 1-min release and its exact 5-min derivation; opt-in expensive original Graf producer |
-| 02 | staged rainfall → review rain time series; optional exact full-history comparison and gauge validation | historical Graf detector missing; compatibility v3 unverified |
-| 03 | stage-01 **5-min Graf rainfall** + QC geometry → `R(time,y,x)` IDW grid NetCDF | reuses unchanged original IDW mathematical functions; **adapter not same as historic 1-min grid** |
+| 02 | staged rainfall → review rain time series; optional one-link comparison and gauge validation | gauge validation uses the Graf helper v3 (as for the released numbers) behind an explicit switch |
+| 03 | stage-01 **5-min Graf rainfall** + QC geometry → `R(time,y,x)` IDW grid NetCDF | reuses unchanged original IDW mathematical functions; **adapter, not the Fig. 7 grid builder** |
 | 04 | stage-03 grid + separately configured *native* RADKLIM daily YW → native/hourly map PNG/PDF | `cartopy` + native YW external directory required; if exact selected-event cache absent, opt-in explicit demonstration selection from grid extent is clearly marked (not historical event discovery) |
 | 05 | raw CML + gauge/temp → V6 WVD NC, or register original precomputed V6 | full 2020–21 history affects calibration; original V6 supporting product is not in seven main files |
 | 06 | stage-05 V6 + **extra quantization and diagnostics CSVs** + CHMI humidity/temp → binned sensitivity metrics and station-matched pairs | original `33_v6_binned_validation_hexbins.py`, no invented data |
@@ -26,11 +26,11 @@ Change the paths **once** in `config/user_paths.json` (copied from example), and
 
 ## Scientific and availability caveats
 
-- **Do not confuse current HPC 2020–21 source files with the planned physically April–October 2021 seven-file release**. The tested exact rainfall numeric replay needed the longer history; public April–October data may not recreate the identical baseline. Users can still reproduce *plots from released rainfall* and compute an explicitly fresh alternative rainfall using available QC.
+- **Do not confuse longer 2020–21 source files on the author's HPC with the April–October 2021 seven-file release**. The released rainfall thresholds and baselines were computed over the released QC period (1 April to 31 October 2021), so recomputation should use the released QC file.
 - **Final rainfall is Graf RSTD + constant baseline + Pastorek WAA + ITU-R 2005**, not ITU2003 or radar-assisted wet-dry.
-- **New spatial adapter** follows original IDW code but applies it to final released 5min series, whereas an original historic figure may have used a different 1-min source and full selected-event grid. This is a reviewer demonstration; compare outputs scientifically before asserting exact Figure 7 match.
+- **Spatial adapter** follows original IDW code and applies it to the derived 5-min series of the released rainfall. The paper's Figure 7 grid is built with `reconstruction_2026/05_figures/fig7_grid_builder/`; compare outputs scientifically before asserting an exact Figure 7 match.
 - The native DWD RADKLIM YW radar fields are not the path-averaged radar NetCDF among the seven. The user must supply their own native YW radar directory, licensed appropriately.
-- Water vapour V6 quantization CSVs/validation cache are separate supporting inputs. Original March 2026 six-step QC executable still unconfirmed; preserve provenance.
+- Water vapour V6 quantization CSVs/validation cache are separate supporting inputs. The QC producer is `reconstruction_2026/02_qc/scripts/s3_04_qc_corrected_rev1.py`; preserve provenance.
 - Original code and source checksums are preserved, while the **new wrappers are clearly separate** in `src/essd_cz/connected.py`. Data licences: CML CC BY-NC 4.0; CHMI/DWD CC BY 4.0. Software licence still requires approval.
 
 ## Fast synthetic checks

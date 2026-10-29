@@ -4,13 +4,13 @@
 
 `python run.py --config config/user_paths.json availability`
 
-The original `availability_native_timestep_percentage.py` produces CML, radar-path, gauge, temperature and relative-humidity percentage time series and saves a PNG/PDF plus five CSVs. On the research HPC this completed on real data with means of **58.67%, 99.48%, 99.74%, 99.57%, 99.56%**, respectively. Those are time-mean values for the five different native cadences, not interchangeable rainfall metrics. With the corrected QC (1,987 CMLs, October 2026) the CML mean is **66.35%**; the other four rows do not change (`reconstruction_2026/05_figures/`).
+The original `availability_native_timestep_percentage.py` produces CML, radar-path, gauge, temperature and relative-humidity percentage time series and saves a PNG/PDF plus five CSVs. On the released files the means are **66.35%, 99.48%, 99.74%, 99.57%, 99.56%**, respectively. Those are time-mean values for the five different native cadences, not interchangeable rainfall metrics.
 
 `python run.py --config ... validate-gauge --detector /path/to/exact/cml_graf_rstd_hess_radar_gauge.py`
 
-The final paper hexbin and confusion plotting script is preserved unchanged in `original/code/figures/rebuild_ESSD_FINAL_GRAF_shared_population_NEW_EVENT_FINAL_HEXBIN_SPACING.py`. It needs an **exact historically executed Graf helper** that was *not* recovered. If you want to test code compatibility only, specify `--allow-unverified-v3` explicitly; this is NOT proof of the original numbers. The plotting script matches the nearest gauge to each CML midpoint (≤5 km), aggregates two complete CML 5-min windows against end-labelled 10-min gauge amounts, and requires the gauge confusion matrix to use the same sample population as the hexbin.
+The final paper hexbin and confusion plotting script is preserved unchanged in `original/code/figures/rebuild_ESSD_FINAL_GRAF_shared_population_NEW_EVENT_FINAL_HEXBIN_SPACING.py`. The released validation numbers (N 1,331,687, RMSE 3.63 mm/h, MBE −0.91 mm/h, PCC 0.633 for gauge-wet intervals) were computed with a copy of its validation function and the Graf helper `original/notebook_references/wetdry_validation/cml_graf_rstd_hess_radar_gauge_v3.py` (`reconstruction_2026/04_validation/`). The CLI loads that helper only when you pass `--allow-unverified-v3` explicitly; the original helper file itself was not recovered. The plotting script matches the nearest gauge to each CML midpoint (≤5 km), aggregates two complete CML 5-min windows against end-labelled 10-min gauge amounts, and requires the gauge confusion matrix to use the same sample population as the hexbin.
 
-The historical `original/code/figures/06_run_multiple_events_vs_radar.py` reads native RADKLIM files and an earlier event grid, and is not runnable from the seven published NetCDF files alone. Avoid confusing this with the final Graf/gauge validation figure.
+The original `original/code/figures/06_run_multiple_events_vs_radar.py` reads native RADKLIM files and a precomputed CML IDW grid, and is not runnable from the seven published NetCDF files alone. Avoid confusing this with the final Graf/gauge validation figure.
 
 ## WVD: a supporting demonstration, not an eighth core release NetCDF
 
@@ -20,6 +20,14 @@ Supporting scripts are under `original/code/wvd/`, notably `13_wvd_raw_60_100_in
 
 `original/code/chmi/chmi_historical_csv_to_netcdf_v5.py` is the confirmed converter from CHMI original CSV. `original/code/radar/dwd_radolan_processor.py` is recovered, but the exact corrected 2021 RADKLIM replay is not established; neither upstream script is necessary just to read the released NetCDF products.
 
-## Corrected processing (October 2026)
+## Paper figures
 
-The figure runners, the figure provenance table and the old/new comparisons of the corrected processing are in `reconstruction_2026/05_figures/`. Figures 2, 3, 5 and 6 were regenerated with the unchanged original plotting code; Figures 1, 4, 7 and 8 keep the published files. Figures 5 and 6 show Case A (with blackout-reconstructed samples): N = 1,331,687, RMSE 3.63 mm/h, bias −0.91 mm/h, correlation 0.633, POD 74.6 %, correct negatives 88.6 %. The Fig. 7 CML grid builder `cml_grid_essd_publication_safe_singleopen.py` is kept there with its provenance. The WVD inputs (RAW only) are unchanged, so Table S13 and Fig. 8 stay as published.
+All figures show the released dataset. The figure runners and the figure provenance table are in `reconstruction_2026/05_figures/`.
+
+* Fig. 1: map of the released quality controlled network (1,987 CMLs), drawn in the published style.
+* Fig. 2: availability, with the unchanged original script (CML mean 66.35%).
+* Fig. 3: frequencies and path lengths of the 1,987 QC CMLs and their 3,731 sublinks.
+* Fig. 4: event time series (13–14 July 2021), with the original producer.
+* Figs. 5 and 6: gauge detection and gauge-wet hexbin with the original plotting functions, all samples: N = 1,331,687, RMSE 3.63 mm/h, bias −0.91 mm/h, correlation 0.633, POD 74.6 %, correct negatives 88.6 %.
+* Fig. 7: rainfall fields of the released Graf rainfall, gridded with the unchanged IDW (`reconstruction_2026/05_figures/fig7_grid_builder/cml_grid_essd_publication_safe_singleopen.py`) and drawn with the unchanged renderer `original/code/figures/03_blettner_event_maps_timeseries.py`.
+* Fig. 8: water vapour (31 CMLs, 45 sublinks, 236,793 pairs; RMSE 3.46 g m−3, correlation 0.598), with `original/code/wvd/plot_wvp_support_hexbins_no_titles.py`.

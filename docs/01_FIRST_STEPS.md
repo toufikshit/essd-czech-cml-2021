@@ -6,8 +6,8 @@ You need Python 3.10+, `numpy`, `pandas`, `xarray`, `netCDF4`, `matplotlib`, `nu
 2. Run `python tools_verify_originals.py`. This verifies all 44 original files, without opening data.
 3. Run `python run.py --config config/user_paths.json check`. It checks native resolutions, entity counts, exact native time coverage and the ITU2005 product label. It is not a validation of observation values.
 4. Run `python run.py --config config/user_paths.json availability`. Open the PNG and CSV files under `results/availability/`.
-5. On the original research HPC, compare the complete-history rainfall using `python run.py --config config/hpc_source.example.json compare-rainfall --link-index 3 --days 14`.
+5. Compare one link's recomputed rainfall with the released file using `python run.py --config config/user_paths.json compare-rainfall --link-index 3 --days 14` (needs the science extras).
 
-**Avoid** `rebuild-all-rainfall` until you understand runtime and time-window effects. It recomputes all 2,219 physical links. Start with the comparator for one physical link. Read `docs/04_REPRODUCE_AND_COMPARE.md`.
+**Avoid** `rebuild-all-rainfall` until you understand runtime and time-window effects. It recomputes all 1,987 physical links. Start with the comparator for one physical link. Read `docs/04_REPRODUCE_AND_COMPARE.md`.
 
 If you see `sh: [CML]: command not found`, terminal output was accidentally pasted as shell commands. Copy only the commands inside code fences.
