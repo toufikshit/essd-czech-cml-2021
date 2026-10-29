@@ -19,7 +19,7 @@ Paths are relative to the author's release folder (`ESSD_RELEASE/`).
 | RAW | `CZ_CML_RAW_1MIN_20210401_20211031.nc` (2,574 CMLs) | **does not exist** | – | – | staged RAW, 2,580 CMLs, 2,257,209,979 B, `46b130aa144a4e96d9698ca94c06ff625ad7670d8aa362b6e4c49a467806d012` |
 | QC | `CZ_CML_PREPROCESSED_1MIN_20210401_20211031.nc` (1,987 CMLs) | `FINAL_RECONSTRUCTION_20261027/stage3/QC_CORRECTED_CANDIDATE_REV1.nc` | 2,409,368,783 | `ca8afa95aacb50dacbd5f7d96f776c56a78c63d1a4888e9f721a29cdcfafde65` | staged QC, 2,219 CMLs, 3,351,446,358 B, `badc3bc800904806c85ccc740c0f28448b63094911666216c038f56c5bc44d19` |
 | Rainfall, 1 min | `CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_1MIN_20210401_20211031.nc` (1,987 CMLs) | `FINAL_RECONSTRUCTION_20261027/stage4/CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_1MIN_20210401_20211031_STAGE4.nc` | 445,051,457 | `9014567c3201be60441d1d8721c809d13ad5fa193e38a7b65606848b868a607e` | staged rainfall, 2,219 CMLs, 493,609,050 B, `be2cd93843b6babbfe9d091de35d23db81071c66c7d9e1eee3ae03fee7a0780f` |
-| Rainfall, 5 min (derived) | `CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_5MIN_DERIVED_20210401_20211031.nc` (suggested name) | `FINAL_RECONSTRUCTION_20261027/stage4/CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_5MIN_DERIVED_20210401_20211031_STAGE4.nc` | 338,126,319 | `a28d920be643d8647f21263a247b61e40496b793a44f453a902bdac8018820ee` | nothing (new file) |
+| Rainfall, 5 min (derived, **not released**) | not a release file; reproducible from the 1-minute file | `FINAL_RECONSTRUCTION_20261027/stage4/CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_5MIN_DERIVED_20210401_20211031_STAGE4.nc` | 338,126,319 | `a28d920be643d8647f21263a247b61e40496b793a44f453a902bdac8018820ee` | nothing (new file) |
 
 ### RAW: no 2,574-CML file exists
 
@@ -52,10 +52,10 @@ but it would contradict the approved RAW population of 2,574.
   (it is stated in `qc_blackout_method`) and that the QC title does not mention
   revision 1. Any metadata rewrite changes the SHA-256, so the values above are
   for the files as approved and must be recomputed after a rewrite.
-* The 5-minute file is new. The earlier staging published only the 1-minute
-  rainfall, because the 5-minute series are derived from it exactly
-  (`src/essd_cz/rain5.py`). Publishing the 5-minute file is a convenience; the
-  author should confirm it.
+* The 5-minute file is not released, as before and as stated in the manuscript:
+  the 5-minute series are derived from the 1-minute file exactly
+  (`src/essd_cz/rain5.py`). Its hash is listed only so that a local derivation
+  can be checked against the verified one.
 
 ## 2. Files that stay the same
 
