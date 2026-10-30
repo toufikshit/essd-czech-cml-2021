@@ -6,8 +6,8 @@ by hand. Configure the data once in `config/user_paths.json`.
 
 "Exact" below means the output was shown to match the released product or a
 prior verified run number for number. "Adapted" means the workflow uses the
-unchanged original functions on the released files, but the historical
-manuscript figure came from an older input, so pixel identity is not claimed.
+unchanged original functions on the released files, but the manuscript
+figure was made with a different script, so pixel identity is not claimed.
 The proof for every "exact" claim is in [EVIDENCE.md](EVIDENCE.md).
 
 ## 00 Explore Data
@@ -17,9 +17,9 @@ The proof for every "exact" claim is in [EVIDENCE.md](EVIDENCE.md).
 * Makes: network map, CML frequency and length figures, monthly and native
   availability tables and figures.
 * Cost: minutes.
-* Fidelity: availability uses the unchanged original script and reproduces
-  the paper numbers exactly (CML 58.67 percent mean and the four reference
-  sensors above 99.4 percent). The network and characteristics plots are
+* Fidelity: availability uses the unchanged original script that made the
+  paper figure (CML 66.35 percent mean and the four reference sensors above
+  99.4 percent). The network and characteristics plots are
   reviewer figures.
 
 ## 01 Graf Rainfall
@@ -31,10 +31,10 @@ The proof for every "exact" claim is in [EVIDENCE.md](EVIDENCE.md).
   analysis 5-minute derivation (five complete valid minutes per block) for the
   next notebooks. With `RECOMPUTE=True` it reruns the full original retrieval.
 * Cost: about a minute for the one-time derivation. The full recomputation of
-  2,219 links takes hours.
-* Fidelity: exact. The 5-minute derivation reproduced the validated reference
-  bit for bit on all 2,219 links, and the full recomputation reproduced that
-  reference in every value and mask.
+  1,987 links takes hours.
+* Fidelity: exact for the 5-minute derivation (an independent re-derivation
+  of the whole released file gave identical values). The recomputation uses
+  the same retrieval functions as the released file.
 
 ## 02 Rainfall Validation
 
@@ -46,10 +46,11 @@ The proof for every "exact" claim is in [EVIDENCE.md](EVIDENCE.md).
 * Makes: rainfall time series figure; optional one link numerical regression;
   optional gauge confusion matrix and hexbins.
 * Cost: seconds by default; the optional steps are heavy.
-* Fidelity: the one link regression is exact (7,666 shared samples, zero
-  error). The gauge validation uses a substitute detector because the exact
-  historical detector is not recovered; do not treat its numbers as identical
-  to the paper.
+* Fidelity: the one link regression compares a recomputation with the
+  released values. The gauge validation uses the Graf helper
+  `cml_graf_rstd_hess_radar_gauge_v3.py`, the same helper used for the
+  released validation numbers; it runs only with `ALLOW_UNVERIFIED_V3`
+  because the original helper file was not recovered.
 
 ## 03 Grid CML Rainfall
 
@@ -59,8 +60,9 @@ The proof for every "exact" claim is in [EVIDENCE.md](EVIDENCE.md).
 * Makes: a 5 min rainfall grid NetCDF built with the unchanged original
   inverse distance weighting functions.
 * Cost: minutes.
-* Fidelity: adapted. The historical manuscript grid came from an older 1 min
-  workflow.
+* Fidelity: adapted. The paper's Fig. 7 grid is built with the grid builder
+  in `reconstruction_2026/05_figures/fig7_grid_builder/` (same IDW settings);
+  this notebook uses the two original IDW functions directly.
 
 ## 04 Spatial Radar Maps
 

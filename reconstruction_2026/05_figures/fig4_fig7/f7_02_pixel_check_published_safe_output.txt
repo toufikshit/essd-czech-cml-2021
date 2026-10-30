@@ -1,0 +1,11 @@
+frame rows [np.float64(209.0), np.float64(661.0), np.float64(1258.0), np.float64(1710.0), np.float64(2344.0)]
+frame cols [np.float64(648.0), np.float64(1573.0), np.float64(1582.0), np.float64(2507.0), np.float64(2517.0), np.float64(3442.0), np.float64(3451.0), np.float64(4376.0), np.float64(4386.0), np.float64(5311.0), np.float64(5320.0), np.float64(6245.0), np.float64(6255.0), np.float64(7180.0), np.float64(7189.0), np.float64(8114.0)]
+grid_safe_original_0p01.nc: res 0.010  overall same-class agreement 91.9812%
+    {'panel': '2021-07-13 16:05:00', 'pixels_compared': 407148, 'same_class': 400753, 'agreement': 0.9842931808580664, 'within_one_class_or_same': 0.9842931808580664}
+    {'panel': '2021-07-13 17:05:00', 'pixels_compared': 407148, 'same_class': 384304, 'agreement': 0.9438926385491271, 'within_one_class_or_same': 0.9856366726595734}
+    {'panel': '2021-07-13 18:05:00', 'pixels_compared': 407148, 'same_class': 362889, 'agreement': 0.8912950573255917, 'within_one_class_or_same': 0.9917302798982188}
+    {'panel': '2021-07-13 19:05:00', 'pixels_compared': 407148, 'same_class': 337025, 'agreement': 0.827770245709177, 'within_one_class_or_same': 0.9933783292561918}
+    {'panel': '2021-07-13 20:05:00', 'pixels_compared': 407148, 'same_class': 355795, 'agreement': 0.8738714177645476, 'within_one_class_or_same': 0.9457396327625335}
+    {'panel': '2021-07-13 21:05:00', 'pixels_compared': 407148, 'same_class': 362068, 'agreement': 0.889278591568668, 'within_one_class_or_same': 0.9362590507628675}
+    {'panel': '2021-07-13 22:05:00', 'pixels_compared': 407148, 'same_class': 387060, 'agreement': 0.9506616758525156, 'within_one_class_or_same': 0.9539283012565455}
+    {'panel': '2021-07-13 23:05:00', 'pixels_compared': 407148, 'same_class': 406104, 'agreement': 0.9974358218633028, 'within_one_class_or_same': 0.9974358218633028}

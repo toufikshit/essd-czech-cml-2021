@@ -1,0 +1,21 @@
+SAVED ..\control_reproduction\FINAL_GRAF_hexbin_gauge_WETONLY_202104_202110.png and PDF
+SAVED ..\control_reproduction\FINAL_GRAF_confusion_GAUGE_same_population_202104_202110.png and PDF
+{
+  "samples": "C:\\Users\\taouf\\ESSD_RELEASE\\FINAL_RECONSTRUCTION_20261027\\stage5a\\control\\control_released_samples.npz",
+  "fig6_gauge_wet_stats": {
+    "N": 1354953,
+    "RMSE": 3.3265412004784003,
+    "MBE": -0.9262826298328277,
+    "PCC": 0.5854077500694844
+  },
+  "fig5_confusion": {
+    "TP": 1026880,
+    "FP": 4014661,
+    "FN": 328073,
+    "TN": 29196125,
+    "POD_pct": 75.78713062371905,
+    "false_alarm_pct_of_dry": 12.088425127908746,
+    "miss_pct": 24.21286937628095,
+    "correct_negative_pct": 87.91157487209125
+  }
+}

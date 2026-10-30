@@ -1,10 +1,13 @@
 # Getting the data
 
 The data is not in this repository and never will be. It is distributed as a
-Zenodo deposit: https://doi.org/10.5281/zenodo.23398309. Download
+Zenodo record: https://doi.org/10.5281/zenodo.23398309. The DOI is reserved;
+the files can be downloaded when the record is published. Download
 `ESSD_CZ_CML_2021_dataset.zip` from the record and extract it; it contains
 the folders and files below plus this documentation and the checksums.
-Verify the extracted files with `sha256sum -c SHA256SUMS.txt`.
+
+The release contains raw signals for 2,574 CMLs, quality controlled signals
+and rainfall for 1,987 CMLs, and reference data from CHMI and DWD.
 
 ## The seven main files
 

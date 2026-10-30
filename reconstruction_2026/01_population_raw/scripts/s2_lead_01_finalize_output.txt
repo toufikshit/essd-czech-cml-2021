@@ -1,0 +1,11 @@
+audit rows 5160 | rx_only>50% sublinks 22
+          rows  cmls  minutes
+proposal                     
+P2a          2     2  1038881
+P2b          3     3   337432
+P2c          1     1   362288
+P3           8     8  3049403
+P4          11    11        0
+P5          16    16  1806630
+P6          14    14       16
+lead-recommended raw CML exclusions: 6 ['10004_11582_3122', '10662_10795_3342', '27040_27099_3747', '29002_29004_3810', '41920_323338_4235', '49111_329218_4481'] -> raw 2574 CMLs / 5148 sublinks

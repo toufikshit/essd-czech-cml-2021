@@ -1,0 +1,112 @@
+CHECKS
+  approved RAW CMLs: 2574
+  approved RAW subset of full-history RAW ids: True
+  assessed = approved - no-frequency: True
+  new QC subset of approved RAW (strict): True
+  new QC ids unique: True
+  no 13/R1 CML in new QC: True
+  no empty-255 CML in new QC: True
+  no no-frequency CML in new QC: True
+  NetCDF CMLs = retained CMLs of the table: True
+  NetCDF sublink status = table status: True
+  every retained CML has >= 1 retained sublink: True
+  empty-255 count: 255
+  reconciliation CMLs: True
+  reconciliation sublinks: True
+
+RECONCILIATION
+                                     population  cmls  sublinks
+                             Approved RAW input  2574      5148
+          Excluded before QC: no frequency (P3)     8        16
+                                 Assessed by QC  2566      5132
+Excluded by QC (CMLs without a passing sublink)   579      1158
+         Excluded sublinks inside retained CMLs     0       243
+                              Retained after QC  1987      3731
+
+SUBLINK STATUS (assessed)
+status
+retained                                     3731
+excluded_detection_limit                      852
+excluded_fluctuation                          364
+excluded_no_observed_total_loss_in_period     165
+excluded_p5_tx_zero_nonoperational             15
+excluded_fluctuation_and_detection_limit        5
+
+SUBLINK STATUS in retained CMLs
+status
+retained                                     3731
+excluded_fluctuation                          170
+excluded_detection_limit                       40
+excluded_no_observed_total_loss_in_period      26
+excluded_p5_tx_zero_nonoperational              7
+
+CML EXCLUSION REASONS
+primary_reason
+detection limit (all sublinks with data)             414
+fluctuation (all sublinks with data)                  99
+no usable observations in the period                  61
+no frequency metadata (not rainfall-ready)             8
+detection limit and fluctuation                        3
+no usable observations (P5 direction and no data)      2
+
+COMPARISON WITH RELEASED QC (2219)
+change         new_status                                                            
+in both        retained                                                                  1804
+in neither     excluded before QC: no frequency                                             8
+               excluded by QC: detection limit (all sublinks with data)                   414
+               excluded by QC: detection limit and fluctuation                              3
+               excluded by QC: fluctuation (all sublinks with data)                         5
+               excluded by QC: no usable observations (P5 direction and no data)            1
+               excluded by QC: no usable observations in the period                        13
+               not in approved RAW: R1 non-operational (Stage 2)                            2
+new only       retained                                                                   183
+released only  excluded by QC: fluctuation (all sublinks with data)                        94
+               excluded by QC: no usable observations (P5 direction and no data)            1
+               excluded by QC: no usable observations in the period                        48
+               not in approved RAW: R1 non-operational (Stage 2)                            4
+               not in approved RAW: author exclusion of the 13 TX = 0 CMLs (Stage 1B)      13
+               not in approved RAW: empty metadata-only CML                               255
+
+PROCESSING COUNTS (retained sublinks | all assessed sublinks)
+  n_p6_masked: 9 | 14
+  n_tx_invalid: 0 | 0
+  n_rx_invalid: 0 | 0
+  n_plateau_masked: 1,262,668 | 2,830,539
+  n_blackout_gaps: 6,410 | 9,234
+  n_blackout_minutes: 37,414 | 54,618
+  n_blackout_rejected_gaps: 1,784 | 4,958
+  n_blackout_rejected_minutes: 19,937 | 61,943
+  n_interp_gaps: 651,631 | 892,374
+  n_interp_minutes: 706,377 | 972,894
+  n_tl_observed_after_masks: 631,446,096 | 858,961,242
+  sublinks with >= 1 reconstructed blackout minute (retained): 1136
+  P6 minutes in window: 14 of 15
+
+DETECTION LIMIT (ITU 2005, per sublink, assessed sublinks with frequency):
+count    5132.000
+mean        1.429
+std         3.486
+min         0.006
+25%         0.059
+50%         0.480
+75%         1.359
+max        62.134
+  sublinks with R_min >= 2: 898; NaN: 0
+  CMLs in both: released 2003 CML value vs new per-sublink min: median ratio 0.593
+
+E-BAND (>= 70 GHz) CMLs: new QC 810
+ALL CHECKS PASS
+
+REVISION 1 vs FIRST CANDIDATE (5132 sublinks)
+  status changed: 0
+  retained CML set identical: True
+  n_blackout_gaps: 14,192 -> 9,234  (retained sublinks: 8,194 -> 6,410)
+  n_blackout_minutes: 116,561 -> 54,618  (retained sublinks: 57,351 -> 37,414)
+  n_interp_gaps: 892,374 -> 892,374  (retained sublinks: 651,631 -> 651,631)
+  n_interp_minutes: 972,894 -> 972,894  (retained sublinks: 706,377 -> 706,377)
+  n_plateau_masked: 2,830,539 -> 2,830,539  (retained sublinks: 1,262,668 -> 1,262,668)
+  n_tl_observed_after_masks: 858,961,242 -> 858,961,242  (retained sublinks: 631,446,096 -> 631,446,096)
+  removed blackout minutes = rejected minutes: True
+  max |frac_long change|: 0; sublinks changed: 0
+  max |frac_short change|: 0; sublinks changed: 0
+  max |detection_limit_mmhr change|: 0; sublinks changed: 0

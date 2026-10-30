@@ -1,0 +1,13 @@
+PRODUCER C:\Users\taouf\ESSD_RELEASE\essd-czech-cml-2021\original\code\figures\rebuild_ESSD_FINAL_GRAF_shared_population_NEW_EVENT_FINAL_HEXBIN_SPACING.py sha256 7358e242925dbe5c2b317d2d2e67213cc54a52d71173adc814ecc66a09dcc6fb
+cml: C:\Users\taouf\ESSD_RELEASE\FINAL_RECONSTRUCTION_20261027\stage3\QC_CORRECTED_CANDIDATE_REV1.nc
+rain: C:\Users\taouf\ESSD_RELEASE\FINAL_RECONSTRUCTION_20261027\stage4\CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_5MIN_DERIVED_20210401_20211031_STAGE4.nc
+radar: C:\Users\taouf\ESSD_RELEASE\extracted\full\ESSD_CZ_2021_HANDOFF\data\source_full_history\radar\CZ_RADAR_CMLPATH_5MIN_20200101_20211231.nc
+gauge: C:\Users\taouf\ESSD_RELEASE\extracted\full\ESSD_CZ_2021_HANDOFF\data\source_full_history\gauge\CZ_RAIN_GAUGE_10MIN_20200101_20211231.nc
+temp: C:\Users\taouf\ESSD_RELEASE\extracted\full\ESSD_CZ_2021_HANDOFF\data\source_full_history\temperature\CHMI_10MIN_TEMPERATURE_2021.nc
+hum: C:\Users\taouf\ESSD_RELEASE\extracted\full\ESSD_CZ_2021_HANDOFF\data\source_full_history\humidity\CHMI_10MIN_HUMIDITY_2021.nc
+TRY DIFFERENT EVENT: 2021-07-13 12:00:00 -> 2021-07-14 01:00:00; source: 2021-07-13 event (Figure 7)
+NEW EVENT CML SELECTED: 28038_28079_2496
+SAVED C:\Users\taouf\ESSD_RELEASE\FINAL_RECONSTRUCTION_20261027\stage5b\fig47\work\fig4_stage4_auto\FINAL_GRAF_event_20210713_20210714.png and PDF
+FINAL GRAF event: {'cml_id': '28038_28079_2496', 'midpoint_to_gauge_km': 3.8760140018893945, 'temp_station_km': 3.8760140018893945, 'humidity_station_km': 3.8760140018893945, 'event_start': '2021-07-13 12:00:00', 'event_end': '2021-07-14 01:00:00', 'rain_rate_source': 'Final Graf ITU2005 Pastorek product', 'explicit_event_id_requested': None, 'explicit_event_id_rejection_reason': None, 'selection': 'different event, strongest eligible E-band Graf/radar/gauge CML'}
+SELECTED NEW EVENT: 2021-07-13 12:00:00 to 2021-07-14 01:00:00; physical CML 28038_28079_2496
+DONE

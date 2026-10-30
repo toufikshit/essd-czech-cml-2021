@@ -1,0 +1,20 @@
+cml_id,stage,rule,reason,in_released_raw,in_released_qc
+10033_11436_3151,1B,author dataset decision,TX = 0 dBm at every valid minute; non-operational,0,1
+10408_10410_3284,1B,author dataset decision,TX = 0 dBm at every valid minute; non-operational,0,1
+31095_31220_3870,1B,author dataset decision,TX = 0 dBm at every valid minute; non-operational,0,1
+31095_31220_3871,1B,author dataset decision,TX = 0 dBm at every valid minute; non-operational,0,1
+31133_318029_3883,1B,author dataset decision,TX = 0 dBm at every valid minute; non-operational,0,1
+37097_37151_4135,1B,author dataset decision,TX = 0 dBm at every valid minute; non-operational,0,1
+42127_42186_4287,1B,author dataset decision,TX = 0 dBm at every valid minute; non-operational,0,1
+43001_43009_4290,1B,author dataset decision,TX = 0 dBm at every valid minute; non-operational,0,1
+43036_332113_4303,1B,author dataset decision,TX = 0 dBm at every valid minute; non-operational,0,1
+48032_48082_4445,1B,author dataset decision,TX = 0 dBm at every valid minute; non-operational,0,1
+48059_347495_4455,1B,author dataset decision,TX = 0 dBm at every valid minute; non-operational,0,1
+58006_58134_4635,1B,author dataset decision,TX = 0 dBm at every valid minute; non-operational,0,1
+58052_58140_4641,1B,author dataset decision,TX = 0 dBm at every valid minute; non-operational,0,1
+10004_11582_3122,2,R1 (P2a),"no sublink has TX and RX in the same minute (s0: 3:TX entirely missing, RX present; s1: 3:TX entirely missing, RX present)",1,1
+10662_10795_3342,2,R1 (P2b),"no sublink has TX and RX in the same minute (s0: 5:empty; s1: 3:RX entirely missing, TX present)",1,1
+27040_27099_3747,2,R1 (P2a),"no sublink has TX and RX in the same minute (s0: 3:TX entirely missing, RX present; s1: 3:TX entirely missing, RX present)",1,1
+29002_29004_3810,2,R1 (P2b),"no sublink has TX and RX in the same minute (s0: 3:TX entirely missing, RX present; s1: 5:empty)",1,1
+41920_323338_4235,2,R1 (P2c),"TX = 0 dBm at every valid minute on both sublinks, except one placeholder-mixed minute (127.5 dBm) on sublink 0",1,0
+49111_329218_4481,2,R1 (P2b),"no sublink has TX and RX in the same minute (s0: 3:TX entirely missing, RX present; s1: 5:empty)",1,0

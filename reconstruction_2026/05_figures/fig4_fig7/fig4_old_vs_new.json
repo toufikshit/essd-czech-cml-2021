@@ -1,0 +1,206 @@
+[
+  {
+    "cml_id": "45035_45097_2740",
+    "sublink1_trsl": {
+      "old_finite": 781,
+      "new_finite": 781,
+      "identical_minutes": 780,
+      "max_abs_diff_db": 3.814697265625e-06,
+      "old_max": 76.0,
+      "new_max": 76.0
+    },
+    "sublink2_trsl": {
+      "old_finite": 781,
+      "new_finite": 781,
+      "identical_minutes": 781,
+      "max_abs_diff_db": 0.0,
+      "old_max": 77.80000305175781,
+      "new_max": 77.80000305175781
+    },
+    "new_qc_flag_minutes": {
+      "bit1": 0,
+      "bit2": 0,
+      "bit4": 0,
+      "bit8": 0,
+      "bit16": 2
+    },
+    "old_panel_b": {
+      "finite_5min": 157,
+      "n_5min": 157,
+      "max_mmph": 118.9085464477539,
+      "acc_mm": 54.873151646654186,
+      "sublink_acc_mm": [
+        52.009488111182385,
+        57.736815182126
+      ],
+      "graf_wet_5min_per_sublink": [
+        74,
+        108
+      ],
+      "graf_valid_5min_per_sublink": [
+        157,
+        157
+      ],
+      "graf_threshold_db": [
+        0.13375410437583923,
+        0.13921058177947998
+      ],
+      "selection_score_inputs": [
+        118.9085464477539,
+        71.76000022888184,
+        93.60000228881836
+      ],
+      "selection_score": 71.76000022888184,
+      "gauge_km": 0.7157625814789887
+    },
+    "new_panel_b": {
+      "finite_5min": 157,
+      "n_5min": 157,
+      "max_mmph": 118.9085464477539,
+      "acc_mm": 54.872422708294266,
+      "sublink_acc_mm": [
+        52.009488111182385,
+        57.735357305406154
+      ],
+      "graf_wet_5min_per_sublink": [
+        74,
+        104
+      ],
+      "graf_valid_5min_per_sublink": [
+        157,
+        157
+      ],
+      "graf_threshold_db": [
+        0.13398289680480957,
+        0.1396646946668625
+      ],
+      "selection_score_inputs": [
+        118.9085464477539,
+        71.76000022888184,
+        93.60000228881836
+      ],
+      "selection_score": 71.76000022888184,
+      "gauge_km": 0.7157625814789887
+    },
+    "panel_b_diff": {
+      "identical_5min": 153,
+      "max_abs_diff_mmph": 0.006873353384435177,
+      "mean_diff_mmph": -5.571503387942056e-05
+    },
+    "new_5min_blackout_minutes": 0,
+    "new_5min_interpolated_minutes": 2,
+    "stage4_1min_flags": {
+      "minutes": 781,
+      "bit8_blackout_reconstructed": 0,
+      "bit16_interpolated": 2,
+      "graf_wet_1min_per_sublink": [
+        359,
+        492
+      ],
+      "rain_from_bit8_minutes_mm": 0.0,
+      "max_rate_at_bit8_mmph": null
+    }
+  },
+  {
+    "cml_id": "28038_28079_2496",
+    "sublink1_trsl": {
+      "old_finite": 740,
+      "new_finite": 750,
+      "identical_minutes": 740,
+      "max_abs_diff_db": 0.0,
+      "old_max": 103.0999984741211,
+      "new_max": 103.0999984741211
+    },
+    "sublink2_trsl": {
+      "old_finite": 739,
+      "new_finite": 760,
+      "identical_minutes": 739,
+      "max_abs_diff_db": 0.0,
+      "old_max": 94.0,
+      "new_max": 94.0
+    },
+    "new_qc_flag_minutes": {
+      "bit1": 0,
+      "bit2": 0,
+      "bit4": 10,
+      "bit8": 11,
+      "bit16": 22
+    },
+    "old_panel_b": {
+      "finite_5min": 138,
+      "n_5min": 157,
+      "max_mmph": 0.5218992233276367,
+      "acc_mm": 0.05093760839857472,
+      "sublink_acc_mm": [
+        0.04989694128744304,
+        0.00848667356573666
+      ],
+      "graf_wet_5min_per_sublink": [
+        34,
+        30
+      ],
+      "graf_valid_5min_per_sublink": [
+        138,
+        135
+      ],
+      "graf_threshold_db": [
+        0.18988193571567535,
+        0.18658366799354553
+      ],
+      "selection_score_inputs": [
+        0.5218992233276367,
+        98.83017942121333,
+        133.79999542236328
+      ],
+      "selection_score": 0.5218992233276367,
+      "gauge_km": 3.8760140018893945
+    },
+    "new_panel_b": {
+      "finite_5min": 146,
+      "n_5min": 157,
+      "max_mmph": 91.07945251464844,
+      "acc_mm": 22.873975778512733,
+      "sublink_acc_mm": [
+        0.04989694128744304,
+        25.156813287816476
+      ],
+      "graf_wet_5min_per_sublink": [
+        37,
+        39
+      ],
+      "graf_valid_5min_per_sublink": [
+        143,
+        146
+      ],
+      "graf_threshold_db": [
+        0.18986055254936218,
+        0.18447136878967285
+      ],
+      "selection_score_inputs": [
+        91.07945251464844,
+        98.83017942121333,
+        133.79999542236328
+      ],
+      "selection_score": 91.07945251464844,
+      "gauge_km": 3.8760140018893945
+    },
+    "panel_b_diff": {
+      "identical_5min": 133,
+      "max_abs_diff_mmph": 18.68707847595215,
+      "mean_diff_mmph": 0.13908634075652
+    },
+    "new_5min_blackout_minutes": 11,
+    "new_5min_interpolated_minutes": 22,
+    "stage4_1min_flags": {
+      "minutes": 781,
+      "bit8_blackout_reconstructed": 11,
+      "bit16_interpolated": 22,
+      "graf_wet_1min_per_sublink": [
+        187,
+        193
+      ],
+      "rain_from_bit8_minutes_mm": 16.697899627685548,
+      "max_rate_at_bit8_mmph": 91.07945251464844
+    }
+  }
+]

@@ -1,0 +1,27 @@
+group,product,blackout,subset,N,RMSE,MBE,PCC
+full population,released (control),n/a,all_period,34565739,0.7015879171635514,-0.019137258902541213,0.6003108246016736
+full population,released (control),n/a,gauge_wet_ge_0.1,1354953,3.3265412004784003,-0.9262826298328277,0.5854077500694844
+full population,Stage 4,with bit 8,all_period,34249231,0.7677945853902204,-0.019407283808686036,0.6344598452462883
+full population,Stage 4,with bit 8,gauge_wet_ge_0.1,1331687,3.632715362763583,-0.9091762818646633,0.633070613492371
+full population,Stage 4,without bit 8,all_period,34244692,0.713896866951281,-0.019004088384994035,0.6150958530908798
+full population,Stage 4,without bit 8,gauge_wet_ge_0.1,1327998,3.3807319975511776,-0.8942484421440698,0.6062215022713041
+common samples (processing change),released (control),n/a,all_period,30750879,0.6993311673294461,-0.021567230540515268,0.6108110934880002
+common samples (processing change),released (control),n/a,gauge_wet_ge_0.1,1194055,3.3566710030943527,-0.9464085241966081,0.5943786882251052
+common samples (processing change),Stage 4,with bit 8,all_period,30750879,0.6888790903336571,-0.020195783652128367,0.6259529029210089
+common samples (processing change),Stage 4,with bit 8,gauge_wet_ge_0.1,1194055,3.29594868566942,-0.9124246463925489,0.6115098325709524
+common samples (processing change),released (control),without Stage-4 bit-8 samples,all_period,30749998,0.6953151366226776,-0.021552570963052086,0.6090391163229213
+common samples (processing change),released (control),without Stage-4 bit-8 samples,gauge_wet_ge_0.1,1193662,3.3381867517801096,-0.9456551579305782,0.5918022307421101
+common samples (processing change),Stage 4,without bit 8,all_period,30749998,0.6845043073550525,-0.020293430432699048,0.6244265180126414
+common samples (processing change),Stage 4,without bit 8,gauge_wet_ge_0.1,1193662,3.2785849825744826,-0.9127713705689411,0.6086616630214396
+released-only samples: CML not in Stage 4,released (control),n/a,all_period,2034026,0.7430767026277992,-0.007561155355812915,0.4997412670824882
+released-only samples: CML not in Stage 4,released (control),n/a,gauge_wet_ge_0.1,86714,3.3011695613774266,-0.9746393459815118,0.49143252868552884
+"released-only samples: CML kept, sample lost",released (control),n/a,all_period,1780834,0.6916348454284832,0.00960077519835453,0.5102613545667932
+"released-only samples: CML kept, sample lost",released (control),n/a,gauge_wet_ge_0.1,74184,2.832191851994794,-0.5458147516021989,0.4953400767140934
+Stage-4-only samples: new CML,Stage 4,with bit 8,all_period,3483037,0.9175332479587934,-0.005704541101375631,0.5928459026950741
+Stage-4-only samples: new CML,Stage 4,with bit 8,gauge_wet_ge_0.1,132817,4.063926252787687,-0.6855648204789647,0.6168882968202783
+Stage-4-only samples: new CML,Stage 4,without bit 8,all_period,3482999,0.8996819160856476,-0.0059686836775868155,0.5914529766909973
+Stage-4-only samples: new CML,Stage 4,without bit 8,gauge_wet_ge_0.1,132786,4.0005680091290134,-0.6891099580010839,0.6126891037530324
+"Stage-4-only samples: CML kept, sample gained",Stage 4,with bit 8,all_period,15315,13.191361043614027,-1.5525510365888557,0.6856922864391976
+"Stage-4-only samples: CML kept, sample gained",Stage 4,with bit 8,gauge_wet_ge_0.1,4815,22.36708146718573,-6.271726138670446,0.5559022944128837
+"Stage-4-only samples: CML kept, sample gained",Stage 4,without bit 8,all_period,11695,4.393391498587211,-0.5110978183764058,0.6872506290728193
+"Stage-4-only samples: CML kept, sample gained",Stage 4,without bit 8,gauge_wet_ge_0.1,1550,11.97194304665928,-4.203540678222559,0.5783505299834903
