@@ -1,2 +1,0 @@
-CMLs 2574 gauges 424 weather stations (union T/RH) 251 radar valid cells 567728
-exit 0

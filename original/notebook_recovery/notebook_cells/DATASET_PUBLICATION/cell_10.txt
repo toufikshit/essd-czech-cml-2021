@@ -1,3 +1,0 @@
-import xarray as xr
-ds = xr.open_dataset("/home/jovyan/cml_rainrate_S2020_E2021_valid_cml_radar.nc")
-ds

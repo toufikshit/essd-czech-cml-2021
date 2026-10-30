@@ -8,10 +8,10 @@ software. It never covers the data files.
 
 | What | Licence | Notes |
 |---|---|---|
-| `src/`, `tests/`, `notebooks/`, `run.py`, `tools_verify_originals.py`, `docs/` | MIT | project software and documentation, designed and developed by Taoufiq Shit |
-| `original/` (44 preserved scripts and notebooks) | MIT | preserved project research code by the same author. It implements published methods (see below) but contains no copied third party source files. |
+| `scripts/`, `src/`, `notebooks/`, `config/`, `tests/`, `tools_verify_originals.py`, `docs/` | MIT | project software and documentation, designed and developed by Taoufiq Shit |
+| `original/` (17 unchanged scientific scripts) | MIT | project research code by the same author. It implements published methods (see below) but contains no copied third party source files. |
 | The seven NetCDF data files | CC BY-NC 4.0 or CC BY 4.0 per file | distributed through Zenodo, never through this repository. See the table below. |
-| Python dependencies (numpy, pandas, xarray, netCDF4, scipy, matplotlib, numba, pycomlink, cartopy, requests, beautifulsoup4, tqdm) | each project's own licence | installed from PyPI, not redistributed here |
+| Python dependencies (numpy, pandas, xarray, netCDF4, scipy, matplotlib, numba, pycomlink, poligrain, cartopy, pillow, itur, requests, beautifulsoup4, tqdm) | each project's own licence | installed from PyPI, not redistributed here |
 
 ## Data files and attribution
 
@@ -19,10 +19,10 @@ software. It never covers the data files.
 |---|---|---|
 | `CZ_CML_RAW_1MIN_*.nc` | CC BY-NC 4.0 | CML signal data provided by T-Mobile Czech Republic a.s. under an agreement (available on request). Noncommercial use only. |
 | `CZ_CML_PREPROCESSED_1MIN_*.nc` | CC BY-NC 4.0 | derived from T-Mobile Czech Republic CML data |
-| `CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_5MIN_*.nc` | CC BY-NC 4.0 | derived from T-Mobile Czech Republic CML data |
+| `CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_1MIN_*.nc` | CC BY-NC 4.0 | derived from T-Mobile Czech Republic CML data |
 | `CZ_RAIN_GAUGE_10MIN_*.nc` | CC BY 4.0 | Czech Hydrometeorological Institute (CHMI) open data, https://opendata.chmi.cz |
-| `CHMI_10MIN_TEMPERATURE_2021.nc` | CC BY 4.0 | CHMI open data |
-| `CHMI_10MIN_HUMIDITY_2021.nc` | CC BY 4.0 | CHMI open data |
+| `CHMI_10MIN_TEMPERATURE_*.nc` | CC BY 4.0 | CHMI open data |
+| `CHMI_10MIN_HUMIDITY_*.nc` | CC BY 4.0 | CHMI open data |
 | `CZ_RADAR_CMLPATH_5MIN_*.nc` | CC BY 4.0 | derived from Deutscher Wetterdienst (DWD) RADKLIM YW radar data, DWD Climate Data Center OpenData |
 | WVD V6 support files (optional Zenodo supplement) | CC BY-NC 4.0 | derived from T-Mobile Czech Republic CML data and CHMI station data |
 
@@ -34,8 +34,8 @@ them from the DWD Climate Data Center under its own terms.
 The code implements published methods, cited in the paper: the Graf wet and
 dry detection scheme, the Pastorek wet antenna correction, ITU R P.838 (2005)
 rain attenuation coefficients, and processing built on the open source
-pycomlink library. pycomlink is used as an installed dependency under its own
-licence and is not copied into this repository.
+pycomlink and poligrain libraries. They are used as installed dependencies under
+their own licences and are not copied into this repository.
 
 ## Funding
 

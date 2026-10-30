@@ -1,9 +1,0 @@
-raw           308160 native slots entities=2574, physically cropped=True: PASS
-qc            308160 native slots entities=1987, physically cropped=True: PASS
-rain          308160 native slots entities=1987, physically cropped=True: PASS
-gauge          30816 native slots entities=424, physically cropped=True: PASS
-radar          61632 native slots entities=1132, physically cropped=True: PASS
-temperature    30816 native slots entities=251, physically cropped=True: PASS
-humidity       30816 native slots entities=247, physically cropped=True: PASS
-NOTE: time-axis coverage is not a numerical-data identity test.
-exit 0

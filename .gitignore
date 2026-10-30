@@ -15,7 +15,7 @@ data/*
 !data/README.md
 external_radar/
 
-# Generated results (each user's workspace); small HPC evidence lives in docs/evidence/
+# Generated results (output_dir of config/user_paths.json)
 results/*
 !results/.gitkeep
 

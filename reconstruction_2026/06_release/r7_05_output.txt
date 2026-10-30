@@ -1,9 +1,0 @@
-draft state: unsubmitted | reserved DOI: 10.5281/zenodo.23398309
-replace ESSD_CZ_CML_2021_dataset.zip: remote 7368105954 md5:810cc5a4aeb6d4cd326bd3be15bb49f6 -> local 6368237019 md5:b807b0fb672784e63117312a0d37dddd
-replace README_DATA.md: remote 6305 md5:04c11e3624baed858b67f386ae279f02 -> local 6022 md5:456741af1312342453457a2cdfc6b080
-replace DATA_DICTIONARY.md: remote 14537 md5:cf6f9b76c3ebd42c377b7ad532073cce -> local 14463 md5:d0258e7227d738c43253c6a9ee9024d8
-replace SHA256SUMS.txt: remote 1217 md5:666a19df344751268dbec477b8d3bf1f -> local 1383 md5:ee9873aaa79783ecb72f99d3d72c22d5
-description: 2,580/2,219 -> 2,574/1,987; full-history thresholds sentence -> April to October 2021
-upload ESSD_CZ_CML_2021_dataset.zip failed: curl: (55) Send failure: Connection was reset
-
-exit 1

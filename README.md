@@ -2,142 +2,152 @@
 
 Code and notebooks for the dataset paper *Operational microwave links for
 hydrometeorological sensing: a multisource dataset for the Czech Republic*
-(Shit, Fencl and Bareš; Earth System Science Data, in preparation).
+(Shit, Fencl, Mudroch and Bareš; Earth System Science Data, in preparation).
 
-The dataset contains observations from commercial microwave links (CML) and
-reference sensors in the Czech Republic for April to October 2021: 2,574 CMLs
-in the raw signal product and 1,987 CMLs after quality control. Nine
-notebooks walk from the released NetCDF files to rainfall retrieval, gauge
-validation, rainfall maps and E band water vapour analysis. The original
-scientific scripts are preserved unchanged under `original/` and the notebooks
-call them directly.
+The repository contains the Python scripts and notebooks used to process the data
+and produce the figures. The README explains how to install the required packages,
+set the data paths, and run the code.
 
-> Dataset: Zenodo, https://doi.org/10.5281/zenodo.23398309. The DOI is
-> reserved; the files can be downloaded when the record is published. The
-> article DOI will be added once the paper has one.
+> Dataset: Zenodo, https://doi.org/10.5281/zenodo.23398309. The DOI is reserved;
+> the files can be downloaded when the record is published. The article DOI will
+> be added once the paper has one.
 
-## Quick start
+## 1. Download the data
 
-1. **Get the code.** Clone this repository.
+Download `ESSD_CZ_CML_2021_dataset.zip` from the Zenodo record and extract it, for
+example into the `data/` folder of this repository. It contains:
 
-2. **Get the data.** Download `ESSD_CZ_CML_2021_dataset.zip` from
-   https://doi.org/10.5281/zenodo.23398309 and extract it. Keep the file
-   names. Details: [data/README.md](data/README.md).
+| Folder / file | Content |
+|---|---|
+| `primary/CZ_CML_RAW_1MIN_20210401_20211031.nc` | raw TX and RX, 2,574 CMLs, 1 min |
+| `primary/CZ_CML_PREPROCESSED_1MIN_20210401_20211031.nc` | quality controlled signals, 1,987 CMLs, 1 min |
+| `primary/CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_1MIN_20210401_20211031.nc` | CML rainfall, 1,987 CMLs, 1 min |
+| `primary/CZ_RAIN_GAUGE_10MIN_20210401_20211031.nc` | 424 CHMI rain gauges, 10 min |
+| `primary/CZ_RADAR_CMLPATH_5MIN_20210401_20211031.nc` | RADKLIM radar along 1,132 CML paths, 5 min |
+| `primary/CHMI_10MIN_TEMPERATURE_20210401_20211031.nc` | 251 CHMI stations, 10 min |
+| `primary/CHMI_10MIN_HUMIDITY_20210401_20211031.nc` | 247 CHMI stations, 10 min |
+| `supplementary_wvd/` | three water vapour (WVD) supporting files |
+| `README_DATA.md`, `DATA_DICTIONARY.md`, `SHA256SUMS.txt` | documentation and checksums |
 
-3. **Install.** Python 3.10 or newer.
+Details and checksums: [data/README.md](data/README.md). Variables:
+[docs/DATA_DICTIONARY.md](docs/DATA_DICTIONARY.md).
 
-   ```bash
-   pip install -e .
-   ```
+Two steps need data that are not in the deposit: the radar processing and the
+radar parts of Figs. 1 and 7 need daily RADKLIM YW 2017.002 files from the DWD
+Climate Data Center (`scripts/radar_cml_paths.py --download` gets them).
 
-   This installs the core packages. Extras: `.[science]` for rainfall
-   recomputation (numba, pycomlink), `.[chmi]` for the CHMI download notebook,
-   `.[test]` for the test suite. Notebook 04 also needs cartopy.
+## 2. Install
 
-4. **Point the code at your data.** Copy the example and edit the seven paths:
+Python 3.10 or newer.
 
-   ```bash
-   cp config/user_paths.example.json config/user_paths.json
-   ```
+```bash
+git clone https://github.com/toufikshit/essd-czech-cml-2021
+cd essd-czech-cml-2021
+python -m venv .venv
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
+pip install -e ".[all]"
+```
 
-   Paths can be absolute or relative to `config/`. This is the only file you
-   edit. No notebook contains data paths.
+`pip install -e .` installs only the packages needed to read the data. The groups
+`science` (numba, pycomlink), `figures` (cartopy, pillow), `radar` (poligrain),
+`wvd` (itur) and `notebooks` can be installed separately, for example
+`pip install -e ".[science,notebooks]"`. Tested with Python 3.12, numpy 2.5,
+xarray 2026.9, netCDF4 1.7, numba 0.68, pycomlink 0.6.0, poligrain 0.3.1 and
+cartopy 0.26.
 
-5. **Check before running.**
+## 3. Set the data paths
 
-   ```bash
-   python tools_verify_originals.py
-   python run.py --config config/user_paths.json check
-   ```
+```bash
+cp config/user_paths.example.json config/user_paths.json
+```
 
-   The first command confirms the 44 preserved original scripts are unchanged.
-   The second confirms your seven files have the right roles, entity counts
-   and time coverage.
+Edit `config/user_paths.json`: the paths of the seven files, the three WVD files
+(`extras`), a folder with RADKLIM files (`extras.radklim_dir`, optional) and the
+output folder (`output_dir`, default `results/`). Relative paths are relative to
+the `config/` folder; absolute paths also work. The example file already matches
+the zip extracted into `data/`. Every script reads this file; another file can be
+given with `--config`. Check the paths and files:
 
-6. **Run the notebooks in order.** Start with
-   `notebooks/00_Explore_Data.ipynb` and continue 01 to 07. Notebook 08 is an
-   optional upstream step that rebuilds the CHMI station files from CHMI open
-   data. Each notebook registers its output in a pipeline manifest and the
-   next notebook reads it from there. See
-   [docs/NOTEBOOK_GUIDE.md](docs/NOTEBOOK_GUIDE.md) for inputs, outputs and
-   cost per notebook, and [docs/CONNECTED_WORKFLOW.md](docs/CONNECTED_WORKFLOW.md)
-   for the full stage table.
+```bash
+python scripts/check_files.py
+```
 
-Expensive steps are off by default and marked in each notebook (`RECOMPUTE`,
-`RUN_GAUGE_VALIDATION`, `RUN_MAPS`, `RUN_SENSITIVITY`). The default first pass
-of every notebook runs in seconds to minutes.
+All seven lines must say PASS.
 
-## What is in the data
+## 4. Run the code
 
-| File | Step | Content |
-|---|---|---|
-| `CZ_CML_RAW_1MIN_20210401_20211031.nc` | 1 min | raw signal levels, 2,574 CMLs |
-| `CZ_CML_PREPROCESSED_1MIN_20210401_20211031.nc` | 1 min | quality controlled signals, 1,987 CMLs (3,731 sublinks) |
-| `CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_1MIN_20210401_20211031.nc` | 1 min | final CML rainfall in mm/h, native 1-minute, 1,987 CMLs |
-| `CZ_RAIN_GAUGE_10MIN_20210401_20211031.nc` | 10 min | 424 CHMI rain gauges; `rr` is the amount in mm per 10 min |
-| `CZ_RADAR_CMLPATH_5MIN_20210401_20211031.nc` | 5 min | RADKLIM radar rainfall averaged along 1,132 CML paths, amount in mm per 5 min |
-| `CHMI_10MIN_TEMPERATURE_20210401_20211031.nc` | 10 min | 251 CHMI temperature stations |
-| `CHMI_10MIN_HUMIDITY_20210401_20211031.nc` | 10 min | 247 CHMI humidity stations |
+Each script starts from the released files and writes into `output_dir`. Run them
+from the repository folder. `--help` shows the options of every script.
 
-The rainfall retrieval uses CML data only, without gauge or radar
-calibration. The method is described in the manuscript and in
-[docs/CONNECTED_WORKFLOW.md](docs/CONNECTED_WORKFLOW.md).
+| Order | Script | Input | Output (in `output_dir`) |
+|---:|---|---|---|
+| 1 | `scripts/qc_from_raw.py` | RAW file | `qc/CZ_CML_PREPROCESSED_1MIN_20210401_20211031.nc`, `qc/QC_SUBLINK_RESULTS.csv` |
+| 2 | `scripts/rainfall_1min.py` | QC file | `rainfall/CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_1MIN_20210401_20211031.nc` |
+| 3 | `scripts/derive_5min.py` | 1-minute rainfall | `rainfall_5min/CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_5MIN_DERIVED_20210401_20211031.nc` |
+| 4 | `scripts/gauge_validation.py` | QC file, 5-minute rainfall, gauges | `validation/graf_summary.json` (statistics), `graf_samples.npz` |
+| 5 | `scripts/radar_cml_paths.py` | radar file (path geometry), RADKLIM files | `radar/cml_rr_RADKLIM_2021_CZ.nc` |
+| 6 | `scripts/wvd_validation.py` | WVD files, RAW, temperature, humidity | `wvd/WVP_SUPPORT_HEXBINS/` (Table S13, Fig. 8) |
+| 7 | `scripts/figures/fig01_study_area.py` | RAW, stations, RADKLIM files | `figures/f01_study_area.png` |
+|  | `scripts/figures/fig02_availability.py` | seven files | `figures/fig02/availability_native_timestep_percentage_v1.png` |
+|  | `scripts/figures/fig03_cml_characteristics.py` | RAW file | `figures/f03_cml_characteristics.png` |
+|  | `scripts/figures/fig04_event_series.py` | QC, 5-minute rainfall, radar, stations | `figures/fig04/FINAL_GRAF_event_20210713_20210714.png` |
+|  | `scripts/figures/fig05_fig06_validation.py` | validation samples (step 4) | `figures/fig05_fig06/` |
+|  | `scripts/figures/fig07_event_maps.py` | 5-minute rainfall, QC, RADKLIM file of 13 July 2021 | `figures/fig07/hourly_1h/event04_instance01_multitime_hourly1h.png` |
 
-The CML rainfall product is released at its **native 1-minute** resolution.
-Every 5-minute rainfall series used in the manuscript analysis (validation,
-event series, gridding) is derived from it by the notebooks: a directional
-5-minute rate exists only where all five 1-minute samples are valid, and the
-physical-link mean is computed from the directional 5-minute rates. See
-[docs/03_RAINFALL_EXPLAINED.md](docs/03_RAINFALL_EXPLAINED.md).
+With 12 threads the QC takes about 30 minutes, the rainfall 8 minutes, the gauge
+validation 1 hour and Fig. 1 15 minutes; the other steps take minutes, except the
+radar processing, which depends on the download. By default, step 2 uses the released QC
+file and step 3 the released 1-minute rainfall. To run the whole chain from the
+raw data, pass the output of the previous step:
 
-## Processing and validation
+```bash
+python scripts/qc_from_raw.py
+python scripts/rainfall_1min.py --input-nc results/qc/CZ_CML_PREPROCESSED_1MIN_20210401_20211031.nc
+python scripts/derive_5min.py --native results/rainfall/CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_1MIN_20210401_20211031.nc
+python scripts/gauge_validation.py
+```
 
-The raw product holds 2,574 CMLs (2,566 with frequency metadata, 904 of them
-E band). Quality control keeps 1,987 CMLs with 3,731 directional sublinks
-(810 E band CMLs), and the rainfall covers the same 1,987 CMLs. Against the
-nearest rain gauge over gauge wet intervals the rainfall gives N = 1,331,687,
-RMSE 3.63 mm/h, mean bias -0.91 mm/h and Pearson correlation 0.633. Without
-the intervals that use reconstructed blackout minutes: N = 1,327,998, RMSE
-3.38, bias -0.89, correlation 0.606. Detection: 74.6 % of gauge-wet intervals
-are detected and 88.6 % of gauge-dry intervals are correctly dry. Water
-vapour from 31 E band CMLs (45 sublinks, 236,793 pairs) gives RMSE
-3.46 g/m3 and correlation 0.598.
+`scripts/qc_from_raw.py --only-cmls id1,id2` and `scripts/rainfall_1min.py
+--only-first N` process a few CMLs only, for a quick test.
 
-The code, parameters, reports and rerun commands of the processing are in
-[reconstruction_2026/](reconstruction_2026/README.md).
+### Notebooks
 
-## Reproducibility
+The notebooks in `notebooks/` run the same scripts and show their results.
 
-The released rainfall was computed from the released quality controlled file
-with the Graf retrieval code, and an independent second implementation
-reproduced it bit for bit on the sublinks it checked. The 5-minute series
-derived from the 1-minute file were re-derived independently with identical
-values. The verification numbers and proof files are in
-[docs/EVIDENCE.md](docs/EVIDENCE.md), and the provenance of every piece of
-code is in [docs/PROVENANCE_MAP.md](docs/PROVENANCE_MAP.md).
+| Notebook | Content |
+|---|---|
+| `00_Read_Data.ipynb` | open the seven files, plot signals, rainfall and the network |
+| `01_QC_and_Rainfall.ipynb` | QC and rainfall for a few CMLs, compared with the released files |
+| `02_Rainfall_Validation.ipynb` | 5-minute rainfall, gauge validation, Figs. 5 and 6 |
+| `03_Figures.ipynb` | Figs. 1 to 4 and 7 |
+| `04_Radar_Processing.ipynb` | radar rainfall along the CML paths |
+| `05_Water_Vapour.ipynb` | WVD validation and Fig. 8 |
 
-## Troubleshooting
+## 5. Repository content
 
-* `wrong filename` from `run.py check`: fix the paths in
-  `config/user_paths.json`. Do not rename the data files.
-* `No output registered for 'X'`: run the previous notebook first.
-* `This output manifest was created with another configuration`: change
-  `workspace` in `config/active_profile.json` instead of reusing another
-  output folder.
-* Notebook 04 needs cartopy and a native RADKLIM radar folder. Both are
-  optional.
+| Folder | Content |
+|---|---|
+| `scripts/` | processing, validation and figure scripts |
+| `src/essd_cz/` | data paths (`config.py`), file check (`catalog.py`), 5-minute derivation (`rain5.py`) |
+| `original/code/` | unchanged scientific scripts called by the scripts: figure producers, radar processing, validation helper, WVD retrieval, CHMI converter |
+| `config/` | path template, population tables used by the QC, inputs of Fig. 7 |
+| `notebooks/` | notebooks 00 to 05 |
+| `docs/` | methods and settings ([docs/METHODS.md](docs/METHODS.md)), data dictionary, licences |
+| `tests/` | tests on small artificial files (`python -m pytest tests`) |
+
+`python tools_verify_originals.py` checks that the scripts in `original/` are
+unchanged.
 
 ## Licences
 
-The software is MIT. The CML data files are CC BY-NC 4.0, provided under an
-agreement with T-Mobile Czech Republic (available on request). The CHMI and
-DWD derived data files are CC BY 4.0. Per file details:
-[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+Software: MIT ([LICENSE](LICENSE)). Data: CML files CC BY-NC 4.0 (noncommercial
+use only; provided under an agreement with T-Mobile Czech Republic a.s.), CHMI and
+DWD derived files CC BY 4.0. Details: [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)
+and [docs/LICENCES.md](docs/LICENCES.md).
 
 ## Citation
 
-See [CITATION.cff](CITATION.cff). Software by Taoufiq Shit. Dataset and
-paper by Taoufiq Shit, Martin Fencl, Martin Mudroch and Vojtěch Bareš
-(Czech Technical University in Prague). Please cite both the
-paper and the dataset once their DOIs exist. Funded by the Czech Science
-Foundation (GAČR), grant 24-13677L (MERGOSAT).
+See [CITATION.cff](CITATION.cff). Software by Taoufiq Shit. Dataset and paper by
+Taoufiq Shit, Martin Fencl, Martin Mudroch and Vojtěch Bareš (Czech Technical
+University in Prague). Please cite both the paper and the dataset. Funded by the
+Czech Science Foundation (GAČR), grant 24-13677L (MERGOSAT).

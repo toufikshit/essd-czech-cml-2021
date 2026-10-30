@@ -1,1 +1,0 @@
-!python inspect_essd_three_netcdf.py

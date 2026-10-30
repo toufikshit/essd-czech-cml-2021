@@ -1,18 +1,19 @@
-# Core packages. Same as `pip install -e .`
+# Same as `pip install -e ".[all]"`
 numpy
 pandas
 xarray
 netCDF4
 scipy
 matplotlib
-
-# Uncomment what you need:
-# numba            # rainfall recomputation (with pycomlink)
-# pycomlink        # rainfall recomputation
-# nbformat         # notebooks and tests
-# ipykernel        # notebooks
-# pytest           # tests
-# requests         # notebook 08 (CHMI download)
-# beautifulsoup4   # notebook 08
-# tqdm             # notebook 08
-# cartopy          # notebook 04 (radar maps), optional
+numba          # quality control and rainfall
+pycomlink      # rainfall
+cartopy        # maps of Figs. 1 and 7
+pillow         # Fig. 2
+poligrain      # radar along the CML paths
+requests       # radar download, CHMI converter
+tqdm           # radar, CHMI converter
+itur           # WVD retrieval
+beautifulsoup4 # CHMI converter
+nbformat       # notebooks, tests
+ipykernel      # notebooks
+pytest         # tests

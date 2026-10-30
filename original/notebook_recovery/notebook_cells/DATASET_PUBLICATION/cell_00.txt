@@ -1,2 +1,0 @@
-!pip install pandas h5py xarray netCDF4 eumdac satpy scikit-learn netcdf4 matplotlib cartopy
-!pip install -U "pycomlink==0.6.0"

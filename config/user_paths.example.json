@@ -1,20 +1,19 @@
 {
-  "description": "COPY as user_paths.json. Values may be absolute or relative to THIS config directory. No developer paths required.",
+  "description": "Copy to user_paths.json and set the paths. Relative paths are relative to this config folder; absolute paths also work.",
   "datasets": {
-    "raw": "../data/CZ_CML_RAW_1MIN_20210401_20211031.nc",
-    "qc": "../data/CZ_CML_PREPROCESSED_1MIN_20210401_20211031.nc",
-    "rain": "../data/CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_1MIN_20210401_20211031.nc",
-    "gauge": "../data/CZ_RAIN_GAUGE_10MIN_20210401_20211031.nc",
-    "radar": "../data/CZ_RADAR_CMLPATH_5MIN_20210401_20211031.nc",
-    "temperature": "../data/CHMI_10MIN_TEMPERATURE_20210401_20211031.nc",
-    "humidity": "../data/CHMI_10MIN_HUMIDITY_20210401_20211031.nc"
+    "raw": "../data/primary/CZ_CML_RAW_1MIN_20210401_20211031.nc",
+    "qc": "../data/primary/CZ_CML_PREPROCESSED_1MIN_20210401_20211031.nc",
+    "rain": "../data/primary/CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_1MIN_20210401_20211031.nc",
+    "gauge": "../data/primary/CZ_RAIN_GAUGE_10MIN_20210401_20211031.nc",
+    "radar": "../data/primary/CZ_RADAR_CMLPATH_5MIN_20210401_20211031.nc",
+    "temperature": "../data/primary/CHMI_10MIN_TEMPERATURE_20210401_20211031.nc",
+    "humidity": "../data/primary/CHMI_10MIN_HUMIDITY_20210401_20211031.nc"
   },
   "extras": {
-    "native_radklim_root": "../external_radar/YW",
-    "historical_event_cache": "",
-    "wvd_v6_nc": "",
-    "wvd_v6_diagnostics_csv": "",
-    "wvd_quantization_csv": "",
-    "wvd_validation_pairs_csv": ""
-  }
+    "wvd_v6_nc": "../data/supplementary_wvd/CZ_CML_WVD_EBAND_PROGRESSIVE_V6_2021.nc",
+    "wvd_v6_diagnostics_csv": "../data/supplementary_wvd/CZ_CML_WVD_EBAND_PROGRESSIVE_V6_DIAGNOSTICS.csv",
+    "wvd_quantization_csv": "../data/supplementary_wvd/CZ_CML_WVD_V6_LINK_QUANTIZATION_SERIES.csv",
+    "radklim_dir": ""
+  },
+  "output_dir": "../results"
 }

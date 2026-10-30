@@ -1,7 +1,0 @@
-population,cmls,sublinks
-Approved RAW input,2574,5148
-Excluded before QC: no frequency (P3),8,16
-Assessed by QC,2566,5132
-Excluded by QC (CMLs without a passing sublink),579,1158
-Excluded sublinks inside retained CMLs,0,243
-Retained after QC,1987,3731

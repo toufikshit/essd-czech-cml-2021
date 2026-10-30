@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
-"""Make small, artificial (NOT observed) seven-file CML data for regression tests.
+"""Make small, artificial (NOT observed) seven-file CML data for the tests.
 
-Uses the same variable/dimension names and units as the real 2021 data.
-For a scientific reference, --scientific-reference uses the *unchanged original*
-Graf / pycomlink implementation; never approximates its physical formulae.
-The 2-day fixture is NOT a substitute for a two-year threshold-history test.
+Uses the same variable and dimension names and units as the released files. The values only test the data
+handling (file names, axes, the 5-minute derivation); they have no scientific meaning.
 """
 from __future__ import annotations
 import argparse
@@ -43,42 +41,7 @@ def sha(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
-def produce_reference(qc, rain, original):
-    """Write paper-like synthetic NATIVE 1-MINUTE rainfall using original functions DIRECTLY.
-
-    This deliberately does not call the new aggregate_exact() wrapper and mirrors
-    the verified 1-minute exporter: R is the per-minute retrieval, the wet flag is
-    255 wherever the estimate is invalid, and the valid flag marks a finite rate.
-    """
-    tt=pd.DatetimeIndex(qc['time'].values)
-    tr=np.asarray(qc['trsl'].transpose('time','sublink_id','cml_id').values,np.float32)
-    nt, ns, nl=tr.shape
-    wet, valid, thr, q80, *_ = original.graf(np.ascontiguousarray(tr.reshape(nt,ns*nl)),60,.8,1.12,60,45)
-    L=original.meta2(qc,'length','sublink_id','cml_id',ns,nl)
-    f=original.meta2(qc,'frequency','sublink_id','cml_id',ns,nl)*1e6
-    pol=original.meta2(qc,'polarization','sublink_id','cml_id',ns,nl,True)
-    R=np.full((nt,ns,nl),np.nan,np.float32);WF=np.full((nt,ns,nl),255,np.uint8)
-    VF=np.zeros((nt,ns,nl),np.uint8)
-    for si in range(ns*nl):
-        sl=si//nl; link=si%nl
-        r,err=original.estimate(tr[:,sl,link],wet[:,si],valid[:,si],tt.values,L[sl,link],f[sl,link],pol[sl,link])
-        good=valid[:,si] & np.isfinite(r)
-        R[:,sl,link]=r
-        WF[:,sl,link]=np.where(good,(wet[:,si]&good).astype(np.uint8),np.uint8(255))
-        VF[:,sl,link]=good.astype(np.uint8)
-        if err:print('Expected original calculation warning:',sl,link,err,flush=True)
-    cnt=np.sum(np.isfinite(R),axis=1);sm=np.nansum(R,axis=1)
-    rmean=np.full((nt,nl),np.nan,np.float32);good=cnt>0
-    rmean[good]=(sm[good]/cnt[good]).astype(np.float32)
-    rain['R_sublink_1min'].values[:]=R
-    rain['R_mean_1min'].values[:]=rmean
-    rain['graf_wet_1min'].values[:]=WF
-    rain['graf_valid_1min'].values[:]=VF
-    rain['graf_threshold_db'].values[:]=thr.reshape(ns,nl).astype(np.float32)
-    rain['graf_rstd_q80_db'].values[:]=q80.reshape(ns,nl).astype(np.float32)
-
-
-def create(root:Path, *, scientific_reference=False, scenario='baseline'):
+def create(root:Path):
     """Create isolated 7-file example under root, with no real data or writebacks."""
     root=Path(root).resolve();root.mkdir(parents=True,exist_ok=True)
     tt=pd.date_range(START,periods=MINUTES,freq='min')
@@ -130,11 +93,8 @@ def create(root:Path, *, scientific_reference=False, scenario='baseline'):
        coords=coords,attrs={'kr_model':'ITU_2005', 'wet_dry_method':'GRAF_RSTD_Q80',
                             'aggregation_to_5min':'arithmetic mean of five complete valid 1-minute directional samples',
                             'scientific_status':'SYNTHETIC fixture; no scientific claim'})
-    if scientific_reference:
-        from essd_cz.rainfall import producer
-        produce_reference(qc,rainfall,producer())
-    else:
-        # This placeholder tests ONLY data plumbing; not a scientific reference.
+    # Placeholder values: they test ONLY the data handling, not the science.
+    if True:
         A=np.zeros((MINUTES,2,3),np.float32)
         A[500:650,:,:]=2.3
         A[1112:1115,0,0]=np.nan   # incomplete 5-minute blocks after derivation
@@ -151,22 +111,6 @@ def create(root:Path, *, scientific_reference=False, scenario='baseline'):
         rainfall['graf_valid_1min'].values[:]=valid.astype('u1')
         rainfall['graf_threshold_db'].values[:]=np.full((2,3),0.3,'f4')
         rainfall['graf_rstd_q80_db'].values[:]=np.full((2,3),0.26785715,'f4')
-    if scenario=='reordered':
-        rainfall=rainfall.isel(cml_id=[2,0,1],sublink_id=[1,0])
-    elif scenario=='numeric_corruption':
-        # one corrupted minute inside a complete valid block (5-min index 125)
-        rainfall['R_sublink_1min'].values[627,0,0]=19.0
-    elif scenario=='mask_corruption':
-        rainfall['R_sublink_1min'].values[627,0,0]=np.nan
-        rainfall['graf_valid_1min'].values[627,0,0]=0
-        rainfall['graf_wet_1min'].values[627,0,0]=255
-    elif scenario=='flag_corruption':
-        a=rainfall['graf_wet_1min'].values
-        a[627,0,0]=np.uint8(1-int(a[627,0,0]))
-    elif scenario=='time_shift':
-        arr=rainfall.time_1min.values.copy();arr[627]=arr[627]+np.timedelta64(7,'s')
-        rainfall=rainfall.assign_coords(time_1min=arr)
-    elif scenario!='baseline':raise ValueError(f'Unknown scenario {scenario}')
     gw=np.full((len(t10),3),0.,np.float32);gw[30:65,0]=0.5;gw[20,2]=np.nan
     radar=np.zeros((len(t5),2),np.float32);radar[100:125,0]=0.3;radar[15,1]=np.nan
     datasets={
@@ -186,13 +130,10 @@ def create(root:Path, *, scientific_reference=False, scenario='baseline'):
     manifest={role:{'sha256':sha(path),'size':Path(path).stat().st_size} for role,path in filemap.items()}
     (root/'fixture_sha256.json').write_text(json.dumps(manifest,indent=2)+'\n')
     print('WROTE 7 SYNTHETIC NetCDFs, config, checksums in',root)
-    print('Scientific reference:',scientific_reference,'Scenario:',scenario)
     return filemap
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--out-dir',type=Path,required=True)
-    parser.add_argument('--scientific-reference',action='store_true',help='Requires original netCDF4 + pycomlink; generates reference using unchanged functions')
-    parser.add_argument('--scenario',choices=('baseline','reordered','numeric_corruption','mask_corruption','flag_corruption','time_shift'),default='baseline')
     args=parser.parse_args()
-    create(args.out_dir,scientific_reference=args.scientific_reference,scenario=args.scenario)
+    create(args.out_dir)

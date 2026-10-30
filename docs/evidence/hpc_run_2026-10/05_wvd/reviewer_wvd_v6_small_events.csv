@@ -1,1 +1,0 @@
-series_index,cml_id,sublink_id,frequency_ghz,length_km,event_index,boundary_time,reason,near_long_gap,origin,pre_tl_med,post_tl_med,delta_tl_med,pre_tx_med,post_tx_med,delta_tx_med,pre_rx_med,post_rx_med,delta_rx_med,pre_tl_low,post_tl_low,delta_tl_low,n_pre_days,n_post_days,merged_candidate_count,all_reasons

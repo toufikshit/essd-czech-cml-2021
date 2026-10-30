@@ -1,4 +1,4 @@
-"""Explain the released products without reading their large observation arrays."""
+"""Check the seven released files (dimensions, entity counts, required variables, time axis) without reading data."""
 from __future__ import annotations
 from datetime import datetime, timedelta
 from netCDF4 import Dataset, date2num, num2date
@@ -16,30 +16,19 @@ CONTRACT = {
     'temperature': ('time', 10, 30816, 'station', 251),
     'humidity': ('time', 10, 30816, 'station', 247),
 }
-# The hpc profile keeps the author's legacy full-history 5-minute reference
-# in the rain role; it is inspected with its own contract, not relabelled.
-LEGACY_RAIN_5MIN = ('time_5min', 5, 61632, 'cml_id', 2219)
 REQUIRED = {
     'qc': ('trsl',), 'rain': ('R_sublink_1min',),
     'gauge': ('rr',), 'radar': ('rr',),
     'temperature': ('T',), 'humidity': ('H',),
 }
-LEGACY_RAIN_REQUIRED = ('R_sublink_5min',)
 
 
 def inspect_one(role, filename):
-    """Check the required April--October time axis inside a longer source file.
-
-    Only a 1D time axis is loaded. Existence/coverage is not scientific identity.
-    """
+    """Check one file: entity count, required variables and the 1 April to 31 October 2021 time axis."""
     td, step_minutes, expected_slots, entity, nentity = CONTRACT[role]
     required = REQUIRED.get(role, ())
     with Dataset(filename) as ds:
         problems=[]
-        if role=='rain' and 'time_1min' not in ds.variables and 'time_5min' in ds.variables:
-            # Author's legacy full-history 5-minute reference (hpc profile only).
-            td, step_minutes, expected_slots, entity, nentity = LEGACY_RAIN_5MIN
-            required = LEGACY_RAIN_REQUIRED
         if entity not in ds.dimensions or len(ds.dimensions[entity])!=nentity:
             problems.append(f'Expected {entity}={nentity}')
         for v in required:

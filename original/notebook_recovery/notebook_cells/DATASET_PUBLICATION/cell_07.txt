@@ -1,4 +1,0 @@
-import xarray as xr
-import pandas as pd 
-ds = pd.read_csv("CML META/metadata_paired_2021.csv",sep=";")["pol"].unique()
-ds

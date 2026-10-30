@@ -1,7 +1,0 @@
-Missing exact source code from uploaded archive:
-- Original March 2026 six-step cml_preprocessed_v3.nc producer: NOT IDENTIFIED
-- Original upstream raw telecom acquisition/converter: NOT VERIFIED
-- Corrected RADKLIM upstream processing execution: NOT VERIFIED
-
-Available but not in initial ZIP: see referenced_scripts_not_in_original_zip.tsv.
-All the latter are notebook references, mostly experimental, not proven mandatory.

@@ -1,2 +1,0 @@
-!find /home/jovyan -type f -name "CHMI_S2018E2025_10MIN_CZ.nc" 2>/dev/null
-!find /home/jovyan -type f -name "*CHMI*10MIN*.nc" 2>/dev/null

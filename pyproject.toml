@@ -23,14 +23,23 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-# original rainfall recomputation (notebooks 01 and 02, run.py compare-rainfall)
+# quality control and rainfall retrieval (scripts/qc_from_raw.py, scripts/rainfall_1min.py)
 science = ["numba", "pycomlink"]
-# CHMI CSV to NetCDF download and conversion (notebook 08)
+# maps of Figs. 1 and 7
+figures = ["cartopy", "pillow"]
+# radar along the CML paths (scripts/radar_cml_paths.py)
+radar = ["poligrain", "requests", "tqdm"]
+# WVD retrieval from the raw signals (original/code/wvd/13_*, 19_*)
+wvd = ["itur"]
+# CHMI CSV to NetCDF converter (original/code/chmi/)
 chmi = ["requests", "beautifulsoup4", "tqdm"]
-# notebook kernel
+# notebooks
 notebooks = ["nbformat", "ipykernel"]
-# regression tests
+# tests
 test = ["pytest", "nbformat"]
+# everything
+all = ["numba", "pycomlink", "cartopy", "pillow", "poligrain", "requests", "tqdm", "itur", "beautifulsoup4",
+       "nbformat", "ipykernel", "pytest"]
 
 [tool.setuptools]
 package-dir = { "" = "src" }

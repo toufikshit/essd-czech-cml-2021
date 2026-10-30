@@ -1,4 +1,0 @@
-import xarray as xr
-
-ds = xr.open_dataset("full_dataset_cml_pipeline_grid_all_plot_event/rainfall/cml_rainrate_selected_pastorek_itu03.nc")
-ds

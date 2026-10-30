@@ -1,4 +1,0 @@
-DONE ../CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_5MIN_DERIVED_20210401_20211031_STAGE4.nc 338126319
-dims {'time_5min': 61632, 'sublink_id': 2, 'cml_id': 1987}
-finite directional 5-min rates 126329587
-5-min intervals with >= 1 blackout minute 12037 ; with >= 1 interpolated minute 648710

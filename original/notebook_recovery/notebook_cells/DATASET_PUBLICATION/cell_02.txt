@@ -1,2 +1,0 @@
-!python harmonize_essd_cml_radar_metadata_v2.py \
-    --root ESSD_publication_dataset 

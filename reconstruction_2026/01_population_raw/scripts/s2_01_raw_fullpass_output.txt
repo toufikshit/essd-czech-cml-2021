@@ -1,4 +1,0 @@
-[F] C:\Users\taouf\ESSD_RELEASE\extracted\full\ESSD_CZ_2021_HANDOFF\data\source_full_history\raw\CZ_CML_RAW_1MIN_20200101_20211231.nc: 2580 CMLs x 2 sublinks, 1052640 minutes (2020-01-01 00:00:00..2021-12-31 23:59:00), window index 656640:964800; done in 1076s
-[F] sublinks with both finite >0: 5139; CMLs with any both finite: 2575; total both-finite minutes 918,482,728
-[F] TX<=-99 0, TX==255 0, RX>-20 0, RX<=-99.9 0
-[F] TX>30 16 (14 sublinks), >40 16 (14), >60 16 (14), >100 13 (12); TX<-30 84 (37)
