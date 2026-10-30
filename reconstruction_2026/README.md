@@ -12,9 +12,9 @@ baseline, the Pastorek wet antenna correction and the ITU-R P.838-3 (2005)
 power law.
 
 No NetCDF file is stored in git. The data files are listed, with sizes and
-checksums, in [DATA_RELEASE_MANIFEST.md](DATA_RELEASE_MANIFEST.md). They will
-be published in the Zenodo record (DOI to be added when the data release is
-published). The history of the processing is in
+checksums, in [DATA_RELEASE_MANIFEST.md](DATA_RELEASE_MANIFEST.md). They are
+in the Zenodo record https://doi.org/10.5281/zenodo.23398309 (DOI reserved;
+public when the record is published). The history of the processing is in
 [PROVENANCE_HISTORY.md](PROVENANCE_HISTORY.md).
 
 ## 1. Released populations
@@ -110,6 +110,7 @@ and 45 directional sublinks with 236,793 pairs, RMSE 3.46 g m-3 and PCC 0.598
 | `03_rainfall_graf/` | 1-minute rainfall script, 5-minute derivation | `stage4/` |
 | `04_validation/` | gauge validation script, metrics tables, WVD check | `stage5a/` |
 | `05_figures/` | figure runners, figure provenance, Fig. 3 axis correction, Fig. 7 grid builder | `stage5b/` |
+| `06_release/` | release files for Zenodo: RAW subset, release attributes, content checks, data dictionary, checksums, archive, upload to the unpublished draft, preview link check | `stage7_release/` |
 
 `FILE_PROVENANCE.csv` lists every copied file with its source in the
 reconstruction workspace (`FINAL_RECONSTRUCTION_20261027/`) and its SHA-256.

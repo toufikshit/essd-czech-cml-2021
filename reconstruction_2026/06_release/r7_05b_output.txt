@@ -1,0 +1,11 @@
+replaced and verified: ESSD_CZ_CML_2021_dataset.zip size 6368237019 md5 b807b0fb672784e63117312a0d37dddd
+replaced and verified: README_DATA.md size 6022 md5 456741af1312342453457a2cdfc6b080
+replaced and verified: DATA_DICTIONARY.md size 14463 md5 d0258e7227d738c43253c6a9ee9024d8
+replaced and verified: SHA256SUMS.txt size 1383 md5 ee9873aaa79783ecb72f99d3d72c22d5
+metadata fields changed: ['description']
+state: unsubmitted | submitted: False | DOI: 10.5281/zenodo.23398309
+  ESSD_CZ_CML_2021_dataset.zip  6368237019  md5:b807b0fb672784e63117312a0d37dddd  completed
+  DATA_DICTIONARY.md  14463  md5:d0258e7227d738c43253c6a9ee9024d8  completed
+  README_DATA.md  6022  md5:456741af1312342453457a2cdfc6b080  completed
+  SHA256SUMS.txt  1383  md5:ee9873aaa79783ecb72f99d3d72c22d5  completed
+exit 0
