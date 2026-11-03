@@ -93,6 +93,7 @@ from the repository folder. `--help` shows the options of every script.
 |  | `scripts/figures/fig04_event_series.py` | QC, 5-minute rainfall, radar, stations | `figures/fig04/FINAL_GRAF_event_20210713_20210714.png` |
 |  | `scripts/figures/fig05_fig06_validation.py` | validation samples (step 4) | `figures/fig05_fig06/` |
 |  | `scripts/figures/fig07_event_maps.py` | 5-minute rainfall, QC, RADKLIM file of 13 July 2021 | `figures/fig07/hourly_1h/event04_instance01_multitime_hourly1h.png` |
+|  | `scripts/figures/fig09_wvd_timeseries.py` | WVD validation pairs (step 6), WVD file, temperature, humidity | `figures/fig09/f09_wvd_timeseries.png` |
 
 With 12 threads the QC takes about 30 minutes, the rainfall 8 minutes, the gauge
 validation 1 hour and Fig. 1 15 minutes; the other steps take minutes, except the
@@ -121,7 +122,7 @@ The notebooks in `notebooks/` run the same scripts and show their results.
 | `02_Rainfall_Validation.ipynb` | 5-minute rainfall, gauge validation, Figs. 5 and 6 |
 | `03_Figures.ipynb` | Figs. 1 to 4 and 7 |
 | `04_Radar_Processing.ipynb` | radar rainfall along the CML paths |
-| `05_Water_Vapour.ipynb` | WVD validation and Fig. 8 |
+| `05_Water_Vapour.ipynb` | WVD validation, Figs. 8 and 9 |
 
 ## 5. Repository content
 

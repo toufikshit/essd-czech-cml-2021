@@ -7,7 +7,8 @@ midpoints is interpolated by inverse distance weighting (nnear 15, power 2, maxi
 and idw_fast_series are taken unchanged from original/code/figures/cml_grid_essd_publication_safe_singleopen.py.
 Step 2, figure: the unchanged renderer original/code/figures/03_blettner_event_maps_timeseries.py with the
 arguments of original/code/figures/06_run_multiple_events_vs_radar.py for event 4 (config/fig7/event_selection.csv);
-the radar row is read from the daily RADKLIM YW 2017.002 file of 13 July 2021 in extras.radklim_dir.
+the radar row is read from the daily RADKLIM YW 2017.002 file of 13 July 2021 in extras.radklim_dir. The upper row is
+labelled CML (the renderer's default row label).
 Outputs in <output_dir>/figures/fig07: grid_cml_20210713.nc and hourly_1h/event04_instance01_multitime_hourly1h.png.
 Usage: python scripts/figures/fig07_event_maps.py [--config config/user_paths.json]
 Needs cartopy for the radar row.
@@ -101,7 +102,7 @@ def main():
         build_cml_grid(rain5, ds['qc'], grid, '2021-07-13 15:05:00', '2021-07-13 23:05:00')
     if a.grid_only:
         return
-    cmd = [sys.executable, str(RENDERER), '--gridded-nc', str(grid), '--cml-var', 'R', '--cml-row-label', 'GRAF',
+    cmd = [sys.executable, str(RENDERER), '--gridded-nc', str(grid), '--cml-var', 'R', '--cml-row-label', 'CML',
            '--cml-geom-nc', str(ds['qc']), '--radar-root', str(extra(a.config, 'radklim_dir')),
            '--selection-cache-csv', str(FIG7 / 'event_selection.csv'),
            '--event-rank', '4', '--instance-rank', '1', '--start-time', '2021-07-13 16:05:00',
