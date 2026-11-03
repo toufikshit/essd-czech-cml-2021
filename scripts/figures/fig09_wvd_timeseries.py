@@ -11,7 +11,8 @@ Selection (fixed rule, not chosen for good agreement):
   * sublink: the one whose RMSE over all its pairs is closest to the median RMSE of the 45 sublinks;
   * period: the 14-day window (starting at 00:00 UTC) with the most matched pairs of that sublink.
 The script checks that the rebuilt pairs equal the stored validation pairs of the sublink.
-Output: <output_dir>/figures/fig09/f09_wvd_timeseries.png/.pdf and f09_selection.json.
+Output: <output_dir>/figures/fig09/f09_wvd_timeseries.png/.pdf (style of Fig. 4) and f09_selection.json (selection,
+window statistics and the cause of every 10-minute step without a pair).
 Usage: python scripts/figures/fig09_wvd_timeseries.py [--config config/user_paths.json] [--days 14]
        [--cml-id ID --sublink-id N --start YYYY-MM-DD]   (to plot another sublink or period)
 """
@@ -95,6 +96,8 @@ def main():
         vi = int(row.series_index)
         w5 = np.asarray(v6['wvd_internal_anchor'].isel(method=mi, series=vi).values, dtype=float)
         s5 = np.asarray(v6['retrieval_status'].isel(method=mi, series=vi).values)
+        tb5 = np.asarray(v6['hardware_transition_buffer_5min'].isel(series=vi).values)
+        hs5 = np.asarray(v6['hardware_state_id'].isel(series=vi).values)
         t10, w10 = helper.strict_5_to_10(t5, w5, s5)
         sid = str(row.station_id)
         hs = pd.Series(np.asarray(hum['H'].sel(station=sid).values, dtype=float),
@@ -127,26 +130,62 @@ def main():
            'window_pairs': int(ok.sum()), 'window_rmse_gm3': rmse(w.station[ok], w.cml[ok]),
            'window_bias_gm3': float((w.cml[ok] - w.station[ok]).mean()),
            'window_station_min_max_gm3': [float(w.station[ok].min()), float(w.station[ok].max())]}
+
+    # cause of every 10-min step of the window without a pair. A V6 value exists only for "safe dry" minutes: valid
+    # total loss, known Graf state, no Graf-wet minute within the wet buffer (6 h), no hardware transition (12 h).
+    import netCDF4
+    with netCDF4.Dataset(ds['raw']) as f:
+        f.set_auto_mask(False)
+        j = [str(x) for x in f['cml_id'][:]].index(str(row.cml_id))
+        traw = pd.to_datetime(f['time'][:], unit='m', origin='2020-01-01')
+        tx = f['tx'][:, int(row.sublink_id), j].astype(float)
+        rx = f['rx'][:, int(row.sublink_id), j].astype(float)
+    okraw = pd.Series(np.isfinite(tx) & np.isfinite(rx) & (tx > -99) & (tx != 255) & (rx > -99.9) & (rx < -20),
+                      index=traw)
+    s5f = pd.DataFrame({'trans': tb5, 'state': hs5}, index=t5)
+    st_ok = pd.Series(np.isfinite(truth), index=t10)
+    causes = {}
+    for t in w.index[~ok]:
+        if not np.isfinite(paired.loc[t, 'cml']) and np.isfinite(w10[t10.get_loc(t)]):
+            c = 'station value missing'
+        else:
+            b = s5f.loc[t - pd.Timedelta(minutes=10):t - pd.Timedelta(minutes=5)]
+            if (b.trans > 0).any() or (b.state < 0).any():
+                c = 'hardware transition'
+            elif not okraw.loc[t - pd.Timedelta(minutes=10):t - pd.Timedelta(minutes=1)].all():
+                c = 'missing raw signal minutes'
+            else:
+                c = 'classified as wet by the Graf method, or within 6 h of a wet period'
+            if not st_ok[t]:
+                c += '; station value also missing'
+        causes[c] = causes.get(c, 0) + 1
+    sel['window_10min_steps'] = int(len(w))
+    sel['window_gap_causes_10min_steps'] = causes
     print(json.dumps(sel, indent=1))
 
-    plt.rcParams.update({'font.family': 'DejaVu Sans', 'font.size': 11})
-    fig, ax = plt.subplots(figsize=(10, 3.6))
-    ax.plot(w.index, w.station, color='#1f6fb0', lw=1.1, label='Station (CHMI, from RH and T)')
-    ax.plot(w.index, w.cml, color='#d95f02', lw=1.1, label='CML')
-    ax.set_ylabel('WVD (g m$^{-3}$)')
-    ax.set_xlabel('Time (UTC)')
+    # style of Fig. 4 (style() and save() of the event-plot producer)
+    prod = load(ORIGINAL / 'figures' / 'rebuild_ESSD_FINAL_GRAF_shared_population_NEW_EVENT_FINAL_HEXBIN_SPACING.py',
+                'essd_fig4_style')
+    from matplotlib.ticker import AutoMinorLocator, MaxNLocator
+    prod.style()
+    fig, ax = plt.subplots(figsize=(8.6, 3.0), constrained_layout=True)
+    ax.plot(w.index, w.cml, color='#1F4E79', lw=1.3, label='CML')
+    ax.plot(w.index, w.station, color='#C05E25', lw=1.2, ls='--', label='Station')
+    ax.set_ylabel('WVD [g m$^{-3}$]')
+    ax.set_xlabel('Time [UTC]')
+    ax.legend(frameon=False, ncol=2, loc='upper right', fontsize=8.5)
     ax.xaxis.set_major_locator(mdates.DayLocator(interval=2))
+    ax.xaxis.set_minor_locator(mdates.DayLocator())
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%d %b'))
-    ax.set_xlim(start, end)
-    ax.grid(True, lw=0.4, color='0.85')
-    ax.legend(loc='upper left', frameon=False, ncol=2)
-    for sp in ('top', 'right'):
-        ax.spines[sp].set_visible(False)
-    fig.tight_layout()
-    fig.savefig(out / 'f09_wvd_timeseries.png', dpi=300)
-    fig.savefig(out / 'f09_wvd_timeseries.pdf')
+    ax.yaxis.set_minor_locator(AutoMinorLocator(2))
+    ax.spines['bottom'].set_position(('outward', 4))
+    ax.set_xlim(start, end); ax.margins(x=0)
+    lo, hi = ax.get_ylim()
+    ticks = MaxNLocator(nbins=5).tick_values(lo, hi)
+    ax.set_ylim(float(ticks[0]), float(ticks[-1])); ax.set_yticks(ticks)
+    ax.tick_params(which='both', direction='out', top=False, right=False)
+    prod.save(fig, out / 'f09_wvd_timeseries')
     (out / 'f09_selection.json').write_text(json.dumps(sel, indent=1))
-    print('saved', out / 'f09_wvd_timeseries.png')
 
 
 if __name__ == '__main__':
