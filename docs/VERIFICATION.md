@@ -28,7 +28,9 @@ The scripts were run on the released files for a few CMLs (45035_45097_2740,
   averages equal the released radar file (float32).
 
 The figure scripts in `scripts/figures/` reproduce Figs. 1 to 7 of the paper pixel for
-pixel. `scripts/wvd_validation.py` reproduces the WVD statistics (31 CMLs, 45 sublinks,
+pixel. The axis, legend and colour-bar texts of Figs. 2 to 7 follow the terminology of the paper; for Figs. 2 and 4 to 7
+`src/essd_cz/relabel.py` replaces the producers' label strings when the figure is saved (text only; the producers in
+`original/code/figures/` are unchanged). `scripts/wvd_validation.py` reproduces the WVD statistics (31 CMLs, 45 sublinks,
 236,793 pairs, RMSE 3.46 g m-3, PCC 0.598) and the content of Fig. 8; the image size
 differs by a few pixels from the published file, which was drawn on another computer.
 `scripts/figures/fig09_wvd_timeseries.py` rebuilds the 10-minute pairs of the 45 sublinks with the

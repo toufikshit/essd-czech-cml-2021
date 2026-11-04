@@ -15,6 +15,7 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'src'))
 from essd_cz.config import ORIGINAL, load_config  # noqa: E402
+from essd_cz import relabel  # noqa: E402
 
 PRODUCER = ORIGINAL / 'figures' / 'rebuild_ESSD_FINAL_GRAF_shared_population_NEW_EVENT_FINAL_HEXBIN_SPACING.py'
 ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -28,6 +29,7 @@ if not samples.is_file():
     raise SystemExit(f'{samples} not found (run scripts/gauge_validation.py first)')
 spec = importlib.util.spec_from_file_location('essd_final_graf_figures', PRODUCER)
 m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
+relabel.install({**relabel.FIG5, **relabel.FIG6})  # label-only: axis text as in the paper
 out = Path(a.out_dir) if a.out_dir else cfg['output_dir'] / 'figures' / 'fig05_fig06'
 out.mkdir(parents=True, exist_ok=True)
 S = np.load(samples)

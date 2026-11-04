@@ -18,6 +18,7 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'src'))
 from essd_cz.config import ORIGINAL, load_config  # noqa: E402
+from essd_cz import relabel  # noqa: E402
 
 PRODUCER = ORIGINAL / 'figures' / 'availability_native_timestep_percentage.py'
 CROP_TOP = 125
@@ -38,6 +39,7 @@ spec = importlib.util.spec_from_file_location('availability_producer', PRODUCER)
 mod = importlib.util.module_from_spec(spec)
 sys.modules[spec.name] = mod      # needed by the producer's dataclass
 spec.loader.exec_module(mod)
+relabel.install(relabel.FIG2)  # label-only: colour-bar text as in the paper
 mod.main()
 
 src = out / 'availability_native_timestep_percentage.png'

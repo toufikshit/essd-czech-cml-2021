@@ -24,6 +24,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'src'))
 from essd_cz.config import ORIGINAL, load_config  # noqa: E402
 from essd_cz.rain5 import derived_5min_name  # noqa: E402
+from essd_cz import relabel  # noqa: E402
 
 PRODUCER = ORIGINAL / 'figures' / 'rebuild_ESSD_FINAL_GRAF_shared_population_NEW_EVENT_FINAL_HEXBIN_SPACING.py'
 
@@ -49,6 +50,7 @@ def main():
     spec = importlib.util.spec_from_file_location('essd_fig456_producer', PRODUCER)
     g = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(g)
+    relabel.install(relabel.FIG4)  # label-only: axis and legend text as in the paper
     start, end = pd.Timestamp(a.start), pd.Timestamp(a.end)
     result = {'inputs': {k: str(v) for k, v in paths.items()}}
     # Same open calls as producer main().

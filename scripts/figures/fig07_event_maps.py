@@ -18,6 +18,7 @@ from __future__ import annotations
 import argparse
 import ast
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -102,13 +103,15 @@ def main():
         build_cml_grid(rain5, ds['qc'], grid, '2021-07-13 15:05:00', '2021-07-13 23:05:00')
     if a.grid_only:
         return
-    cmd = [sys.executable, str(RENDERER), '--gridded-nc', str(grid), '--cml-var', 'R', '--cml-row-label', 'CML',
+    # label-only: the renderer runs through essd_cz.relabel, which changes the colour-bar text as in the paper
+    cmd = [sys.executable, '-m', 'essd_cz.relabel', 'FIG7', str(RENDERER), '--gridded-nc', str(grid), '--cml-var', 'R', '--cml-row-label', 'CML',
            '--cml-geom-nc', str(ds['qc']), '--radar-root', str(extra(a.config, 'radklim_dir')),
            '--selection-cache-csv', str(FIG7 / 'event_selection.csv'),
            '--event-rank', '4', '--instance-rank', '1', '--start-time', '2021-07-13 16:05:00',
            '--ncols', '8', '--panel-step-minutes', '60', '--dpi', '600', '--skip-timeseries', '--out-dir', str(out)]
     print('RENDERER:', ' '.join(cmd), flush=True)
-    subprocess.run(cmd, check=True)
+    env = dict(os.environ, PYTHONPATH=str(ROOT / 'src') + os.pathsep + os.environ.get('PYTHONPATH', ''))
+    subprocess.run(cmd, check=True, env=env)
 
 
 if __name__ == '__main__':

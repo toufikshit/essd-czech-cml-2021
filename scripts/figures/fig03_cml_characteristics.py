@@ -176,8 +176,8 @@ fig, axes = plt.subplots(
 # ----- (a) Frequency histogram (sub-links) -----------------
 ax = axes[0]
 ax.hist(freq_all, bins=bins_a, color=TOMATO, edgecolor="white", linewidth=0.4)
-ax.set_xlabel("Frequency (GHz)", fontsize=10)
-ax.set_ylabel("Number of sub-links", fontsize=10)
+ax.set_xlabel("Frequency [GHz]", fontsize=10)
+ax.set_ylabel("Number of sublinks", fontsize=10)
 
 xt_a = nice_ticks(freq_min, freq_max, 4)
 yt_a = nice_ticks(0, ax.get_ylim()[1], 4)
@@ -189,8 +189,8 @@ ax.set_title("(a)", fontsize=11, fontweight="bold", loc="left", pad=8)
 # ----- (b) Path-length histogram (links) -------------------
 ax = axes[1]
 ax.hist(length, bins=bins_b, color=TOMATO, edgecolor="white", linewidth=0.4)
-ax.set_xlabel("Path length (km)", fontsize=10)
-ax.set_ylabel("Number of links", fontsize=10)
+ax.set_xlabel("Path length [km]", fontsize=10)
+ax.set_ylabel("Number of CMLs", fontsize=10)
 
 xt_b = nice_ticks(0, len_max, 4)
 yt_b = nice_ticks(0, ax.get_ylim()[1], 4)
@@ -210,8 +210,8 @@ hb = ax.hexbin(
     linewidths=0.3,
     edgecolors="0.3",
 )
-ax.set_xlabel("Frequency (GHz)", fontsize=10)
-ax.set_ylabel("Path length (km)", fontsize=10)
+ax.set_xlabel("Frequency [GHz]", fontsize=10)
+ax.set_ylabel("Path length [km]", fontsize=10)
 
 xt_c = nice_ticks(freq_min, freq_max, 4)
 yt_c = nice_ticks(0, len_max, 4)
@@ -262,7 +262,7 @@ leg.get_frame().set_linewidth(0.5)
 
 ax.text(
     1.0, 1.02,
-    "Number of sub-links",
+    "Number of sublinks",
     transform=ax.transAxes,
     fontsize=9,
     ha="right",
