@@ -31,5 +31,5 @@ The figure scripts in `scripts/figures/` reproduce Figs. 1 to 7 of the paper pix
 pixel. `scripts/wvd_validation.py` reproduces the WVD statistics (31 CMLs, 45 sublinks,
 236,793 pairs, RMSE 3.46 g m-3, PCC 0.598) and the content of Fig. 8; the image size
 differs by a few pixels from the published file, which was drawn on another computer.
-`scripts/figures/fig09_wvd_timeseries.py` rebuilds the 10-minute pairs of the plotted sublink with the
-validation functions and checks that they equal the stored validation pairs before drawing Fig. 9.
+`scripts/figures/fig09_wvd_timeseries.py` rebuilds the 10-minute pairs of the 45 sublinks with the
+validation functions and checks that they equal the stored validation pairs before selecting and drawing Fig. 9.
