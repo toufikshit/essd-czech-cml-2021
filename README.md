@@ -14,19 +14,20 @@ set the data paths, and run the code.
 
 ## 1. Download the data
 
-Download `ESSD_CZ_CML_2021_dataset.zip` from the Zenodo record and extract it, for
-example into the `data/` folder of this repository. It contains:
+Download the files from the Zenodo record; each file can be downloaded on its
+own. For the example configuration, put the seven products into `data/primary/`
+and the three WVD files into `data/supplementary_wvd/`. The record contains:
 
-| Folder / file | Content |
+| File | Content |
 |---|---|
-| `primary/CZ_CML_RAW_1MIN_20210401_20211031.nc` | raw TX and RX, 2,574 CMLs, 1 min |
-| `primary/CZ_CML_PREPROCESSED_1MIN_20210401_20211031.nc` | quality controlled signals, 1,987 CMLs, 1 min |
-| `primary/CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_1MIN_20210401_20211031.nc` | CML rainfall, 1,987 CMLs, 1 min |
-| `primary/CZ_RAIN_GAUGE_10MIN_20210401_20211031.nc` | 424 CHMI rain gauges, 10 min |
-| `primary/CZ_RADAR_CMLPATH_5MIN_20210401_20211031.nc` | RADKLIM radar along 1,132 CML paths, 5 min |
-| `primary/CHMI_10MIN_TEMPERATURE_20210401_20211031.nc` | 251 CHMI stations, 10 min |
-| `primary/CHMI_10MIN_HUMIDITY_20210401_20211031.nc` | 247 CHMI stations, 10 min |
-| `supplementary_wvd/` | three water vapour (WVD) supporting files |
+| `CZ_CML_RAW_1MIN_20210401_20211031.nc` | raw TX and RX, 2,574 CMLs, 1 min |
+| `CZ_CML_PREPROCESSED_1MIN_20210401_20211031.nc` | quality controlled signals, 1,987 CMLs, 1 min |
+| `CZ_CML_RAINRATE_GRAF_ITU2005_PASTOREK_1MIN_20210401_20211031.nc` | CML rainfall, 1,987 CMLs, 1 min |
+| `CZ_RAIN_GAUGE_10MIN_20210401_20211031.nc` | 424 CHMI rain gauges, 10 min |
+| `CZ_RADAR_CMLPATH_5MIN_20210401_20211031.nc` | RADKLIM radar along 1,132 CML paths, 5 min |
+| `CHMI_10MIN_TEMPERATURE_20210401_20211031.nc` | 251 CHMI stations, 10 min |
+| `CHMI_10MIN_HUMIDITY_20210401_20211031.nc` | 247 CHMI stations, 10 min |
+| `CZ_CML_WVD_EBAND_PROGRESSIVE_V6_2021.nc`, `CZ_CML_WVD_EBAND_PROGRESSIVE_V6_DIAGNOSTICS.csv`, `CZ_CML_WVD_V6_LINK_QUANTIZATION_SERIES.csv` | water vapour (WVD) supporting files |
 | `README_DATA.md`, `DATA_DICTIONARY.md`, `SHA256SUMS.txt` | documentation and checksums |
 
 Details and checksums: [data/README.md](data/README.md). Variables:
@@ -65,7 +66,8 @@ Edit `config/user_paths.json`: the paths of the seven files, the three WVD files
 (`extras`), a folder with RADKLIM files (`extras.radklim_dir`, optional) and the
 output folder (`output_dir`, default `results/`). Relative paths are relative to
 the `config/` folder; absolute paths also work. The example file already matches
-the zip extracted into `data/`. Every script reads this file; another file can be
+the layout `data/primary/` and `data/supplementary_wvd/` of section 1. Every
+script reads this file; another file can be
 given with `--config`. Check the paths and files:
 
 ```bash
